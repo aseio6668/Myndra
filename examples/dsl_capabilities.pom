@@ -1,0 +1,140 @@
+// Inline DSL and Capability-Based Security Example
+// Demonstrates embedded domain-specific languages and permission system
+
+import net::http with capabilities("fetch", "read-only")
+import graphics::shader with capabilities("compile", "execute")
+import db::query with capabilities("read")
+
+#tag:graphics
+fn create_fragment_shader() -> Shader {
+    // Inline shader DSL with full syntax highlighting
+    dsl shader {
+        precision mediump float;
+        
+        uniform float uTime;
+        uniform vec2 uResolution;
+        
+        void main() {
+            vec2 uv = gl_FragCoord.xy / uResolution.xy;
+            
+            // Create animated gradient
+            float wave = sin(uv.x * 10.0 + uTime) * 0.5 + 0.5;
+            vec3 color = mix(
+                vec3(0.2, 0.4, 1.0),  // Blue
+                vec3(1.0, 0.4, 0.2),  // Orange
+                wave
+            );
+            
+            gl_FragColor = vec4(color, 1.0);
+        }
+    }
+}
+
+#tag:data
+fn fetch_user_data(user_id: string) -> User fallback return default_user() {
+    // Database query using inline SQL DSL
+    let user_query = dsl sql {
+        SELECT users.*, profiles.avatar_url, profiles.bio
+        FROM users 
+        LEFT JOIN profiles ON users.id = profiles.user_id
+        WHERE users.id = :user_id
+        AND users.active = true
+        LIMIT 1
+    }
+    
+    // Execute with capability checking
+    let result = db::execute(user_query, { user_id }) 
+        with_capabilities(["read"])
+    
+    return User::from_row(result.first())
+}
+
+#tag:api
+fn fetch_weather_data(location: string) -> WeatherData 
+    fallback retry(3) or return cached_weather(location) {
+    
+    // HTTP request with capability enforcement
+    let response = http::get("https://api.weather.com/v1/current") {
+        query: { location, api_key: env("WEATHER_API_KEY") },
+        timeout: 5s,
+        capabilities: ["fetch", "read-only"]
+    }
+    
+    if response.status != 200 {
+        throw HttpError("Weather API request failed")
+    }
+    
+    return WeatherData::parse(response.body)
+}
+
+#tag:ui
+capsule weather_widget {
+    let location = "New York"
+    let weather_data: evolving<WeatherData?> = nil
+    let is_loading: evolving<bool> = false
+    
+    fn load_weather() {
+        is_loading -> true over 100ms
+        
+        @async {
+            try {
+                let data = fetch_weather_data(location)
+                weather_data -> data over 200ms
+            } catch error {
+                log("Failed to load weather: " + error.message) if context == "dev"
+            } finally {
+                is_loading -> false over 100ms
+            }
+        }
+    }
+    
+    fn render() -> Element {
+        return ui::div([
+            ui::h3("Weather for " + location),
+            
+            if is_loading {
+                ui::spinner("Loading weather...")
+            } else if weather_data {
+                ui::div([
+                    ui::span("Temperature: " + weather_data.temperature + "°F"),
+                    ui::span("Conditions: " + weather_data.description),
+                    ui::span("Humidity: " + weather_data.humidity + "%")
+                ])
+            } else {
+                ui::button("Load Weather", onclick: load_weather)
+            }
+        ])
+    }
+}
+
+// Composable execution model example
+@parallel
+fn process_large_dataset(data: [DataPoint]) -> ProcessedData {
+    // This function will automatically run in parallel
+    return data
+        .chunks(1000)
+        .map(process_chunk)
+        .reduce(combine_results)
+}
+
+@reactive
+fn update_dashboard(weather: WeatherData, users: [User]) {
+    // This function will react to changes in its inputs
+    let stats = calculate_stats(users)
+    let combined = combine_weather_and_stats(weather, stats)
+    
+    dashboard.update(combined)
+}
+
+fn main() {
+    // Initialize shader for background
+    let shader = create_fragment_shader()
+    graphics::set_background_shader(shader)
+    
+    // Create UI
+    let widget = weather_widget.render()
+    ui::mount(widget, "#weather")
+    
+    // Load initial data
+    widget.load_weather()
+}

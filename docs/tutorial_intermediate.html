@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomegranate Language - Intermediate Tutorial</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #4a5568;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        h2 {
+            color: #2d3748;
+            margin-top: 30px;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #4a5568;
+        }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+        }
+        .highlight {
+            background: #fef5e7;
+            padding: 15px;
+            border-left: 4px solid #f6ad55;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .feature-box {
+            background: #e6fffa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #38b2ac;
+        }
+        .advanced-box {
+            background: #fed7d7;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #e53e3e;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .nav-button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-button:hover {
+            background: #5a67d8;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ Pomegranate Language - Intermediate Tutorial</h1>
+        
+        <div class="highlight">
+            <strong>Ready for the next level?</strong> This tutorial covers Pomegranate's advanced features: reactive programming, temporal types, live code capsules, and more sophisticated language constructs.
+        </div>
+
+        <h2>1. Reactive Programming</h2>
+        <p>Pomegranate has built-in reactive programming that automatically updates when data changes:</p>
+
+        <h3>Observable Data Streams</h3>
+        <div class="code-block">
+<pre>import std::reactive with capabilities("observe", "emit")
+
+@reactive
+fn create_temperature_monitor() {
+    // Create reactive data streams
+    let sensor_temp = observable&lt;float&gt;(20.0)
+    let fahrenheit = observable&lt;float&gt;(68.0)
+    let status = observable&lt;string&gt;("Normal")
+    
+    // Reactive transformations
+    sensor_temp.subscribe { celsius -&gt;
+        // Automatically convert to Fahrenheit
+        fahrenheit.emit(celsius * 9.0 / 5.0 + 32.0)
+        
+        // Update status based on temperature
+        if celsius &gt; 30.0 {
+            status.emit("Hot")
+        } else if celsius &lt; 10.0 {
+            status.emit("Cold")
+        } else {
+            status.emit("Normal")
+        }
+    }
+    
+    return { sensor_temp, fahrenheit, status }
+}</pre>
+        </div>
+
+        <div class="feature-box">
+            <strong>🔄 Reactive Feature:</strong> When sensor_temp changes, fahrenheit and status automatically update. No manual triggering needed!
+        </div>
+
+        <h3>Data Processing Pipeline</h3>
+        <div class="code-block">
+<pre>@reactive
+fn create_data_pipeline() {
+    let raw_data = observable&lt;[float]&gt;([])
+    let filtered_data = observable&lt;[float]&gt;([])
+    let statistics = observable&lt;Stats&gt;(Stats::empty())
+    
+    // Multi-stage reactive pipeline
+    raw_data.subscribe { data -&gt;
+        // Filter outliers
+        let filtered = data.filter(|x| x &gt; 0.0 && x &lt; 1000.0)
+        filtered_data.emit(filtered)
+    }
+    
+    filtered_data.subscribe { data -&gt;
+        // Calculate statistics
+        let stats = Stats {
+            count: data.length(),
+            average: data.sum() / data.length(),
+            min: data.min(),
+            max: data.max()
+        }
+        statistics.emit(stats)
+    }
+    
+    return { raw_data, filtered_data, statistics }
+}</pre>
+        </div>
+
+        <h2>2. Temporal Types - Time-Aware Variables</h2>
+        <p>Variables that change over time with smooth transitions:</p>
+
+        <h3>Basic Temporal Operations</h3>
+        <div class="code-block">
+<pre>fn create_animated_ui() {
+    // Variables that evolve over time
+    let opacity: evolving&lt;float&gt; = 0.0
+    let position_x: evolving&lt;float&gt; = 0.0
+    let scale: evolving&lt;float&gt; = 1.0
+    
+    // Animate opacity fade-in
+    opacity -&gt; 1.0 over 2s
+    
+    // Move element across screen
+    position_x -&gt; 300.0 over 3s
+    
+    // Scale animation with easing
+    scale -&gt; 1.5 over 1s then scale -&gt; 1.0 over 1s
+    
+    return ui::div {
+        style: {
+            opacity: opacity,
+            transform: "translateX(" + position_x + "px) scale(" + scale + ")",
+            transition: "all ease-in-out"
+        }
+    }
+}</pre>
+        </div>
+
+        <h3>Physics Simulation with Temporal Types</h3>
+        <div class="code-block">
+<pre>fn create_bouncing_ball_physics() {
+    let x: evolving&lt;float&gt; = 50.0
+    let y: evolving&lt;float&gt; = 100.0
+    let velocity_x: evolving&lt;float&gt; = 50.0
+    let velocity_y: evolving&lt;float&gt; = 0.0
+    
+    fn update_physics() {
+        let gravity = 9.81
+        let damping = 0.98
+        let bounce_factor = 0.8
+        
+        // Apply gravity
+        velocity_y -&gt; velocity_y + gravity over 16ms
+        
+        // Update positions
+        x -&gt; x + velocity_x over 16ms
+        y -&gt; y + velocity_y over 16ms
+        
+        // Bounce off walls
+        if x &lt;= 0.0 || x &gt;= 400.0 {
+            velocity_x -&gt; -velocity_x * bounce_factor over 0ms
+        }
+        
+        // Bounce off ground
+        if y &lt;= 0.0 {
+            y -&gt; 0.0 over 0ms
+            velocity_y -&gt; -velocity_y * bounce_factor over 0ms
+        }
+        
+        // Apply air resistance
+        velocity_x -&gt; velocity_x * damping over 16ms
+        velocity_y -&gt; velocity_y * damping over 16ms
+    }
+    
+    // Run physics at 60 FPS
+    @interval(16ms) update_physics()
+    
+    return { x, y }
+}</pre>
+        </div>
+
+        <h2>3. Live Code Capsules</h2>
+        <p>Code blocks that can be modified and reloaded at runtime:</p>
+
+        <h3>UI Components as Capsules</h3>
+        <div class="code-block">
+<pre>#tag:ui
+capsule todo_item {
+    fn create(text: string, completed: bool, on_toggle: fn()) -&gt; Element {
+        return ui::div([
+            ui::checkbox(completed, onclick: on_toggle),
+            ui::span(text, {
+                style: {
+                    text_decoration: completed ? "line-through" : "none",
+                    color: completed ? "#888" : "#333",
+                    font_weight: completed ? "normal" : "bold"
+                }
+            }),
+            ui::button("Delete", {
+                style: { 
+                    background: "#ff4444", 
+                    color: "white",
+                    margin_left: "10px"
+                }
+            })
+        ])
+    }
+}
+
+#tag:app
+capsule todo_app {
+    let todos: evolving&lt;[TodoItem]&gt; = []
+    let new_todo_text = ""
+    
+    fn add_todo(text: string) {
+        let new_item = TodoItem {
+            id: generate_id(),
+            text: text,
+            completed: false
+        }
+        todos -&gt; todos.push(new_item) over 200ms
+    }
+    
+    fn render() -&gt; Element {
+        return ui::div([
+            ui::h1("Todo App with Live Capsules"),
+            
+            ui::input_field(new_todo_text, {
+                placeholder: "Add a new todo...",
+                on_enter: { text -&gt;
+                    add_todo(text)
+                    new_todo_text = ""
+                }
+            }),
+            
+            ui::div(
+                todos.map { todo -&gt;
+                    todo_item.create(
+                        todo.text, 
+                        todo.completed,
+                        { toggle_todo(todo.id) }
+                    )
+                }
+            )
+        ])
+    }
+}</pre>
+        </div>
+
+        <div class="advanced-box">
+            <strong>🔥 Live Reload Feature:</strong> You can modify the styling, logic, or structure of these capsules while your program is running, and the changes take effect immediately!
+        </div>
+
+        <h2>4. Advanced Error Handling</h2>
+        <p>Sophisticated error handling with multiple fallback strategies:</p>
+
+        <div class="code-block">
+<pre>fn fetch_user_profile(user_id: string) -&gt; UserProfile 
+    fallback retry(3, exponential_backoff) 
+    or try_cache(user_id) 
+    or return UserProfile::guest() {
+    
+    let response = http::get("/api/users/" + user_id) {
+        timeout: 5s,
+        capabilities: ["fetch"]
+    }
+    
+    if response.status == 404 {
+        throw UserNotFoundError("User " + user_id + " not found")
+    }
+    
+    return UserProfile::parse(response.body)
+}
+
+fn save_user_data(user: User) -&gt; SaveResult
+    fallback queue_for_later(user) 
+    or log_error_and_continue() {
+    
+    // Multiple validation steps with individual fallbacks
+    validate_user(user) fallback fix_common_issues(user)
+    
+    let result = database::save(user) fallback {
+        // Try backup database
+        backup_database::save(user)
+    }
+    
+    return result
+}</pre>
+        </div>
+
+        <h2>5. Inline DSL (Domain-Specific Languages)</h2>
+        <p>Embed specialized languages directly in your Pomegranate code:</p>
+
+        <h3>SQL Query DSL</h3>
+        <div class="code-block">
+<pre>import db::query with capabilities("read", "write")
+
+fn get_active_users(min_age: int) -&gt; [User] {
+    let query = dsl sql {
+        SELECT users.*, profiles.avatar, profiles.bio
+        FROM users
+        JOIN profiles ON users.id = profiles.user_id  
+        WHERE users.active = true
+        AND users.age &gt;= :min_age
+        ORDER BY users.created_at DESC
+        LIMIT 100
+    }
+    
+    return db::execute(query, { min_age })
+        .map(User::from_row)
+}</pre>
+        </div>
+
+        <h3>Shader DSL</h3>
+        <div class="code-block">
+<pre>import graphics::shader with capabilities("compile", "execute")
+
+fn create_wave_shader() -&gt; Shader {
+    return dsl shader {
+        precision mediump float;
+        
+        uniform float uTime;
+        uniform vec2 uResolution;
+        uniform vec3 uColor;
+        
+        void main() {
+            vec2 uv = gl_FragCoord.xy / uResolution.xy;
+            
+            // Create animated wave pattern
+            float wave1 = sin(uv.x * 10.0 + uTime) * 0.1;
+            float wave2 = sin(uv.y * 15.0 + uTime * 1.5) * 0.1;
+            float combined = wave1 + wave2;
+            
+            vec3 color = uColor + vec3(combined);
+            gl_FragColor = vec4(color, 1.0);
+        }
+    }
+}</pre>
+        </div>
+
+        <h2>6. Context-Aware Programming</h2>
+        <p>Write code that adapts to different execution environments:</p>
+
+        <div class="code-block">
+<pre>fn setup_logging() {
+    // Different behavior based on context
+    match context {
+        "dev" =&gt; {
+            log::set_level(LogLevel::Debug)
+            log::add_console_output()
+            log::add_file_output("dev.log")
+        },
+        "staging" =&gt; {
+            log::set_level(LogLevel::Info)  
+            log::add_structured_output()
+            log::add_remote_logging("staging.logs.company.com")
+        },
+        "prod" =&gt; {
+            log::set_level(LogLevel::Error)
+            log::add_structured_output()
+            log::add_remote_logging("prod.logs.company.com")
+            log::enable_error_alerting()
+        }
+    }
+}
+
+fn get_database_config() -&gt; DatabaseConfig {
+    return DatabaseConfig {
+        host: env("DB_HOST") if context == "prod" else "localhost",
+        port: env("DB_PORT").to_int() if context == "prod" else 5432,
+        pool_size: 50 if context == "prod" else 5,
+        ssl_enabled: context == "prod",
+        query_logging: context == "dev"
+    }
+}</pre>
+        </div>
+
+        <h2>7. Parallel and Async Programming</h2>
+
+        <h3>Parallel Execution</h3>
+        <div class="code-block">
+<pre>@parallel
+fn process_large_dataset(data: [DataItem]) -&gt; ProcessedData {
+    // Automatically parallelized across available cores
+    return data
+        .chunks(1000)                    // Split into chunks
+        .map(process_chunk)              // Process each chunk in parallel
+        .reduce(combine_results)         // Combine results
+}
+
+@async
+fn fetch_user_dashboard(user_id: string) -&gt; Dashboard {
+    // Fetch multiple data sources concurrently
+    let user_future = fetch_user_profile(user_id)
+    let posts_future = fetch_user_posts(user_id)
+    let stats_future = fetch_user_stats(user_id)
+    let friends_future = fetch_user_friends(user_id)
+    
+    // Wait for all to complete
+    let user = await user_future
+    let posts = await posts_future  
+    let stats = await stats_future
+    let friends = await friends_future
+    
+    return Dashboard::build(user, posts, stats, friends)
+}</pre>
+        </div>
+
+        <h2>8. Practice Projects</h2>
+
+        <h3>Project 1: Real-time Chat Application</h3>
+        <div class="code-block">
+<pre>// Build a reactive chat app with live updates
+import net::websocket with capabilities("connect", "send", "receive")
+import std::reactive with capabilities("observe", "emit")
+
+#tag:chat
+capsule chat_application {
+    let messages: evolving&lt;[Message]&gt; = []
+    let connected_users: evolving&lt;[User]&gt; = []
+    let current_message = ""
+    
+    fn connect_to_server() {
+        // Your implementation here
+        // Hint: Use reactive streams for real-time updates
+    }
+    
+    fn send_message(text: string) {
+        // Your implementation here
+    }
+    
+    fn render() -&gt; Element {
+        // Create the UI
+        // Challenge: Add typing indicators and emoji reactions
+    }
+}</pre>
+        </div>
+
+        <h3>Project 2: Animated Data Visualization</h3>
+        <div class="code-block">
+<pre>// Create smooth, animated charts with temporal types
+import std::graphics with capabilities("render", "animate")
+
+capsule animated_chart {
+    let data_points: evolving&lt;[DataPoint]&gt; = []
+    let chart_scale: evolving&lt;float&gt; = 1.0
+    let animation_progress: evolving&lt;float&gt; = 0.0
+    
+    fn update_data(new_data: [DataPoint]) {
+        // Animate data changes smoothly
+        data_points -&gt; new_data over 1s
+        
+        // Auto-scale the chart
+        let max_value = new_data.map(|p| p.value).max()
+        chart_scale -&gt; calculate_scale(max_value) over 500ms
+    }
+    
+    fn render() -&gt; Element {
+        // Challenge: Create bar charts, line graphs, or pie charts
+        // Use temporal types for smooth animations
+    }
+}</pre>
+        </div>
+
+        <h2>9. Advanced Tips and Best Practices</h2>
+
+        <div class="two-column">
+            <div class="feature-box">
+                <h3>🎯 Reactive Programming Tips</h3>
+                <ul>
+                    <li>Use observables for data that changes frequently</li>
+                    <li>Create reactive pipelines for data processing</li>
+                    <li>Combine multiple streams with reactive operators</li>
+                    <li>Avoid excessive subscriptions for performance</li>
+                </ul>
+            </div>
+            
+            <div class="advanced-box">
+                <h3>⚡ Temporal Types Best Practices</h3>
+                <ul>
+                    <li>Use appropriate time durations for smooth animations</li>
+                    <li>Chain temporal operations for complex sequences</li>
+                    <li>Consider performance with frequent time updates</li>
+                    <li>Use temporal types for natural user interactions</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight">
+            <strong>💡 Pro Tip:</strong> Combine reactive programming with temporal types for powerful real-time applications. For example, a reactive data stream that smoothly animates changes to a chart!
+        </div>
+
+        <h2>10. Next Steps</h2>
+        <p>You've mastered intermediate Pomegranate! Ready for advanced topics?</p>
+        <ul>
+            <li><strong>Advanced Tutorial:</strong> Decentralized identity, zero-knowledge proofs, and advanced security</li>
+            <li><strong>Package Management:</strong> Create and distribute hash-based packages</li>
+            <li><strong>Performance Optimization:</strong> Advanced parallel processing and memory management</li>
+            <li><strong>Integration Patterns:</strong> Connect with existing systems and APIs</li>
+        </ul>
+
+        <div class="navigation">
+            <a href="tutorial_beginner.html" class="nav-button">← Beginner Tutorial</a>
+            <a href="tutorial_advanced.html" class="nav-button">Advanced Tutorial →</a>
+        </div>
+    </div>
+</body>
+</html>

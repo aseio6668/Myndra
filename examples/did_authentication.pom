@@ -1,0 +1,178 @@
+// Decentralized Identity and Zero-Knowledge Proofs Example
+// Demonstrates DID integration and privacy-first authentication
+
+import did::core with capabilities("verify", "resolve")
+import crypto::zk with capabilities("prove", "verify")
+import std::privacy with capabilities("anonymize")
+
+#tag:auth
+fn authenticate_user(did_token: string) -> AuthResult {
+    // Verify the DID document
+    let did_doc = did::resolve(did_token) 
+        fallback return AuthResult::invalid("Cannot resolve DID")
+    
+    if !did_doc.is_valid() {
+        return AuthResult::invalid("Invalid DID document")
+    }
+    
+    // Verify zero-knowledge proofs without revealing personal data
+    let user_identity = did::verify(did_token)
+    
+    // Check required proofs while preserving privacy
+    let has_age_proof = user_identity.has_proof("age > 18")
+    let has_country_proof = user_identity.has_proof("country in allowed_countries")
+    let has_reputation_proof = user_identity.has_proof("reputation > 0.8")
+    
+    if !has_age_proof {
+        return AuthResult::insufficient("Age verification required")
+    }
+    
+    if !has_country_proof {
+        return AuthResult::insufficient("Geographic restriction")
+    }
+    
+    log("User authenticated with DID: " + user_identity.id) if context == "dev"
+    
+    return AuthResult::success(user_identity)
+}
+
+#tag:privacy
+fn create_anonymous_session(user: DIDIdentity) -> Session {
+    // Create session without storing personal data
+    let session_id = crypto::random_uuid()
+    let capabilities = derive_capabilities_from_proofs(user)
+    
+    // Store only the minimum required information
+    let session = Session {
+        id: session_id,
+        capabilities: capabilities,
+        created_at: now(),
+        expires_at: now() + 24h,
+        // No personal identifiers stored
+    }
+    
+    // Use ZK proofs for audit trail without compromising privacy
+    let audit_proof = zk::create_proof {
+        statement: "User has valid permissions for this session",
+        private_inputs: [user.proofs],
+        public_inputs: [session.capabilities]
+    }
+    
+    session.audit_proof = audit_proof
+    return session
+}
+
+#tag:permissions
+fn derive_capabilities_from_proofs(user: DIDIdentity) -> CapabilitySet {
+    let capabilities = []
+    
+    // Derive permissions based on zero-knowledge proofs
+    if user.has_proof("age > 18") {
+        capabilities.push("adult_content")
+    }
+    
+    if user.has_proof("verified_developer") {
+        capabilities.push("api_access", "code_review", "publish_packages")
+    }
+    
+    if user.has_proof("premium_subscriber") {
+        capabilities.push("advanced_features", "priority_support")
+    }
+    
+    if user.has_proof("reputation > 0.9") {
+        capabilities.push("moderation", "community_leader")
+    }
+    
+    return capabilities
+}
+
+#tag:verification
+capsule verification_ui {
+    let current_user: evolving<DIDIdentity?> = nil
+    let verification_status: evolving<string> = "Not authenticated"
+    let is_verifying: evolving<bool> = false
+    
+    fn verify_identity(did_input: string) {
+        is_verifying -> true over 100ms
+        verification_status -> "Verifying identity..." over 200ms
+        
+        @async {
+            try {
+                let auth_result = authenticate_user(did_input)
+                
+                if auth_result.is_success() {
+                    current_user -> auth_result.user over 300ms
+                    verification_status -> "Verified ✓" over 200ms
+                    
+                    // Create anonymous session
+                    let session = create_anonymous_session(auth_result.user)
+                    store_session(session)
+                    
+                } else {
+                    verification_status -> "Verification failed: " + auth_result.error over 200ms
+                }
+                
+            } catch error {
+                verification_status -> "Error: " + error.message over 200ms
+                log("DID verification error: " + error.message) if context == "dev"
+            } finally {
+                is_verifying -> false over 100ms
+            }
+        }
+    }
+    
+    fn render() -> Element {
+        return ui::div([
+            ui::h2("Decentralized Identity Verification"),
+            
+            if current_user {
+                ui::div([
+                    ui::p("Welcome! Your identity has been verified."),
+                    ui::p("Available capabilities:"),
+                    ui::ul(
+                        derive_capabilities_from_proofs(current_user)
+                            .map(cap -> ui::li(cap))
+                    ),
+                    ui::button("Sign Out") {
+                        current_user -> nil over 200ms
+                        verification_status -> "Not authenticated" over 200ms
+                        clear_session()
+                    }
+                ])
+            } else {
+                ui::div([
+                    ui::p("Status: " + verification_status),
+                    ui::input_field("DID or Verification Token", {
+                        placeholder: "did:example:123456789abcdefghi",
+                        on_submit: verify_identity
+                    }),
+                    
+                    if is_verifying {
+                        ui::spinner("Verifying...")
+                    } else {
+                        ui::button("Verify Identity", onclick: {
+                            let input = get_input_value()
+                            verify_identity(input)
+                        })
+                    },
+                    
+                    ui::div([
+                        ui::h4("Required Proofs:"),
+                        ui::ul([
+                            ui::li("Age verification (18+)"),
+                            ui::li("Geographic eligibility"),
+                            ui::li("Identity authenticity")
+                        ])
+                    ])
+                ])
+            }
+        ])
+    }
+}
+
+fn main() {
+    let verifier = verification_ui.render()
+    ui::mount(verifier, "#auth-app")
+    
+    log("DID verification app started") if context == "dev"
+}

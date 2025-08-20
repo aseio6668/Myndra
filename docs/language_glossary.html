@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomegranate Language - Complete Glossary</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #4a5568;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        h2 {
+            color: #2d3748;
+            margin-top: 30px;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+            background: #f7fafc;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        h3 {
+            color: #4a5568;
+            margin-top: 25px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+        .search-container {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .search-box {
+            width: 300px;
+            padding: 10px;
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+        }
+        .glossary-entry {
+            background: #f8f9fa;
+            border-left: 4px solid #38b2ac;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .entry-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        .entry-category {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        .entry-syntax {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 8px 0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+        }
+        .entry-description {
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+        .entry-example {
+            background: #e6fffa;
+            border-left: 3px solid #38b2ac;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 4px;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        .three-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .category-keywords {
+            background: #fef5e7;
+            border-left: 4px solid #f6ad55;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .category-reactive {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .category-temporal {
+            background: #e9d8fd;
+            border-left: 4px solid #805ad5;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .category-security {
+            background: #fed7d7;
+            border-left: 4px solid #e53e3e;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .nav-button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-button:hover {
+            background: #5a67d8;
+        }
+        .toc {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .toc ul {
+            columns: 3;
+            list-style-type: none;
+            padding: 0;
+        }
+        .toc li {
+            margin: 5px 0;
+        }
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Pomegranate Language - Complete Glossary</h1>
+        
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Search keywords, functions, or concepts..." id="searchBox">
+        </div>
+
+        <div class="toc">
+            <h3>Quick Navigation</h3>
+            <ul>
+                <li><a href="#core-language">Core Language Elements</a></li>
+                <li><a href="#data-types">Data Types</a></li>
+                <li><a href="#control-flow">Control Flow</a></li>
+                <li><a href="#functions">Functions & Methods</a></li>
+                <li><a href="#reactive">Reactive Programming</a></li>
+                <li><a href="#temporal">Temporal Types</a></li>
+                <li><a href="#capsules">Live Code Capsules</a></li>
+                <li><a href="#security">Security & Capabilities</a></li>
+                <li><a href="#context">Context-Aware Features</a></li>
+                <li><a href="#dsl">Domain-Specific Languages</a></li>
+                <li><a href="#parallel">Parallel Computing</a></li>
+                <li><a href="#did">Decentralized Identity</a></li>
+                <li><a href="#packages">Package Management</a></li>
+                <li><a href="#error-handling">Error Handling</a></li>
+                <li><a href="#annotations">Annotations</a></li>
+                <li><a href="#built-in">Built-in Functions</a></li>
+            </ul>
+        </div>
+
+        <h2 id="core-language">Core Language Elements</h2>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Keyword</div>
+            <div class="entry-title">fn</div>
+            <div class="entry-syntax">fn function_name(parameters) -> return_type { }</div>
+            <div class="entry-description">Defines a function with optional parameters and return type.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>fn add(a: int, b: int) -> int { return a + b }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Keyword</div>
+            <div class="entry-title">let</div>
+            <div class="entry-syntax">let variable_name = value</div>
+            <div class="entry-description">Declares a variable with type inference or explicit typing.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let name = "Alice"</code><br>
+                <code>let age: int = 25</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Keyword</div>
+            <div class="entry-title">import</div>
+            <div class="entry-syntax">import module_name with capabilities(capability_list)</div>
+            <div class="entry-description">Imports a module with specific capability requirements for security.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>import std::io with capabilities("read", "write")</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Keyword</div>
+            <div class="entry-title">match</div>
+            <div class="entry-syntax">match value { pattern => result }</div>
+            <div class="entry-description">Pattern matching for control flow and value extraction.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>match age { 0..18 => "minor", 18..65 => "adult", 65.. => "senior" }</code>
+            </div>
+        </div>
+
+        <h2 id="data-types">Data Types</h2>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Type</div>
+            <div class="entry-title">int</div>
+            <div class="entry-syntax">let number: int = 42</div>
+            <div class="entry-description">Integer type for whole numbers.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let count: int = 100</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Type</div>
+            <div class="entry-title">float</div>
+            <div class="entry-syntax">let number: float = 3.14</div>
+            <div class="entry-description">Floating-point number type for decimal values.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let pi: float = 3.14159</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Type</div>
+            <div class="entry-title">string</div>
+            <div class="entry-syntax">let text: string = "Hello"</div>
+            <div class="entry-description">Text string type for character data.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let message: string = "Welcome to Pomegranate!"</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Type</div>
+            <div class="entry-title">bool</div>
+            <div class="entry-syntax">let flag: bool = true</div>
+            <div class="entry-description">Boolean type for true/false values.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let is_active: bool = false</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Type</div>
+            <div class="entry-title">[Type]</div>
+            <div class="entry-syntax">let array: [int] = [1, 2, 3]</div>
+            <div class="entry-description">Array type for collections of elements of the same type.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let names: [string] = ["Alice", "Bob", "Charlie"]</code>
+            </div>
+        </div>
+
+        <h2 id="control-flow">Control Flow</h2>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Control Flow</div>
+            <div class="entry-title">if/else</div>
+            <div class="entry-syntax">if condition { } else { }</div>
+            <div class="entry-description">Conditional execution based on boolean expressions.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>if age >= 18 { print("Adult") } else { print("Minor") }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Control Flow</div>
+            <div class="entry-title">for</div>
+            <div class="entry-syntax">for variable in iterable { }</div>
+            <div class="entry-description">Loop over collections or ranges.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>for i in 0..10 { print(i) }</code><br>
+                <code>for name in names { print(name) }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Control Flow</div>
+            <div class="entry-title">while</div>
+            <div class="entry-syntax">while condition { }</div>
+            <div class="entry-description">Loop while condition is true.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>while counter < 10 { counter += 1 }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Control Flow</div>
+            <div class="entry-title">loop</div>
+            <div class="entry-syntax">loop { }</div>
+            <div class="entry-description">Infinite loop, use break to exit.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>loop { if should_exit { break } }</code>
+            </div>
+        </div>
+
+        <h2 id="functions">Functions & Methods</h2>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Function</div>
+            <div class="entry-title">return</div>
+            <div class="entry-syntax">return value</div>
+            <div class="entry-description">Returns a value from a function.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>fn double(x: int) -> int { return x * 2 }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Function</div>
+            <div class="entry-title">fallback</div>
+            <div class="entry-syntax">fn name() fallback strategy { }</div>
+            <div class="entry-description">Defines fallback behavior for error handling.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>fn fetch_data() fallback retry(3) or return default_data() { }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Function</div>
+            <div class="entry-title">main</div>
+            <div class="entry-syntax">fn main() { }</div>
+            <div class="entry-description">Program entry point function.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>fn main() { print("Hello World!") }</code>
+            </div>
+        </div>
+
+        <h2 id="reactive">Reactive Programming</h2>
+        <div class="category-reactive">
+            <h3>Reactive System Components</h3>
+
+            <div class="glossary-entry">
+                <div class="entry-category">Reactive</div>
+                <div class="entry-title">@reactive</div>
+                <div class="entry-syntax">@reactive fn function_name() { }</div>
+                <div class="entry-description">Annotation that makes a function reactive to data changes.</div>
+                <div class="entry-example">
+                    <strong>Example:</strong><br>
+                    <code>@reactive fn update_ui() { /* reacts to data changes */ }</code>
+                </div>
+            </div>
+
+            <div class="glossary-entry">
+                <div class="entry-category">Reactive</div>
+                <div class="entry-title">observable</div>
+                <div class="entry-syntax">let obs = observable&lt;Type&gt;(initial_value)</div>
+                <div class="entry-description">Creates a reactive data stream that can be observed.</div>
+                <div class="entry-example">
+                    <strong>Example:</strong><br>
+                    <code>let temperature = observable&lt;float&gt;(20.0)</code>
+                </div>
+            </div>
+
+            <div class="glossary-entry">
+                <div class="entry-category">Reactive</div>
+                <div class="entry-title">subscribe</div>
+                <div class="entry-syntax">observable.subscribe { value -> action }</div>
+                <div class="entry-description">Listens to changes in an observable and executes a callback.</div>
+                <div class="entry-example">
+                    <strong>Example:</strong><br>
+                    <code>temp.subscribe { value -> print("Temp: " + value) }</code>
+                </div>
+            </div>
+
+            <div class="glossary-entry">
+                <div class="entry-category">Reactive</div>
+                <div class="entry-title">emit</div>
+                <div class="entry-syntax">observable.emit(new_value)</div>
+                <div class="entry-description">Sends a new value to all subscribers of an observable.</div>
+                <div class="entry-example">
+                    <strong>Example:</strong><br>
+                    <code>temperature.emit(25.0)</code>
+                </div>
+            </div>
+        </div>
+
+        <h2 id="temporal">Temporal Types</h2>
+        <div class="category-temporal">
+            <h3>Time-Aware Programming</h3>
+
+            <div class="glossary-entry">
+                <div class="entry-category">Temporal</div>
+                <div class="entry-title">evolving&lt;Type&gt;</div>
+                <div class="entry-syntax">let value: evolving&lt;Type&gt; = initial_value</div>
+                <div class="entry-description">A variable that can change its value over time with smooth transitions.</div>
+                <div class="entry-example">
+                    <strong>Example:</strong><br>
+                    <code>let opacity: evolving&lt;float&gt; = 0.0</code>
+                </div>
+            </div>
+
+            <div class="glossary-entry">
+                <div class="entry-category">Temporal</div>
+                <div class="entry-title">-></div>
+                <div class="entry-syntax">variable -> target_value over duration</div>
+                <div class="entry-description">Animates a temporal variable to a new value over a specified time period.</div>
+                <div class="entry-example">
+                    <strong>Example:</strong><br>
+                    <code>opacity -> 1.0 over 2s</code><br>
+                    <code>position_x -> 100.0 over 500ms</code>
+                </div>
+            </div>
+
+            <div class="glossary-entry">
+                <div class="entry-category">Temporal</div>
+                <div class="entry-title">then</div>
+                <div class="entry-syntax">animation then next_animation</div>
+                <div class="entry-description">Chains temporal animations to run in sequence.</div>
+                <div class="entry-example">
+                    <strong>Example:</strong><br>
+                    <code>scale -> 1.5 over 1s then scale -> 1.0 over 1s</code>
+                </div>
+            </div>
+
+            <div class="glossary-entry">
+                <div class="entry-category">Temporal</div>
+                <div class="entry-title">@interval</div>
+                <div class="entry-syntax">@interval(duration) function_call()</div>
+                <div class="entry-description">Executes a function repeatedly at specified time intervals.</div>
+                <div class="entry-example">
+                    <strong>Example:</strong><br>
+                    <code>@interval(16ms) update_physics()</code>
+                </div>
+            </div>
+        </div>
+
+        <h2 id="capsules">Live Code Capsules</h2>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Capsule</div>
+            <div class="entry-title">capsule</div>
+            <div class="entry-syntax">capsule name { functions and data }</div>
+            <div class="entry-description">A live code block that can be modified and reloaded at runtime.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>capsule ui_component { fn render() -> Element { } }</code>
+            </div>
+        </div>
+
+        <h2 id="security">Security & Capabilities</h2>
+        <div class="category-security">
+            <h3>Security-First Programming</h3>
+
+            <div class="glossary-entry">
+                <div class="entry-category">Security</div>
+                <div class="entry-title">capabilities</div>
+                <div class="entry-syntax">import module with capabilities("cap1", "cap2")</div>
+                <div class="entry-description">Declares the specific permissions a module requires to operate.</div>
+                <div class="entry-example">
+                    <strong>Example:</strong><br>
+                    <code>import net::http with capabilities("fetch", "read-only")</code>
+                </div>
+            </div>
+
+            <div class="glossary-entry">
+                <div class="entry-category">Security</div>
+                <div class="entry-title">with_capabilities</div>
+                <div class="entry-syntax">operation with_capabilities(["cap1", "cap2"])</div>
+                <div class="entry-description">Executes an operation with specific capability enforcement.</div>
+                <div class="entry-example">
+                    <strong>Example:</strong><br>
+                    <code>db::execute(query) with_capabilities(["read"])</code>
+                </div>
+            </div>
+        </div>
+
+        <h2 id="context">Context-Aware Features</h2>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Context</div>
+            <div class="entry-title">context</div>
+            <div class="entry-syntax">if context == "environment" { }</div>
+            <div class="entry-description">Built-in variable that contains the current execution context (dev/prod/test).</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>log("Debug info") if context == "dev"</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Context</div>
+            <div class="entry-title">env</div>
+            <div class="entry-syntax">env("VARIABLE_NAME")</div>
+            <div class="entry-description">Accesses environment variables.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let api_key = env("API_KEY")</code>
+            </div>
+        </div>
+
+        <h2 id="dsl">Domain-Specific Languages</h2>
+
+        <div class="glossary-entry">
+            <div class="entry-category">DSL</div>
+            <div class="entry-title">dsl</div>
+            <div class="entry-syntax">dsl language_name { domain-specific code }</div>
+            <div class="entry-description">Embeds domain-specific languages directly in Pomegranate code.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>dsl sql { SELECT * FROM users WHERE active = true }</code><br>
+                <code>dsl shader { precision mediump float; }</code>
+            </div>
+        </div>
+
+        <h2 id="parallel">Parallel Computing</h2>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Parallel</div>
+            <div class="entry-title">@parallel</div>
+            <div class="entry-syntax">@parallel fn function_name() { }</div>
+            <div class="entry-description">Annotation that enables automatic parallelization of a function.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>@parallel fn process_data(data: [Item]) -> [Result] { }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Parallel</div>
+            <div class="entry-title">@async</div>
+            <div class="entry-syntax">@async { asynchronous code }</div>
+            <div class="entry-description">Executes code asynchronously without blocking the main thread.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>@async { let result = fetch_data() }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Parallel</div>
+            <div class="entry-title">await</div>
+            <div class="entry-syntax">let result = await async_operation</div>
+            <div class="entry-description">Waits for an asynchronous operation to complete and returns its result.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let data = await fetch_user_data(user_id)</code>
+            </div>
+        </div>
+
+        <h2 id="did">Decentralized Identity</h2>
+
+        <div class="glossary-entry">
+            <div class="entry-category">DID</div>
+            <div class="entry-title">did::verify</div>
+            <div class="entry-syntax">did::verify(token)</div>
+            <div class="entry-description">Verifies a decentralized identity token.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let user = did::verify(auth_token)</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">DID</div>
+            <div class="entry-title">has_proof</div>
+            <div class="entry-syntax">identity.has_proof("condition")</div>
+            <div class="entry-description">Checks if an identity has a zero-knowledge proof for a specific condition.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>if user.has_proof("age > 18") { grant_access() }</code>
+            </div>
+        </div>
+
+        <h2 id="packages">Package Management</h2>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Package</div>
+            <div class="entry-title">pkg::registry</div>
+            <div class="entry-syntax">pkg::registry::function_name()</div>
+            <div class="entry-description">Access to decentralized package registry operations.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>pkg::registry::publish(package_hash, manifest)</code>
+            </div>
+        </div>
+
+        <h2 id="error-handling">Error Handling</h2>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Error</div>
+            <div class="entry-title">try/catch</div>
+            <div class="entry-syntax">try { code } catch error { handler }</div>
+            <div class="entry-description">Exception handling for error recovery.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>try { risky_operation() } catch error { log_error(error) }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Error</div>
+            <div class="entry-title">throw</div>
+            <div class="entry-syntax">throw ErrorType("message")</div>
+            <div class="entry-description">Throws an exception with a specific error type and message.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>throw ValidationError("Invalid input data")</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Error</div>
+            <div class="entry-title">retry</div>
+            <div class="entry-syntax">retry(count) or alternative</div>
+            <div class="entry-description">Retry operation a specified number of times before fallback.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>fallback retry(3) or return default_value()</code>
+            </div>
+        </div>
+
+        <h2 id="annotations">Annotations</h2>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Annotation</div>
+            <div class="entry-title">#tag</div>
+            <div class="entry-syntax">#tag:category</div>
+            <div class="entry-description">Tags functions or code blocks for organization and navigation.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>#tag:ui<br>fn render_button() { }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Annotation</div>
+            <div class="entry-title">@timeout</div>
+            <div class="entry-syntax">@timeout(duration) { code }</div>
+            <div class="entry-description">Sets a timeout for code execution.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>@timeout(5s) { fetch_remote_data() }</code>
+            </div>
+        </div>
+
+        <h2 id="built-in">Built-in Functions</h2>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Built-in</div>
+            <div class="entry-title">print</div>
+            <div class="entry-syntax">print(value)</div>
+            <div class="entry-description">Outputs a value to the console.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>print("Hello World!")</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Built-in</div>
+            <div class="entry-title">log</div>
+            <div class="entry-syntax">log(message)</div>
+            <div class="entry-description">Logs a message with appropriate formatting and context.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>log("User logged in: " + user.name)</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Built-in</div>
+            <div class="entry-title">now</div>
+            <div class="entry-syntax">now()</div>
+            <div class="entry-description">Returns the current timestamp.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let timestamp = now()</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Built-in</div>
+            <div class="entry-title">sleep</div>
+            <div class="entry-syntax">sleep(duration)</div>
+            <div class="entry-description">Pauses execution for a specified duration.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>sleep(100ms)</code><br>
+                <code>sleep(2s)</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Built-in</div>
+            <div class="entry-title">.to_string()</div>
+            <div class="entry-syntax">value.to_string()</div>
+            <div class="entry-description">Converts any value to its string representation.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let text = age.to_string()</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Built-in</div>
+            <div class="entry-title">.map()</div>
+            <div class="entry-syntax">array.map { item -> transformation }</div>
+            <div class="entry-description">Transforms each element in a collection.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let doubled = numbers.map { n -> n * 2 }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Built-in</div>
+            <div class="entry-title">.filter()</div>
+            <div class="entry-syntax">array.filter { item -> condition }</div>
+            <div class="entry-description">Filters elements based on a condition.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let adults = people.filter { person -> person.age >= 18 }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">Built-in</div>
+            <div class="entry-title">.reduce()</div>
+            <div class="entry-syntax">array.reduce(initial_value, { acc, item -> operation })</div>
+            <div class="entry-description">Reduces a collection to a single value using an accumulator function.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let sum = numbers.reduce(0, { acc, n -> acc + n })</code>
+            </div>
+        </div>
+
+        <div class="category-keywords">
+            <h3>🔑 Quick Reference - Most Used Keywords</h3>
+            <div class="three-column">
+                <div>
+                    <strong>Variables & Functions:</strong>
+                    <ul>
+                        <li><code>let</code> - declare variable</li>
+                        <li><code>fn</code> - define function</li>
+                        <li><code>return</code> - return value</li>
+                        <li><code>main</code> - program entry</li>
+                    </ul>
+                </div>
+                <div>
+                    <strong>Control Flow:</strong>
+                    <ul>
+                        <li><code>if/else</code> - conditions</li>
+                        <li><code>for</code> - iteration</li>
+                        <li><code>while</code> - loops</li>
+                        <li><code>match</code> - pattern matching</li>
+                    </ul>
+                </div>
+                <div>
+                    <strong>Special Features:</strong>
+                    <ul>
+                        <li><code>@reactive</code> - reactive functions</li>
+                        <li><code>evolving<></code> - temporal variables</li>
+                        <li><code>capsule</code> - live code blocks</li>
+                        <li><code>fallback</code> - error handling</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="tutorial_advanced.html" class="nav-button">← Advanced Tutorial</a>
+            <a href="tutorial_beginner.html" class="nav-button">Start Learning →</a>
+        </div>
+    </div>
+
+    <script>
+        // Simple search functionality
+        document.getElementById('searchBox').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const entries = document.querySelectorAll('.glossary-entry');
+            
+            entries.forEach(entry => {
+                const title = entry.querySelector('.entry-title').textContent.toLowerCase();
+                const description = entry.querySelector('.entry-description').textContent.toLowerCase();
+                const category = entry.querySelector('.entry-category').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm) || category.includes(searchTerm)) {
+                    entry.style.display = 'block';
+                } else {
+                    entry.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

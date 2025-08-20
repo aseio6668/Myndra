@@ -1,0 +1,59 @@
+# Pomegranate Package Definition (pom.toml)
+# This file defines a package for the Pomegranate ecosystem
+
+[package]
+name = "std.ui"
+description = "Standard UI library for Pomegranate with reactive components"
+authors = ["Pomegranate Team"]
+license = "MIT"
+
+# Hash-based versioning instead of semantic versioning
+hash = "a1b2c3d4e5f6789..." # Content-based hash
+intent = "ui-components-reactive-v1" # Human-readable intent
+
+[capabilities]
+required = ["render", "event-handling", "style-manipulation"]
+optional = ["audio", "video", "webgl"]
+
+[dependencies]
+"std.reactive" = { hash = "f1e2d3c4b5a6...", intent = "reactive-core-v1" }
+"std.temporal" = { hash = "9f8e7d6c5b4a...", intent = "temporal-types-v1" }
+
+[dev-dependencies]
+"test.framework" = { hash = "1a2b3c4d5e6f...", intent = "testing-v2" }
+
+# Context-specific configurations
+[context.dev]
+debug = true
+hot_reload = true
+logging = "verbose"
+
+[context.prod]
+debug = false
+hot_reload = false
+logging = "errors"
+optimization = "aggressive"
+
+[context.test]
+debug = true
+hot_reload = false
+logging = "verbose"
+coverage = true
+
+# Semantic tags for navigation and organization
+[tags]
+ui = ["components", "reactive", "styling"]
+performance = ["optimization", "lazy-loading"]
+accessibility = ["a11y", "screen-reader", "keyboard-nav"]
+
+# Export definitions
+[exports]
+components = "src/components/mod.pom"
+reactive = "src/reactive/mod.pom"
+styling = "src/styling/mod.pom"
+utils = "src/utils/mod.pom"
+
+[build]
+# Custom build steps if needed
+scripts = ["build.pom"]
+assets = ["styles/", "icons/"]

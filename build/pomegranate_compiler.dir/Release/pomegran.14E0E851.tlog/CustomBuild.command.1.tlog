@@ -1,0 +1,10 @@
+^C:\USERS\ASEIO\DOCUMENTS\.SOURCE\.SOURCE4\POMEGRANTE2[C]\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c] -BC:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build --check-stamp-file C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomegranate Language - Beginner Tutorial</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #4a5568;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        h2 {
+            color: #2d3748;
+            margin-top: 30px;
+            border-left: 4px solid #667eea;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #4a5568;
+        }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+            border-left: 4px solid #667eea;
+        }
+        .highlight {
+            background: #fef5e7;
+            padding: 15px;
+            border-left: 4px solid #f6ad55;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .feature-box {
+            background: #e6fffa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #38b2ac;
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .nav-button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .nav-button:hover {
+            background: #5a67d8;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍎 Pomegranate Programming Language - Beginner Tutorial</h1>
+        
+        <div class="highlight">
+            <strong>Welcome to Pomegranate!</strong> This tutorial will guide you through the basics of this revolutionary programming language that features context-aware syntax, reactive programming, and modern development features.
+        </div>
+
+        <h2>1. Your First Pomegranate Program</h2>
+        <p>Let's start with the classic "Hello World" program. In Pomegranate, you can create context-aware programs right from the beginning:</p>
+        
+        <div class="code-block">
+<pre>// hello_world.pom
+import std::io with capabilities("write")
+
+fn main() {
+    log("Starting Pomegranate program") if context == "dev"
+    
+    let message = "Hello, Pomegranate!"
+    print(message)
+    
+    log("Program completed successfully") if context == "dev"
+}</pre>
+        </div>
+
+        <div class="feature-box">
+            <strong>🎯 Context-Aware Feature:</strong> Notice the <code>if context == "dev"</code> syntax. This means the log statements only execute in development mode, not in production!
+        </div>
+
+        <h2>2. Basic Syntax Elements</h2>
+
+        <h3>Variables and Data Types</h3>
+        <div class="code-block">
+<pre>// Basic variable declaration
+let name = "Alice"              // String
+let age = 25                    // Integer  
+let height = 5.6                // Float
+let is_student = true           // Boolean
+
+// Arrays
+let numbers = [1, 2, 3, 4, 5]
+let names = ["Alice", "Bob", "Charlie"]</pre>
+        </div>
+
+        <h3>Functions</h3>
+        <div class="code-block">
+<pre>// Simple function
+fn greet(name: string) -> string {
+    return "Hello, " + name + "!"
+}
+
+// Function with multiple parameters
+fn calculate_area(length: float, width: float) -> float {
+    return length * width
+}
+
+// Using functions
+fn main() {
+    let greeting = greet("World")
+    print(greeting)
+    
+    let area = calculate_area(10.0, 5.0)
+    print("Area: " + area.to_string())
+}</pre>
+        </div>
+
+        <h2>3. Unique Pomegranate Features</h2>
+
+        <h3>Capability-Based Imports</h3>
+        <p>Pomegranate modules declare exactly what permissions they need:</p>
+        <div class="code-block">
+<pre>// Only import what you need with specific permissions
+import net::http with capabilities("fetch", "read-only")
+import std::file with capabilities("read")
+import std::ui with capabilities("render", "event-handling")</pre>
+        </div>
+
+        <div class="feature-box">
+            <strong>🔒 Security Feature:</strong> This prevents modules from accessing resources they shouldn't have, making your programs more secure by default.
+        </div>
+
+        <h3>Tags for Code Organization</h3>
+        <div class="code-block">
+<pre>// Use tags to organize and navigate your code
+#tag:math
+fn add(a: int, b: int) -> int {
+    return a + b
+}
+
+#tag:ui  
+fn create_button(text: string) -> Element {
+    return ui::button(text)
+}
+
+#tag:data
+fn load_user_data(id: string) -> User {
+    // Load user data
+}</pre>
+        </div>
+
+        <h2>4. Working with User Input</h2>
+        <div class="code-block">
+<pre>import std::io with capabilities("read", "write")
+
+fn main() {
+    print("What's your name? ")
+    let name = io::read_line()
+    
+    print("How old are you? ")
+    let age_str = io::read_line()
+    let age = age_str.to_int()
+    
+    if age >= 18 {
+        print("Hello " + name + ", you're an adult!")
+    } else {
+        print("Hello " + name + ", you're still young!")
+    }
+}</pre>
+        </div>
+
+        <h2>5. Control Flow</h2>
+
+        <h3>If Statements</h3>
+        <div class="code-block">
+<pre>let score = 85
+
+if score >= 90 {
+    print("Excellent!")
+} else if score >= 80 {
+    print("Good job!")
+} else if score >= 70 {
+    print("Not bad!")
+} else {
+    print("Keep trying!")
+}</pre>
+        </div>
+
+        <h3>Loops</h3>
+        <div class="code-block">
+<pre>// For loop with range
+for i in 0..5 {
+    print("Count: " + i.to_string())
+}
+
+// For loop with array
+let fruits = ["apple", "banana", "orange"]
+for fruit in fruits {
+    print("I like " + fruit)
+}
+
+// While loop
+let counter = 0
+while counter < 5 {
+    print("Counter: " + counter.to_string())
+    counter = counter + 1
+}</pre>
+        </div>
+
+        <h2>6. Error Handling with Fallbacks</h2>
+        <p>Pomegranate has built-in self-healing error handling:</p>
+        <div class="code-block">
+<pre>fn divide(a: float, b: float) -> float fallback return 0.0 {
+    if b == 0.0 {
+        throw DivisionByZeroError("Cannot divide by zero")
+    }
+    return a / b
+}
+
+fn fetch_data(url: string) -> Data 
+    fallback retry(3) or return default_data() {
+    // This will retry 3 times, then return default data if it still fails
+    let response = http::get(url)
+    return parse_data(response)
+}</pre>
+        </div>
+
+        <div class="feature-box">
+            <strong>🛡️ Self-Healing Feature:</strong> The fallback system automatically handles errors gracefully, making your programs more robust.
+        </div>
+
+        <h2>7. Practice Exercises</h2>
+        
+        <h3>Exercise 1: Calculator</h3>
+        <p>Create a simple calculator that can add, subtract, multiply, and divide:</p>
+        <div class="code-block">
+<pre>// Try to complete this program
+import std::io with capabilities("read", "write")
+
+fn add(a: float, b: float) -> float {
+    // Your code here
+}
+
+fn main() {
+    print("Enter first number: ")
+    let num1 = io::read_line().to_float()
+    
+    print("Enter operation (+, -, *, /): ")
+    let operation = io::read_line()
+    
+    print("Enter second number: ")
+    let num2 = io::read_line().to_float()
+    
+    // Complete the calculator logic
+}</pre>
+        </div>
+
+        <h3>Exercise 2: Number Guessing Game</h3>
+        <div class="code-block">
+<pre>// Create a number guessing game
+import std::random with capabilities("generate")
+import std::io with capabilities("read", "write")
+
+fn main() {
+    let secret_number = random::int_range(1, 100)
+    let guesses = 0
+    
+    print("Guess a number between 1 and 100!")
+    
+    // Add game logic here
+    // Hint: Use a loop and compare the guess with secret_number
+}</pre>
+        </div>
+
+        <h2>8. Next Steps</h2>
+        <p>Congratulations! You've learned the basics of Pomegranate. Here's what to explore next:</p>
+        <ul>
+            <li><strong>Intermediate Tutorial:</strong> Learn about reactive programming and temporal types</li>
+            <li><strong>Live Code Capsules:</strong> Create code that can be modified at runtime</li>
+            <li><strong>Context-Aware Programming:</strong> Build applications that adapt to their environment</li>
+            <li><strong>Capability-Based Security:</strong> Write secure code by design</li>
+        </ul>
+
+        <div class="highlight">
+            <strong>💡 Tip:</strong> The best way to learn Pomegranate is by practicing! Try modifying the examples and see what happens. The language is designed to be forgiving and help you learn from mistakes.
+        </div>
+
+        <div class="navigation">
+            <a href="language_reference.html" class="nav-button">← Language Reference</a>
+            <a href="tutorial_intermediate.html" class="nav-button">Intermediate Tutorial →</a>
+        </div>
+    </div>
+</body>
+</html>

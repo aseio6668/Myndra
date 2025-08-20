@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\aseio\Documents\.Source\.SOURCE4\Pomegrante2[c]\build\CMakeFiles\6b1326e576fec204907aa7224fdd697f\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{46ECA065-95B2-338F-8776-E40B70534067}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

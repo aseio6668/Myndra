@@ -1,0 +1,82 @@
+// Temporal Types and Animations Example
+// Shows variables that evolve over time
+
+import std::animation with capabilities("interpolate")
+import std::graphics with capabilities("render")
+
+#tag:animation
+fn create_bouncing_ball() {
+    // Temporal variables that change over time
+    let x: evolving<float> = 0.0
+    let y: evolving<float> = 100.0
+    let velocity_y: evolving<float> = 0.0
+    
+    // Physics simulation with temporal types
+    fn update_physics() {
+        let gravity = 9.81
+        let bounce_damping = 0.8
+        let ground_level = 0.0
+        
+        // Update velocity and position over time
+        velocity_y -> velocity_y - gravity over 16ms
+        y -> y + velocity_y over 16ms
+        
+        // Bounce when hitting ground
+        if y <= ground_level {
+            y -> ground_level over 0ms
+            velocity_y -> -velocity_y * bounce_damping over 0ms
+        }
+        
+        // Horizontal movement
+        x -> x + 50.0 over 1s then x -> x - 50.0 over 1s // Oscillate
+    }
+    
+    // Render function that uses temporal values
+    fn render() -> Element {
+        update_physics()
+        
+        return graphics::circle {
+            position: (x, y),
+            radius: 10.0,
+            color: "#ff6b6b",
+            shadow: {
+                offset: (2, 2),
+                blur: 4,
+                color: "rgba(0,0,0,0.3)"
+            }
+        }
+    }
+    
+    return render
+}
+
+#tag:ui
+capsule animation_demo {
+    let ball_renderer = create_bouncing_ball()
+    let is_running: evolving<bool> = false
+    
+    fn render() -> Element {
+        return ui::div([
+            ui::h2("Temporal Types Animation Demo"),
+            ui::canvas(400, 300) {
+                if is_running {
+                    ball_renderer()
+                }
+            },
+            ui::button(is_running ? "Stop" : "Start") {
+                is_running -> !is_running over 100ms
+            }
+        ])
+    }
+}
+
+fn main() {
+    let demo = animation_demo.render()
+    ui::mount(demo, "#app")
+    
+    // Start the animation loop
+    loop {
+        ui::request_animation_frame()
+        demo.update()
+    }
+}

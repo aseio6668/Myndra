@@ -1,0 +1,58 @@
+// Reactive Programming Example
+// Demonstrates built-in reactive primitives and data flows
+
+import std::reactive with capabilities("observe", "emit")
+
+@reactive
+fn data_processor() {
+    // Create observable data streams
+    let sensor_data = observable<float>(0.0)
+    let processed_data = observable<float>(0.0)
+    let alerts = observable<string>("")
+    
+    // Reactive data pipeline
+    sensor_data.subscribe { value ->
+        let smoothed = smooth_filter(value, window: 5)
+        processed_data.emit(smoothed)
+        
+        if smoothed > 100.0 {
+            alerts.emit("High value detected: " + smoothed.to_string())
+        }
+    }
+    
+    // Subscribe to alerts for logging
+    alerts.subscribe { message ->
+        log("ALERT: " + message) if context == "prod"
+        notify_admin(message) if context == "prod"
+    }
+    
+    return { sensor_data, processed_data, alerts }
+}
+
+fn smooth_filter(value: float, window: int) -> float {
+    // Simple moving average implementation
+    static let history: [float] = []
+    
+    history.push(value)
+    if history.length() > window {
+        history.shift()
+    }
+    
+    return history.sum() / history.length()
+}
+
+fn notify_admin(message: string) fallback log("Failed to notify admin: " + message) {
+    // This could fail, so we have a fallback strategy
+    send_email("admin@company.com", "System Alert", message)
+}
+
+fn main() {
+    let streams = data_processor()
+    
+    // Simulate incoming sensor data
+    for i in 0..1000 {
+        let value = random_float(0.0, 150.0)
+        streams.sensor_data.emit(value)
+        sleep(100ms)
+    }
+}

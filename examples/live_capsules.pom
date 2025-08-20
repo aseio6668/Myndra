@@ -1,0 +1,48 @@
+// Live Code Capsules Example
+// This demonstrates live-reloadable code blocks
+
+import std::ui with capabilities("render", "event-handling")
+
+#tag:ui
+capsule render_button {
+    fn create(text: string, onclick: fn()) -> Element {
+        let button = ui::button(text)
+        button.on_click(onclick)
+        
+        // This styling can be modified at runtime
+        button.style = {
+            background: "#007acc",
+            color: "white",
+            padding: "10px 20px",
+            border: "none",
+            border_radius: "4px"
+        }
+        
+        return button
+    }
+}
+
+#tag:ui
+capsule app_layout {
+    let counter: evolving<int> = 0
+    
+    fn render() -> Element {
+        let increment_btn = render_button.create("Increment") {
+            counter -> counter + 1 over 200ms
+        }
+        
+        let decrement_btn = render_button.create("Decrement") {
+            counter -> counter - 1 over 200ms
+        }
+        
+        return ui::div([
+            ui::h1("Counter: " + counter.to_string()),
+            ui::div([increment_btn, decrement_btn])
+        ])
+    }
+}
+
+fn main() {
+    let app = app_layout.render()
+    ui::mount(app, "#root")
+}
