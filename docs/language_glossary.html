@@ -204,6 +204,7 @@
                 <li><a href="#packages">Package Management</a></li>
                 <li><a href="#error-handling">Error Handling</a></li>
                 <li><a href="#annotations">Annotations</a></li>
+                <li><a href="#3d-graphics">Pomegranate3D - 3D Graphics</a></li>
                 <li><a href="#built-in">Built-in Functions</a></li>
             </ul>
         </div>
@@ -699,6 +700,263 @@
             <div class="entry-example">
                 <strong>Example:</strong><br>
                 <code>@timeout(5s) { fetch_remote_data() }</code>
+            </div>
+        </div>
+
+        <h2 id="3d-graphics">Pomegranate3D - 3D Graphics</h2>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Core</div>
+            <div class="entry-title">world</div>
+            <div class="entry-syntax">world { camera { } lighting { } }</div>
+            <div class="entry-description">Creates a 3D world container with camera, lighting, and scene objects.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>world { camera { position: vec3(0, 0, 5) } }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Type</div>
+            <div class="entry-title">vec3</div>
+            <div class="entry-syntax">vec3(x, y, z)</div>
+            <div class="entry-description">3D vector for positions, directions, colors. Supports all mathematical operations.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let position = vec3(1.5, 2.0, -3.0)</code><br>
+                <code>let distance = position.magnitude()</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Type</div>
+            <div class="entry-title">vec2</div>
+            <div class="entry-syntax">vec2(x, y)</div>
+            <div class="entry-description">2D vector for texture coordinates, screen positions, or 2D math.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let texture_coord = vec2(0.5, 0.5)</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Type</div>
+            <div class="entry-title">quat</div>
+            <div class="entry-syntax">quat::from_euler(x, y, z) or quat::identity()</div>
+            <div class="entry-description">Quaternion for 3D rotations. More efficient and stable than Euler angles.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let rotation = quat::from_euler(45.degrees, 0, 90.degrees)</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Type</div>
+            <div class="entry-title">color</div>
+            <div class="entry-syntax">color(r, g, b) or color(r, g, b, a)</div>
+            <div class="entry-description">RGBA color with values from 0.0 to 1.0. Supports color math operations.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let red = color(1.0, 0.0, 0.0, 1.0)</code><br>
+                <code>let bright_red = red * 1.5</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Mesh</div>
+            <div class="entry-title">mesh::cube</div>
+            <div class="entry-syntax">mesh::cube { size: vec3, position: vec3, material: Material }</div>
+            <div class="entry-description">Creates a 3D cube/box mesh with specified dimensions and properties.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>mesh::cube { size: vec3(2, 1, 3), material: color(1, 0.5, 0) }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Mesh</div>
+            <div class="entry-title">mesh::sphere</div>
+            <div class="entry-syntax">mesh::sphere { radius: float, subdivisions: int, material: Material }</div>
+            <div class="entry-description">Creates a 3D sphere mesh with specified radius and smoothness level.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>mesh::sphere { radius: 1.5, subdivisions: 32, material: color(0.2, 0.8, 0.2) }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Mesh</div>
+            <div class="entry-title">mesh::plane</div>
+            <div class="entry-syntax">mesh::plane { size: vec2, resolution: (int, int), material: Material }</div>
+            <div class="entry-description">Creates a flat plane mesh, useful for ground, walls, or water surfaces.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>mesh::plane { size: vec2(10, 10), material: color(0.7, 0.7, 0.7) }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Camera</div>
+            <div class="entry-title">camera</div>
+            <div class="entry-syntax">camera { position: vec3, target: vec3, fov: degrees }</div>
+            <div class="entry-description">Defines the viewpoint for the 3D scene with position, target, and field of view.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>camera { position: vec3(0, 5, 10), target: vec3(0, 0, 0), fov: 60.degrees }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Lighting</div>
+            <div class="entry-title">light::directional</div>
+            <div class="entry-syntax">light::directional { direction: vec3, color: color, intensity: float }</div>
+            <div class="entry-description">Directional light source (like the sun) that illuminates from a specific direction.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>light::directional { direction: vec3(-1, -1, -1), color: color(1, 0.9, 0.8), intensity: 2.0 }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Lighting</div>
+            <div class="entry-title">light::point</div>
+            <div class="entry-syntax">light::point { position: vec3, color: color, intensity: float, range: float }</div>
+            <div class="entry-description">Point light source (like a lightbulb) that emits light in all directions.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>light::point { position: vec3(3, 4, 2), color: color(1, 0.8, 0.6), intensity: 5.0, range: 10.0 }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Material</div>
+            <div class="entry-title">materials::pbr</div>
+            <div class="entry-syntax">materials::pbr { albedo: color, metallic: float, roughness: float }</div>
+            <div class="entry-description">Physically-Based Rendering material for realistic surface appearance.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>materials::pbr { albedo: color(0.7, 0.1, 0.1), metallic: 0.8, roughness: 0.2 }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Material</div>
+            <div class="entry-title">materials::glass</div>
+            <div class="entry-syntax">materials::glass { color: color, transparency: float, refraction_index: float }</div>
+            <div class="entry-description">Glass material with transparency and light refraction effects.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>materials::glass { color: color(0.9, 0.9, 1.0, 0.3), refraction_index: 1.5 }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Animation</div>
+            <div class="entry-title">animate</div>
+            <div class="entry-syntax">animate(object).rotate(axis, degrees).duration(time).loop()</div>
+            <div class="entry-description">Declarative animation system for smooth object motion and transformation.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>animate(cube).rotate(axis: y, degrees: 360).duration(3s).loop()</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Animation</div>
+            <div class="entry-title">timeline</div>
+            <div class="entry-syntax">timeline name { at(time): { properties }, ease: easing_function }</div>
+            <div class="entry-description">Keyframe-based animation system with automatic interpolation between states.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>timeline dance { at(0s): obj.position = vec3(0,0,0), at(2s): obj.position = vec3(5,0,0) }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Animation</div>
+            <div class="entry-title">behavior</div>
+            <div class="entry-syntax">behavior "name" { parameters: {}, motion: {} }</div>
+            <div class="entry-description">Reusable animation behavior that can be applied to any 3D object.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>behavior "hover" { motion: { translate(by: vec3(0, sin(time), 0)) } }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Shader</div>
+            <div class="entry-title">shader</div>
+            <div class="entry-syntax">shader name { vertex { }, fragment { } }</div>
+            <div class="entry-description">Custom shader definition with vertex and fragment stages integrated in the language.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>shader waves { vertex { vertex.position.y += sin(vertex.position.x + time) } }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Physics</div>
+            <div class="entry-title">physics</div>
+            <div class="entry-syntax">physics: { type: dynamic, mass: float, collision_shape: shape }</div>
+            <div class="entry-description">Physics properties for 3D objects enabling realistic collision and movement.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>physics: { type: dynamic, mass: 1.0, collision_shape: box }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Particles</div>
+            <div class="entry-title">particle_system</div>
+            <div class="entry-syntax">particle_system name { emission_rate: rate, lifetime: duration, material: Material }</div>
+            <div class="entry-description">Advanced particle system for fire, smoke, magic effects, and environmental particles.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>particle_system fire { emission_rate: 100.per_second, lifetime: 2s, material: materials::flame }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Procedural</div>
+            <div class="entry-title">procedural_terrain</div>
+            <div class="entry-syntax">procedural_terrain { size: vec2, height_generation: {}, biomes: [] }</div>
+            <div class="entry-description">Generates infinite, varied terrain using noise functions and biome systems.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>procedural_terrain { size: vec2(1000, 1000), height_generation: { base_noise: fbm_noise(scale: 0.01) } }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Procedural</div>
+            <div class="entry-title">l_system</div>
+            <div class="entry-syntax">l_system name { axiom: "F", rules: { "F" => "F[+F]F[-F]F" } }</div>
+            <div class="entry-description">Lindenmayer system for procedural generation of trees, plants, and organic structures.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>l_system tree { axiom: "F", rules: { "F" => "F[+F][-F]" }, iterations: 4 }</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Noise</div>
+            <div class="entry-title">fbm_noise</div>
+            <div class="entry-syntax">fbm_noise(position, octaves: int, persistence: float)</div>
+            <div class="entry-description">Fractal Brownian Motion noise for natural-looking procedural generation.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>let height = fbm_noise(vec2(x, z) * 0.01, octaves: 6, persistence: 0.5)</code>
+            </div>
+        </div>
+
+        <div class="glossary-entry">
+            <div class="entry-category">3D Render</div>
+            <div class="entry-title">render_world</div>
+            <div class="entry-syntax">render_world()</div>
+            <div class="entry-description">Starts the 3D rendering loop with automatic optimization and cross-platform support.</div>
+            <div class="entry-example">
+                <strong>Example:</strong><br>
+                <code>render_world() // Starts rendering at optimal framerate</code>
             </div>
         </div>
 

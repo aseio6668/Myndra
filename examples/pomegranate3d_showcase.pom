@@ -1,0 +1,440 @@
+// Pomegranate3D - Revolutionary 3D Programming
+// This example demonstrates how 3D programming becomes natural and intuitive
+
+import space3d with capabilities("render", "transform", "physics")
+import materials with capabilities("shader", "texture")
+import procedural with capabilities("generate", "noise")
+
+#tag:3d-setup
+fn main() {
+    // Create a 3D world with native spatial types
+    world {
+        // Built-in spatial coordinate system
+        coordinate_system: right_handed
+        units: meters
+        
+        // Declarative camera setup
+        camera main_camera {
+            position: vec3(0, 5, 10)
+            target: vec3(0, 0, 0)
+            fov: 60.degrees
+            near: 0.1
+            far: 1000.0
+            
+            // Reactive camera movement
+            @reactive update_position(mouse_input, keyboard_input)
+        }
+        
+        // Native lighting - no verbose setup needed
+        lighting {
+            ambient: color(0.1, 0.1, 0.2, 1.0)
+            
+            sun {
+                direction: vec3(-0.5, -1.0, -0.3).normalized()
+                color: color(1.0, 0.9, 0.8, 1.0)
+                intensity: 2.5
+                cast_shadows: true
+            }
+            
+            point_light {
+                position: vec3(3, 4, 2)
+                color: color(0.8, 0.4, 0.9, 1.0)
+                intensity: 1.0
+                range: 10.0
+            }
+        }
+        
+        // Physics world integrated naturally
+        physics {
+            gravity: vec3(0, -9.81, 0)
+            air_resistance: 0.01
+            
+            // Physics runs reactively with visual updates
+            @reactive simulate_physics(delta_time)
+        }
+    }
+    
+    // Create scene objects with intuitive syntax
+    create_animated_scene()
+    create_procedural_landscape()
+    create_interactive_objects()
+    
+    // Start the render loop
+    render_loop()
+}
+
+#tag:scene-creation
+fn create_animated_scene() {
+    // Spinning cube with temporal animation
+    let rotating_cube = mesh::cube {
+        size: vec3(2, 2, 2)
+        position: vec3(-3, 2, 0)
+        
+        // Built-in material system
+        material: materials::pbr {
+            albedo: color(0.8, 0.2, 0.4, 1.0)
+            metallic: 0.1
+            roughness: 0.3
+            emissive: color(0.1, 0.05, 0.2, 1.0)
+        }
+        
+        // Physics properties
+        physics: {
+            mass: 1.0
+            collision_shape: box
+            kinematic: true  // Controlled by animation, not physics
+        }
+    }
+    
+    // Temporal animation - rotates smoothly over time
+    rotating_cube.rotation.y -> 360.degrees over 4s then loop
+    rotating_cube.position.y -> 4.0 over 2s then rotating_cube.position.y -> 2.0 over 2s then loop
+    
+    // Reactive sphere that responds to cube's position
+    let responsive_sphere = mesh::sphere {
+        radius: 1.0
+        position: vec3(0, 0, 0)
+        
+        material: materials::glass {
+            transparency: 0.8
+            refraction_index: 1.52
+            color: color(0.2, 0.8, 0.9, 0.8)
+        }
+        
+        physics: {
+            mass: 0.5
+            collision_shape: sphere
+            dynamic: true
+        }
+    }
+    
+    // Reactive relationship - sphere follows cube with spring physics
+    rotating_cube.position.subscribe { cube_pos ->
+        let target = cube_pos + vec3(3, 0, 0)
+        responsive_sphere.physics.apply_spring_force(target, strength: 5.0, damping: 0.8)
+    }
+}
+
+#tag:procedural-generation
+fn create_procedural_landscape() {
+    // Procedural terrain generation with native noise functions
+    let terrain = mesh::plane {
+        resolution: (256, 256)
+        size: vec3(100, 0, 100)
+        position: vec3(0, 0, 0)
+        
+        // Procedural height generation
+        vertex_shader: {
+            let noise = fbm_noise(vertex.position.xz * 0.05, octaves: 6, persistence: 0.5)
+            vertex.position.y = noise * 15.0
+            
+            // Automatic normal calculation for lighting
+            vertex.normal = calculate_normal(vertex.position, neighbors)
+        }
+        
+        // Multi-texture blending based on height and slope
+        material: materials::terrain {
+            texture_layers: [
+                { texture: "grass.jpg", height_range: (0, 5), slope_range: (0, 30.degrees) },
+                { texture: "rock.jpg", height_range: (5, 15), slope_range: (30.degrees, 90.degrees) },
+                { texture: "snow.jpg", height_range: (10, 20), slope_range: (0, 45.degrees) }
+            ]
+            
+            // Procedural texture mixing
+            blend_function: height_and_slope_blend
+        }
+        
+        physics: {
+            collision_shape: heightfield
+            static: true
+        }
+    }
+    
+    // Procedural forest on terrain
+    scatter_objects_on_mesh(terrain) {
+        object: create_procedural_tree
+        density: 0.05  // trees per square meter
+        height_range: (0, 8)  // only place trees below this height
+        slope_max: 25.degrees
+        random_seed: 12345
+    }
+}
+
+#tag:procedural-trees
+fn create_procedural_tree() -> Mesh {
+    let tree_height = random_range(3.0, 8.0)
+    let trunk_radius = tree_height * 0.05
+    
+    // Procedural trunk with L-system growth
+    let trunk = mesh::cylinder {
+        radius: trunk_radius
+        height: tree_height * 0.7
+        position: vec3(0, tree_height * 0.35, 0)
+        
+        material: materials::bark {
+            texture: "bark.jpg"
+            normal_map: "bark_normal.jpg"
+            roughness: 0.9
+        }
+    }
+    
+    // Procedural branch system
+    let branches = l_system::generate {
+        axiom: "F"
+        rules: {
+            "F" -> "FF+[+F-F-F]-[-F+F+F]"
+        }
+        iterations: 3
+        angle: 25.degrees
+        step_length: tree_height * 0.1
+        
+        // Convert L-system to 3D branches
+        interpretation: branch_mesh_generator
+    }
+    
+    // Procedural leaves using instancing
+    let leaves = instance_mesh {
+        base_mesh: mesh::quad { size: vec2(0.3, 0.3) }
+        positions: branches.get_leaf_positions(density: 20)
+        
+        material: materials::foliage {
+            albedo_texture: "leaf.png"
+            alpha_cutout: 0.5
+            subsurface: 0.3  // Light transmission through leaves
+            wind_animation: true
+        }
+    }
+    
+    return merge_meshes([trunk, branches, leaves])
+}
+
+#tag:interactive-objects
+fn create_interactive_objects() {
+    // Interactive floating crystal that responds to player proximity
+    let magic_crystal = mesh::icosphere {
+        subdivisions: 3
+        radius: 0.8
+        position: vec3(5, 3, -5)
+        
+        material: materials::crystal {
+            base_color: color(0.9, 0.3, 0.9, 0.7)
+            transmission: 0.95
+            ior: 2.4
+            
+            // Animated emission
+            emission: {
+                color: color(0.8, 0.1, 0.8, 1.0)
+                intensity: sin(time * 2.0) * 0.5 + 1.0  // Pulsing effect
+            }
+        }
+        
+        physics: {
+            mass: 0.0  // Kinematic - controlled by script
+            trigger: true  // Detects collisions but doesn't physically collide
+        }
+    }
+    
+    // Floating animation
+    magic_crystal.position.y -> magic_crystal.position.y + 0.5 over 2s 
+        then magic_crystal.position.y -> magic_crystal.position.y - 0.5 over 2s 
+        then loop
+    
+    // Gentle rotation
+    magic_crystal.rotation -> magic_crystal.rotation + vec3(0, 360.degrees, 0) over 8s then loop
+    
+    // Reactive behavior to player proximity
+    @reactive
+    fn update_crystal_interaction() {
+        let player_pos = main_camera.position
+        let distance = (magic_crystal.position - player_pos).magnitude()
+        
+        if distance < 5.0 {
+            // Player is near - increase glow and spin faster
+            let proximity = 1.0 - (distance / 5.0)
+            magic_crystal.material.emission.intensity -> 2.0 + proximity * 3.0 over 500ms
+            magic_crystal.scale -> vec3(1.0 + proximity * 0.3) over 300ms
+            
+            // Spawn particle effects
+            if proximity > 0.8 {
+                spawn_particles_around(magic_crystal.position, "sparkle")
+            }
+        } else {
+            // Player is far - return to normal
+            magic_crystal.material.emission.intensity -> 1.0 over 1s
+            magic_crystal.scale -> vec3(1.0) over 500ms
+        }
+    }
+    
+    // Physics-based floating platforms
+    for i in 0..5 {
+        let platform = mesh::cube {
+            size: vec3(2, 0.2, 2)
+            position: vec3(
+                sin(i * 60.degrees) * 8, 
+                2 + i * 1.5, 
+                cos(i * 60.degrees) * 8
+            )
+            
+            material: materials::metal {
+                albedo: color(0.7, 0.7, 0.8, 1.0)
+                metallic: 0.9
+                roughness: 0.1
+            }
+            
+            physics: {
+                mass: 10.0
+                collision_shape: box
+                kinematic: true
+            }
+        }
+        
+        // Each platform has different movement pattern
+        match i {
+            0 => {
+                // Horizontal circle
+                platform.position -> platform.position + vec3(2, 0, 0) over 3s
+                    then platform.position -> platform.position + vec3(0, 0, 2) over 3s
+                    then platform.position -> platform.position + vec3(-2, 0, 0) over 3s
+                    then platform.position -> platform.position + vec3(0, 0, -2) over 3s
+                    then loop
+            },
+            1 => {
+                // Vertical bob
+                platform.position.y -> platform.position.y + 1.5 over 2s
+                    then platform.position.y -> platform.position.y - 1.5 over 2s
+                    then loop
+            },
+            _ => {
+                // Gentle rotation in place
+                platform.rotation.y -> platform.rotation.y + 180.degrees over 4s then loop
+            }
+        }
+    }
+}
+
+#tag:shaders
+// Native shader integration - no context switching needed
+shader water_surface {
+    vertex {
+        // Wave animation using multiple sine waves
+        let wave1 = sin(vertex.position.x * 0.1 + time) * 0.3
+        let wave2 = sin(vertex.position.z * 0.07 + time * 1.3) * 0.2
+        let wave3 = sin((vertex.position.x + vertex.position.z) * 0.05 + time * 0.8) * 0.1
+        
+        vertex.position.y += wave1 + wave2 + wave3
+        
+        // Calculate normal for proper lighting
+        let dx = cos(vertex.position.x * 0.1 + time) * 0.03
+        let dz = cos(vertex.position.z * 0.07 + time * 1.3) * 0.014
+        
+        vertex.normal = normalize(vec3(-dx, 1.0, -dz))
+    }
+    
+    fragment {
+        // Water surface with refraction and reflection
+        let view_dir = normalize(camera.position - fragment.world_position)
+        let surface_normal = fragment.normal
+        
+        // Fresnel effect
+        let fresnel = pow(1.0 - dot(view_dir, surface_normal), 2.0)
+        
+        // Reflection sampling
+        let reflection_dir = reflect(-view_dir, surface_normal)
+        let reflection_color = sample_skybox(reflection_dir)
+        
+        // Refraction with underwater tint
+        let refraction_dir = refract(-view_dir, surface_normal, 0.75)
+        let refraction_color = sample_underwater_scene(refraction_dir) * color(0.6, 0.8, 1.0, 1.0)
+        
+        // Combine reflection and refraction
+        fragment.color = mix(refraction_color, reflection_color, fresnel)
+        fragment.color.a = 0.8  // Slightly transparent
+        
+        // Add foam at wave peaks
+        if fragment.world_position.y > 0.4 {
+            fragment.color = mix(fragment.color, color(1.0, 1.0, 1.0, 1.0), 0.6)
+        }
+    }
+}
+
+#tag:particle-systems
+fn spawn_particles_around(center: vec3, effect_type: string) {
+    match effect_type {
+        "sparkle" => {
+            particle_system {
+                position: center
+                emission_rate: 50.per_second
+                lifetime: 2s
+                
+                spawn_shape: sphere { radius: 1.0 }
+                
+                // Particle physics
+                initial_velocity: random_sphere_direction() * random_range(1.0, 3.0)
+                gravity: vec3(0, -2.0, 0)
+                drag: 0.1
+                
+                // Visual properties
+                size: evolving<float> {
+                    start: 0.1
+                    mid: 0.3 at 0.2  // Peak size at 20% of lifetime
+                    end: 0.0
+                }
+                
+                color: evolving<color> {
+                    start: color(1.0, 1.0, 0.8, 1.0)
+                    end: color(0.8, 0.2, 0.9, 0.0)
+                }
+                
+                material: materials::particle {
+                    texture: "sparkle.png"
+                    blend_mode: additive
+                    billboard: true
+                }
+            }
+        }
+    }
+}
+
+#tag:render-pipeline
+fn render_loop() {
+    // High-performance render loop with automatic optimization
+    @60fps render_frame()
+}
+
+@performance_critical
+fn render_frame() {
+    // Automatic frustum culling
+    scene.cull_objects(main_camera.frustum)
+    
+    // Automatic LOD (Level of Detail) selection
+    scene.update_lod_levels(main_camera.position)
+    
+    // Shadow map generation
+    render_shadow_maps(lighting.shadow_casting_lights)
+    
+    // Main geometry pass
+    render_opaque_objects()
+    
+    // Transparent objects (back-to-front sorted)
+    render_transparent_objects()
+    
+    // Post-processing pipeline
+    apply_post_processing {
+        bloom: { threshold: 1.0, intensity: 0.3 }
+        tone_mapping: aces
+        gamma_correction: 2.2
+        
+        // Optional effects based on context
+        if context == "dev" {
+            debug_wireframe: false
+            show_normals: false
+            show_bounds: false
+        }
+    }
+    
+    // UI overlay
+    render_ui_overlay()
+    
+    // Present frame
+    present_frame()
+}

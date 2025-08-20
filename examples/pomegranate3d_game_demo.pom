@@ -1,0 +1,1115 @@
+// Pomegranate3D Game Demo - Complete Interactive 3D Game
+// Showcases all advanced features: AI, physics, procedural generation, and animation
+
+import space3d with capabilities("render", "physics", "animate", "audio")
+import ai with capabilities("behavior", "pathfinding", "decision_making")
+import procedural with capabilities("generate", "noise", "l_systems")
+import network with capabilities("multiplayer", "sync")
+
+#tag:game-core
+fn main() {
+    // Initialize the game world
+    world crystal_caverns {
+        // Cinematic camera with smooth following
+        camera main_cam {
+            type: "third_person"
+            target: player_character
+            distance: 8.0
+            height_offset: 2.0
+            smoothing: 0.85
+            collision_avoidance: true
+        }
+        
+        // Dynamic lighting system
+        lighting dynamic_lighting {
+            // Main sunlight streaming through cavern opening
+            light::directional sun {
+                direction: vec3(-0.3, -0.8, -0.4).normalized()
+                color: color(1.0, 0.9, 0.7)
+                intensity: 1.5
+                cast_shadows: true
+                shadow_cascade_count: 4
+            }
+            
+            // Ambient light varies by location
+            ambient_system: {
+                surface_ambient: color(0.4, 0.4, 0.5),
+                cavern_ambient: color(0.1, 0.15, 0.3),
+                crystal_chamber_ambient: color(0.3, 0.2, 0.4)
+            }
+            
+            // Dynamic torch lighting
+            torch_system: procedural_torch_placement()
+        }
+        
+        // Integrated physics world
+        physics crystal_physics {
+            gravity: vec3(0, -12.0, 0)  // Slightly stronger than Earth
+            air_resistance: 0.02
+            
+            // Material physics properties
+            materials: {
+                rock: { friction: 0.8, restitution: 0.1 },
+                crystal: { friction: 0.3, restitution: 0.9 },
+                ice: { friction: 0.1, restitution: 0.7 },
+                player: { friction: 0.6, restitution: 0.0 }
+            }
+        }
+    }
+    
+    // Initialize game systems
+    setup_player_character()
+    generate_cavern_world()
+    spawn_ai_creatures()
+    initialize_game_mechanics()
+    setup_audio_system()
+    
+    // Start the game loop
+    start_game_loop()
+}
+
+#tag:player-character
+fn setup_player_character() {
+    // Player character with physics and animation
+    player_character = mesh::humanoid {
+        position: vec3(0, 2, 0)
+        scale: vec3(1.0, 1.0, 1.0)
+        
+        // Character materials
+        material: materials::character {
+            body: materials::pbr {
+                albedo_texture: "character_diffuse.jpg",
+                normal_texture: "character_normal.jpg",
+                roughness: 0.6,
+                metallic: 0.1
+            },
+            equipment: materials::metal {
+                albedo: color(0.4, 0.4, 0.5),
+                metallic: 0.9,
+                roughness: 0.3
+            }
+        }
+        
+        // Physics for player
+        physics: {
+            type: character_controller,
+            mass: 70.0,
+            height: 1.8,
+            radius: 0.4,
+            step_height: 0.3,
+            friction: 0.6
+        }
+    }
+    
+    // Player animation state machine
+    player_animations = state_machine {
+        states: ["idle", "walking", "running", "jumping", "falling", "landing", "attacking", "gathering"]
+        initial_state: "idle"
+        
+        state("idle") {
+            animation: load_animation("character_idle.anim")
+            idle_variations: ["look_around", "stretch", "check_equipment"]
+            
+            // Subtle breathing and fidget animations
+            animate(player_character.torso).breathe(rate: 0.3, amplitude: 0.02)
+            random_fidget(every: 8s, chance: 0.3)
+        }
+        
+        state("walking") {
+            animation: blend_tree {
+                walk_forward: load_animation("walk_forward.anim"),
+                walk_backward: load_animation("walk_backward.anim"),
+                walk_left: load_animation("walk_left.anim"),
+                walk_right: load_animation("walk_right.anim"),
+                
+                // Blend based on movement direction
+                blend_parameter: player_movement_direction
+            }
+            
+            // Footstep particles and audio
+            on_foot_contact {
+                spawn_footstep_particles(foot_position, surface_type)
+                play_footstep_audio(surface_type, movement_speed)
+            }
+        }
+        
+        state("running") {
+            animation: load_animation("character_run.anim")
+            speed_multiplier: 1.8
+            stamina_drain: 10.per_second
+            
+            // Camera shake for immersion
+            camera_shake(intensity: 0.02, frequency: 8.0)
+        }
+        
+        state("jumping") {
+            animation_sequence: [
+                { anim: "jump_start.anim", duration: 0.2s },
+                { anim: "jump_air.anim", loop: true },
+            ]
+            
+            jump_force: vec3(0, 400, 0)
+            air_control: 0.3  // Reduced movement control in air
+        }
+        
+        state("attacking") {
+            attack_animations: [
+                "sword_slash_1.anim",
+                "sword_slash_2.anim", 
+                "sword_thrust.anim"
+            ]
+            
+            // Combo system
+            combo_window: 0.8s
+            current_combo: 0
+            
+            on_animation_event("hit_frame") {
+                perform_attack_collision_check()
+                apply_screen_shake(intensity: 0.1, duration: 0.15s)
+            }
+        }
+        
+        // State transition conditions
+        transitions: {
+            "idle" => "walking": when(input.movement_magnitude > 0.1),
+            "walking" => "running": when(input.run_pressed && player.stamina > 20),
+            "any" => "jumping": when(input.jump_pressed && player.grounded),
+            "jumping" => "falling": when(!player.grounded && player.velocity.y < 0),
+            "falling" => "landing": when(player.grounded),
+            "landing" => "idle": after(0.3s),
+            "any" => "attacking": when(input.attack_pressed && !attacking)
+        }
+    }
+    
+    // Player stats and progression
+    player_stats = {
+        health: evolving(100.0),
+        stamina: evolving(100.0),
+        magic: evolving(50.0),
+        
+        // Stats regenerate over time
+        health_regen: 2.per_second,
+        stamina_regen: 15.per_second,
+        magic_regen: 5.per_second,
+        
+        // Progression system
+        experience: 0,
+        level: 1,
+        skill_points: 0
+    }
+    
+    // Reactive UI updates
+    player_stats.health.subscribe { health ->
+        ui.health_bar.value -> health / 100.0 over 200ms
+        
+        if health < 20 {
+            // Low health effects
+            apply_screen_effect("low_health_overlay")
+            camera_shake(intensity: 0.01, frequency: 2.0)
+        }
+    }
+}
+
+#tag:world-generation
+fn generate_cavern_world() {
+    // Procedural cavern system with multiple chambers
+    cavern_generator = procedural_cavern {
+        seed: 12345
+        chamber_count: random_range(8, 12)
+        
+        // Main entrance chamber
+        entrance_chamber = generate_chamber {
+            type: "entrance"
+            size: vec3(30, 15, 25)
+            features: ["sunlight_shaft", "water_pool", "moss_patches"]
+            difficulty: 1
+        }
+        
+        // Generate connected chambers
+        chambers = []
+        for i in 1..chamber_count {
+            let chamber_type = choose_weighted([
+                ("crystal", 0.3),
+                ("underground_lake", 0.2),
+                ("treasure", 0.15),
+                ("monster_den", 0.2),
+                ("puzzle", 0.15)
+            ])
+            
+            let chamber = generate_chamber {
+                type: chamber_type,
+                size: vec3(
+                    random_range(15, 40),
+                    random_range(8, 20), 
+                    random_range(15, 40)
+                ),
+                difficulty: 1 + (i * 0.5),
+                connected_to: chambers.last_or(entrance_chamber)
+            }
+            
+            chambers.push(chamber)
+        }
+        
+        // Generate tunnel connections
+        tunnel_system = generate_tunnels(entrance_chamber, chambers) {
+            tunnel_width: random_range(3.0, 6.0),
+            tunnel_height: random_range(2.5, 4.0),
+            winding_factor: 0.7,
+            branch_probability: 0.3
+        }
+    }
+    
+    // Create the physical geometry
+    cavern_mesh = mesh::procedural {
+        // Use marching cubes for smooth cavern walls
+        generation_method: marching_cubes,
+        resolution: (256, 128, 256),
+        
+        // Density function defines cavern shape
+        density_function: |position| {
+            let chamber_distance = distance_to_nearest_chamber(position)
+            let tunnel_distance = distance_to_tunnel_system(position)
+            
+            // Combine chamber and tunnel distances
+            let cavern_distance = min(chamber_distance, tunnel_distance)
+            
+            // Add noise for natural irregularities
+            let noise = fbm_noise(position * 0.1, octaves: 4, persistence: 0.5) * 0.5
+            
+            return cavern_distance + noise
+        }
+        
+        // Multi-material system based on position
+        material_function: |position, normal| {
+            let height_factor = position.y / 20.0  // Normalize height
+            
+            match height_factor {
+                0.8.. => materials::moss {  // Near surface
+                    albedo_texture: "moss.jpg",
+                    normal_texture: "moss_normal.jpg"
+                },
+                0.3..0.8 => materials::rock {  // Mid-level rock
+                    albedo_texture: "cave_rock.jpg", 
+                    normal_texture: "rock_normal.jpg",
+                    roughness: 0.9
+                },
+                ..0.3 => materials::wet_rock {  // Lower wet areas
+                    albedo_texture: "wet_rock.jpg",
+                    roughness: 0.3,
+                    metallic: 0.1
+                }
+            }
+        }
+    }
+    
+    // Add procedural details
+    populate_cavern_details()
+}
+
+#tag:cavern-details
+fn populate_cavern_details() {
+    // Crystal formations using L-systems
+    crystal_l_system = l_system crystal_growth {
+        axiom: "F"
+        rules: {
+            "F" => "F[+F]F[-F][^F][&F]",  // 3D branching
+            "[" => "[",
+            "]" => "]"
+        }
+        iterations: 3
+        angle: 30.degrees
+        
+        interpretation: {
+            "F": grow_crystal_segment(length: 0.8, thickness: 0.1),
+            "+": turn_right(angle),
+            "-": turn_left(angle), 
+            "^": pitch_up(angle),
+            "&": pitch_down(angle),
+            "[": push_state(),
+            "]": pop_state()
+        }
+    }
+    
+    // Place crystals in crystal chambers
+    for chamber in chambers.filter(|c| c.type == "crystal") {
+        let crystal_count = random_range(20, 50)
+        
+        for i in 0..crystal_count {
+            let crystal_position = random_point_in_chamber(chamber)
+            let crystal_size = random_range(0.5, 2.5)
+            
+            let crystal = generate_crystal(crystal_l_system) {
+                position: crystal_position,
+                scale: vec3(crystal_size),
+                material: materials::crystal {
+                    base_color: hsv_to_rgb(
+                        random_range(200.degrees, 280.degrees),  // Blue to purple
+                        0.8, 
+                        1.0, 
+                        0.7
+                    ),
+                    emission: hsv_to_rgb(
+                        random_range(200.degrees, 280.degrees),
+                        0.6,
+                        0.3
+                    ),
+                    refraction_index: 2.4
+                }
+            }
+            
+            // Pulsing crystal glow
+            animate(crystal.material.emission)
+                .multiply_by(1.5)
+                .duration(random_range(2s, 5s))
+                .then()
+                .multiply_by(0.7)
+                .duration(random_range(2s, 5s))
+                .ease(sine_in_out)
+                .loop()
+        }
+    }
+    
+    // Underground water systems
+    for chamber in chambers.filter(|c| c.type == "underground_lake") {
+        let water_surface = mesh::plane {
+            size: vec2(chamber.size.x * 0.8, chamber.size.z * 0.8),
+            resolution: (64, 64),
+            position: vec3(chamber.center.x, chamber.floor_level + 0.5, chamber.center.z),
+            
+            // Animated water shader
+            vertex_shader: water_animation_shader,
+            material: materials::water {
+                base_color: color(0.1, 0.3, 0.6, 0.8),
+                normal_texture: "water_normal.jpg",
+                roughness: 0.1,
+                refraction_index: 1.33
+            }
+        }
+        
+        // Water particle effects
+        particle_system water_droplets {
+            position: vec3(chamber.center.x, chamber.ceiling_level - 2.0, chamber.center.z),
+            emission_rate: 2.per_second,
+            lifetime: 3s,
+            
+            spawn_shape: circle { radius: chamber.size.x * 0.3 },
+            spawn_velocity: vec3(0, -2.0, 0),
+            
+            physics: {
+                gravity: vec3(0, -9.81, 0),
+                collision_with: [water_surface],
+                on_collision: spawn_ripple_effect
+            }
+        }
+    }
+    
+    // Procedural vegetation in appropriate areas
+    moss_placement = scatter_objects {
+        surface: cavern_mesh,
+        density: 0.1,  // moss patches per square meter
+        
+        placement_rules: {
+            height_range: (5, 25),  // Near entrance where there's some light
+            moisture_level: > 0.6,  // Near water sources
+            surface_angle: < 45.degrees  // Not on steep walls
+        },
+        
+        object_generator: |position, surface_normal| {
+            return mesh::patch {
+                vertices: generate_moss_patch_vertices(radius: random_range(0.3, 1.2)),
+                material: materials::moss {
+                    albedo_texture: "moss_diffuse.jpg",
+                    normal_texture: "moss_normal.jpg",
+                    alpha_cutout: 0.3,
+                    subsurface: 0.2
+                },
+                orientation: align_to_surface(surface_normal)
+            }
+        }
+    }
+}
+
+#tag:ai-creatures
+fn spawn_ai_creatures() {
+    // Crystal Guardians - magical creatures that protect crystal chambers
+    for chamber in chambers.filter(|c| c.type == "crystal") {
+        let guardian_count = random_range(2, 4)
+        
+        for i in 0..guardian_count {
+            let guardian = ai_creature crystal_guardian {
+                // Physical appearance
+                mesh: load_mesh("crystal_guardian.obj"),
+                material: materials::crystal_creature {
+                    base_color: chamber.crystal_color,
+                    emission: chamber.crystal_color * 0.3,
+                    metallic: 0.1,
+                    roughness: 0.6
+                },
+                
+                position: random_patrol_point(chamber),
+                scale: vec3(random_range(0.8, 1.2)),
+                
+                // Physics
+                physics: {
+                    type: dynamic,
+                    mass: 150.0,
+                    collision_shape: capsule { height: 2.0, radius: 0.5 }
+                },
+                
+                // AI behavior system
+                ai_behavior: {
+                    primary_goal: "protect_crystals",
+                    secondary_goals: ["patrol_territory", "investigate_disturbances"],
+                    
+                    // Behavior tree
+                    behavior_tree: {
+                        root: selector([
+                            // Combat behavior (highest priority)
+                            sequence([
+                                condition("enemy_in_range", radius: 8.0),
+                                parallel([
+                                    action("move_to_enemy"),
+                                    action("prepare_crystal_attack")
+                                ]),
+                                action("attack_with_crystals")
+                            ]),
+                            
+                            // Investigation behavior
+                            sequence([
+                                condition("disturbance_detected"),
+                                action("move_to_disturbance"),
+                                action("investigate_area"),
+                                action("return_to_patrol")
+                            ]),
+                            
+                            // Default patrol behavior
+                            sequence([
+                                action("patrol_waypoints"),
+                                action("idle_at_waypoint", duration: random_range(2s, 8s))
+                            ])
+                        ])
+                    },
+                    
+                    // Emotional state affects behavior
+                    emotional_state: {
+                        aggression: 0.3,
+                        curiosity: 0.7,
+                        territorial: 0.9,
+                        
+                        // Emotions change based on events
+                        on_player_detected: { aggression += 0.4, curiosity += 0.2 },
+                        on_crystal_damaged: { aggression = 1.0, territorial = 1.0 },
+                        on_threat_eliminated: { aggression -= 0.3, territorial -= 0.1 }
+                    }
+                },
+                
+                // Special abilities
+                abilities: {
+                    crystal_shard_attack: {
+                        cooldown: 3s,
+                        range: 12.0,
+                        damage: 25,
+                        effect: spawn_crystal_projectiles
+                    },
+                    
+                    crystal_shield: {
+                        cooldown: 8s,
+                        duration: 4s,
+                        effect: create_protective_crystal_barrier
+                    },
+                    
+                    crystal_resonance: {
+                        cooldown: 15s,
+                        range: 20.0,
+                        effect: |guardian| {
+                            // Calls other guardians to help
+                            let nearby_guardians = find_nearby_creatures("crystal_guardian", 20.0)
+                            for ally in nearby_guardians {
+                                ally.ai.set_goal("assist_ally", target: guardian.enemy)
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Guardian animations
+            guardian.animation_controller = state_machine {
+                states: ["idle", "patrol", "alert", "combat", "casting", "stunned"]
+                
+                state("idle") {
+                    animation: "crystal_guardian_idle.anim",
+                    crystal_glow: pulse_glow(rate: 0.5, intensity: 0.3)
+                }
+                
+                state("patrol") {
+                    animation: "crystal_guardian_walk.anim",
+                    movement_speed: 2.0
+                }
+                
+                state("alert") {
+                    animation: "crystal_guardian_alert.anim",
+                    crystal_glow: increase_glow(intensity: 0.8),
+                    head_tracking: track_target(guardian.ai.target)
+                }
+                
+                state("combat") {
+                    animations: {
+                        melee_attack: "crystal_guardian_attack.anim",
+                        ranged_attack: "crystal_guardian_cast.anim",
+                        dodge: "crystal_guardian_dodge.anim"
+                    }
+                }
+            }
+        }
+    }
+    
+    // Cave Crawlers - small, fast creatures that live in tunnels
+    tunnel_crawler_swarms = []
+    for tunnel in tunnel_system.tunnels {
+        if random() > 0.7 {  // 30% chance per tunnel
+            let swarm_size = random_range(4, 12)
+            let swarm = []
+            
+            for i in 0..swarm_size {
+                let crawler = ai_creature cave_crawler {
+                    mesh: load_mesh("cave_crawler.obj"),
+                    material: materials::chitin {
+                        albedo: color(0.2, 0.15, 0.1),
+                        roughness: 0.8,
+                        metallic: 0.1
+                    },
+                    
+                    scale: vec3(random_range(0.3, 0.6)),
+                    position: random_point_in_tunnel(tunnel),
+                    
+                    physics: {
+                        type: dynamic,
+                        mass: 5.0,
+                        collision_shape: sphere { radius: 0.2 }
+                    },
+                    
+                    // Swarm intelligence AI
+                    ai_behavior: {
+                        swarm_id: swarm.id,
+                        
+                        behavior_rules: [
+                            // Separation - avoid crowding
+                            separation: {
+                                radius: 1.0,
+                                strength: 2.0
+                            },
+                            
+                            // Alignment - match neighbor velocities
+                            alignment: {
+                                radius: 2.0,
+                                strength: 1.0
+                            },
+                            
+                            // Cohesion - move toward swarm center
+                            cohesion: {
+                                radius: 3.0,
+                                strength: 0.8
+                            },
+                            
+                            // Obstacle avoidance
+                            avoidance: {
+                                look_ahead: 1.5,
+                                strength: 3.0
+                            },
+                            
+                            // Player response
+                            player_response: {
+                                flee_distance: 8.0,
+                                alert_distance: 12.0,
+                                group_attack_threshold: 0.8  // If 80% of swarm aggro, all attack
+                            }
+                        ],
+                        
+                        // Emergent behaviors arise from simple rules
+                        emergent_behaviors: [
+                            "tunnel_following",
+                            "wall_climbing", 
+                            "coordinated_flanking",
+                            "retreat_to_nest"
+                        ]
+                    },
+                    
+                    abilities: {
+                        wall_crawling: {
+                            // Can walk on walls and ceilings
+                            gravity_orientation: adaptive,
+                            adhesion_strength: 5.0
+                        },
+                        
+                        pack_attack: {
+                            damage: 5,  // Low individual damage
+                            attack_speed: 2.0,  // But very fast attacks
+                            coordinate_with_swarm: true
+                        }
+                    }
+                }
+                
+                swarm.push(crawler)
+            }
+            
+            tunnel_crawler_swarms.push(swarm)
+        }
+    }
+    
+    // Boss Creature - Ancient Crystal Wrym in the deepest chamber
+    deepest_chamber = chambers.sort_by(|c| c.depth).last()
+    
+    crystal_wyrm = ai_creature ancient_crystal_wyrm {
+        mesh: load_mesh("crystal_wyrm.obj"),
+        scale: vec3(3.0, 2.0, 5.0),
+        position: deepest_chamber.center,
+        
+        material: materials::ancient_crystal {
+            base_color: color(0.3, 0.1, 0.8, 0.9),
+            emission: color(0.2, 0.05, 0.4),
+            metallic: 0.2,
+            roughness: 0.3,
+            
+            // Animated crystal patterns
+            pattern_animation: crystal_veins_pulse(rate: 0.3)
+        },
+        
+        physics: {
+            type: kinematic,  // Boss controls its own movement
+            mass: 2000.0,
+            collision_shape: complex_mesh { mesh: "crystal_wyrm_collision.obj" }
+        },
+        
+        // Sophisticated boss AI
+        ai_behavior: {
+            boss_type: "ancient_guardian",
+            
+            // Multi-phase battle system
+            battle_phases: [
+                {
+                    phase: 1,
+                    health_threshold: 100..75,
+                    behaviors: ["crystal_shard_rain", "ground_slam", "tail_sweep"],
+                    movement_pattern: "territorial_circles",
+                    aggression_level: 0.6
+                },
+                {
+                    phase: 2, 
+                    health_threshold: 75..40,
+                    behaviors: ["crystal_laser_beam", "summon_guardians", "crystal_wall_trap"],
+                    movement_pattern: "aggressive_chase",
+                    aggression_level: 0.8
+                },
+                {
+                    phase: 3,
+                    health_threshold: 40..0,
+                    behaviors: ["berserk_crystal_storm", "reality_distortion", "desperate_rampage"],
+                    movement_pattern: "erratic_teleportation",
+                    aggression_level: 1.0
+                }
+            ],
+            
+            // Sophisticated decision making
+            decision_tree: {
+                // Analyze player behavior and adapt
+                player_analysis: {
+                    track_player_patterns: true,
+                    predict_player_movement: true,
+                    counter_player_strategies: true
+                },
+                
+                // Dynamic ability selection
+                ability_selection: ai_weighted_choice([
+                    ("ranged_attack", weight: if player.distance > 8.0 { 0.8 } else { 0.2 }),
+                    ("melee_attack", weight: if player.distance < 5.0 { 0.9 } else { 0.1 }),
+                    ("area_denial", weight: if player.health < 50 { 0.3 } else { 0.7 }),
+                    ("defensive_ability", weight: if self.health < 50 { 0.8 } else { 0.2 })
+                ])
+            }
+        },
+        
+        // Boss abilities with cinematic effects
+        abilities: {
+            crystal_shard_rain: {
+                cooldown: 8s,
+                cast_time: 2s,
+                duration: 5s,
+                area: circle { center: player.position, radius: 15.0 },
+                
+                effect: |area| {
+                    // Cinematic camera work
+                    camera.shake(intensity: 0.1, duration: 2s)
+                    
+                    // Warning indicators
+                    create_ground_warning_circles(area, duration: 2s)
+                    
+                    // Shard rain
+                    for i in 0..50 {
+                        @delay(random_range(0s, 2s)) {
+                            let impact_point = random_point_in_circle(area)
+                            spawn_crystal_shard_projectile(
+                                from: wyrm.position + vec3(0, 10, 0),
+                                to: impact_point,
+                                damage: 30
+                            )
+                        }
+                    }
+                }
+            },
+            
+            crystal_laser_beam: {
+                cooldown: 12s,
+                cast_time: 1.5s,
+                duration: 3s,
+                
+                effect: {
+                    // Charge-up effect
+                    animate(wyrm.material.emission)
+                        .multiply_by(3.0)
+                        .duration(1.5s)
+                        .ease(ease_in_quad)
+                    
+                    // Sweep laser across arena
+                    let laser_start = wyrm.head_position
+                    let laser_direction = (player.position - laser_start).normalized()
+                    
+                    timeline laser_sweep {
+                        duration: 3s,
+                        
+                        at(0s): laser_direction = (player.position - laser_start).normalized(),
+                        at(3s): laser_direction = rotate_vector(laser_direction, 120.degrees),
+                        
+                        // Continuous laser damage
+                        continuous_effect: create_laser_beam(laser_start, laser_direction, damage: 15.per_second)
+                    }
+                }
+            }
+        },
+        
+        // Health and status
+        health: 1000.0,
+        max_health: 1000.0,
+        
+        // Reactive health system
+        on_damage_taken: { amount ->
+            // Screen shake proportional to damage
+            camera.shake(intensity: amount / 100.0, duration: 0.3s)
+            
+            // Particle effects at hit location
+            spawn_crystal_break_particles(hit_location, intensity: amount / 50.0)
+            
+            // Boss becomes more aggressive when hurt
+            aggression_level += amount / 500.0
+        },
+        
+        on_death: {
+            // Epic death sequence
+            timeline boss_death_sequence {
+                duration: 8s,
+                
+                at(0s): {
+                    stop_all_boss_abilities()
+                    camera.set_cinematic_mode(true)
+                }
+                
+                at(1s): {
+                    // Wyrm staggers and roars
+                    play_animation("crystal_wyrm_death_stagger.anim")
+                    play_audio("wyrm_death_roar.wav", volume: 0.8)
+                    camera.shake(intensity: 0.2, duration: 2s)
+                }
+                
+                at(3s): {
+                    // Crystal body begins to shatter
+                    for crystal_piece in wyrm.crystal_segments {
+                        animate(crystal_piece)
+                            .scale(to: vec3(0.0))
+                            .duration(2s)
+                            .ease(ease_in_back)
+                    }
+                    
+                    spawn_massive_particle_explosion(wyrm.position)
+                }
+                
+                at(5s): {
+                    // Wyrm collapses
+                    animate(wyrm).fall_to_ground().duration(2s)
+                    camera.orbit_around(wyrm.position, radius: 15.0, height: 8.0)
+                }
+                
+                at(7s): {
+                    // Treasure and victory effects
+                    spawn_treasure_chest(wyrm.position + vec3(0, 2, 0))
+                    create_victory_light_shaft(wyrm.position)
+                    play_victory_music()
+                }
+                
+                at(8s): {
+                    camera.set_cinematic_mode(false)
+                    display_victory_ui()
+                }
+            }
+        }
+    }
+}
+
+#tag:game-mechanics
+fn initialize_game_mechanics() {
+    // Treasure system with procedural loot
+    treasure_system = {
+        chest_locations: scatter_points_in_chambers(chambers, density: 0.3),
+        
+        loot_tables: {
+            common: [
+                { item: "health_potion", weight: 0.4, quantity: (1, 3) },
+                { item: "magic_crystal", weight: 0.3, quantity: (2, 5) },
+                { item: "ancient_coin", weight: 0.3, quantity: (5, 15) }
+            ],
+            
+            rare: [
+                { item: "crystal_sword", weight: 0.3, enchantments: random_enchantments(1, 2) },
+                { item: "armor_piece", weight: 0.4, quality: random_range(2, 4) },
+                { item: "spell_scroll", weight: 0.3, spell: random_spell_from_pool() }
+            ],
+            
+            legendary: [
+                { item: "wyrm_scale_armor", weight: 0.5, unique_effects: ["crystal_resonance"] },
+                { item: "crystal_staff", weight: 0.3, power_level: "legendary" },
+                { item: "ancient_artifact", weight: 0.2, random_properties: true }
+            ]
+        }
+    }
+    
+    // Crafting system
+    crafting_system = {
+        recipes: [
+            {
+                name: "crystal_blade",
+                ingredients: [
+                    { item: "crystal_shard", quantity: 5 },
+                    { item: "metal_ingot", quantity: 2 },
+                    { item: "binding_essence", quantity: 1 }
+                ],
+                result: { item: "crystal_blade", enchantment: "sharpness" },
+                crafting_time: 30s
+            }
+        ],
+        
+        crafting_stations: place_crafting_stations_in_chambers()
+    }
+    
+    // Magic system with visual effects
+    magic_system = {
+        spells: [
+            {
+                name: "crystal_missile",
+                mana_cost: 20,
+                cast_time: 0.8s,
+                cooldown: 2s,
+                
+                effect: |target_position| {
+                    let projectile = create_magic_projectile {
+                        start: player.hand_position,
+                        target: target_position,
+                        speed: 15.0,
+                        visual: "glowing_crystal_shard",
+                        trail: "sparkle_trail",
+                        damage: 40
+                    }
+                    
+                    projectile.on_impact = {
+                        spawn_explosion_particles(impact_point, "crystal_shatter")
+                        apply_area_damage(impact_point, radius: 3.0, damage: 20)
+                    }
+                }
+            },
+            
+            {
+                name: "crystal_shield",
+                mana_cost: 35,
+                cast_time: 1.2s,
+                duration: 15s,
+                
+                effect: {
+                    let shield = create_magical_barrier {
+                        center: player.position,
+                        radius: 2.0,
+                        visual: "rotating_crystal_barrier",
+                        damage_absorption: 100
+                    }
+                    
+                    shield.follow_target(player)
+                    
+                    shield.on_absorb_damage = { amount ->
+                        spawn_deflection_particles(hit_point)
+                        play_audio("crystal_chime.wav", pitch: 1.0 + (amount / 50.0))
+                    }
+                }
+            }
+        ]
+    }
+    
+    // Puzzle system for puzzle chambers
+    puzzle_system = {
+        crystal_alignment_puzzle: |chamber| {
+            let crystal_pedestals = place_pedestals_in_chamber(chamber, count: 5)
+            let solution_pattern = generate_random_pattern(5)
+            
+            puzzle {
+                description: "Align the crystals to match the ancient pattern",
+                
+                on_player_interact: |pedestal| {
+                    pedestal.crystal_rotation += 60.degrees
+                    
+                    animate(pedestal.crystal)
+                        .rotate(by: vec3(0, 60.degrees, 0))
+                        .duration(0.5s)
+                        .ease(bounce_out)
+                    
+                    check_puzzle_solution()
+                },
+                
+                check_solution: {
+                    let current_pattern = crystal_pedestals.map(|p| p.crystal_rotation)
+                    
+                    if current_pattern == solution_pattern {
+                        // Puzzle solved!
+                        play_success_audio()
+                        unlock_chamber_treasure()
+                        
+                        // Visual celebration
+                        for pedestal in crystal_pedestals {
+                            animate(pedestal.crystal.material.emission)
+                                .multiply_by(3.0)
+                                .duration(2s)
+                                .ease(bounce_out)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#tag:audio-system
+fn setup_audio_system() {
+    // 3D spatial audio system
+    audio_system = spatial_audio {
+        listener: player_character,
+        
+        // Environmental audio
+        ambient_sounds: {
+            cavern_ambience: {
+                audio: "cavern_ambient.ogg",
+                volume: 0.3,
+                loop: true,
+                reverb: cavern_reverb_settings
+            },
+            
+            water_dripping: {
+                audio: "water_drops.ogg",
+                volume: 0.2,
+                random_delay: (1s, 8s),
+                position_variance: 5.0  // Random positions around chambers
+            },
+            
+            crystal_resonance: {
+                audio: "crystal_hum.ogg", 
+                volume: 0.15,
+                loop: true,
+                distance_falloff: quadratic,
+                
+                // Only plays near crystal formations
+                conditional_playback: |player_pos| {
+                    let nearest_crystal = find_nearest_crystal(player_pos)
+                    return nearest_crystal.distance < 8.0
+                }
+            }
+        },
+        
+        // Dynamic music system
+        dynamic_music: {
+            exploration_theme: "cavern_exploration.ogg",
+            combat_theme: "crystal_battle.ogg",
+            boss_theme: "ancient_wyrm.ogg",
+            victory_theme: "triumph.ogg",
+            
+            // Smooth transitions between themes
+            transition_rules: {
+                "exploration" => "combat": when(player.in_combat, fade_time: 2s),
+                "combat" => "exploration": when(!player.in_combat, fade_time: 3s),
+                "any" => "boss": when(crystal_wyrm.battle_active, fade_time: 1s),
+                "boss" => "victory": when(crystal_wyrm.defeated, fade_time: 4s)
+            },
+            
+            // Adaptive intensity based on situation
+            intensity_layers: [
+                { layer: "percussion", condition: player.health < 30 },
+                { layer: "strings", condition: enemies_nearby.count > 2 },
+                { layer: "brass", condition: boss_battle_active }
+            ]
+        },
+        
+        // Interactive audio objects
+        audio_sources: [
+            {
+                position: entrance_chamber.water_pool_center,
+                audio: "gentle_water_flow.ogg",
+                volume: 0.4,
+                loop: true,
+                distance_model: linear_falloff
+            }
+        ]
+    }
+}
+
+#tag:game-loop
+@60fps
+fn start_game_loop() {
+    game_loop {
+        // Update all systems
+        update_player_input()
+        update_player_physics()
+        update_ai_creatures()
+        update_animations()
+        update_particles()
+        update_audio()
+        
+        // Render the world
+        render_world()
+        
+        // Update UI
+        update_game_ui()
+        
+        // Check win/lose conditions
+        check_game_state()
+    }
+}
+
+fn update_player_input() {
+    // Smooth input handling with acceleration
+    let input_vector = get_movement_input()  // WASD or gamepad
+    
+    player.target_velocity = input_vector * player.movement_speed
+    player.velocity = lerp(player.velocity, player.target_velocity, 0.1)
+    
+    // Jump input
+    if input.jump_pressed && player.grounded {
+        player.physics.apply_impulse(vec3(0, 400, 0))
+        player_animations.set_state("jumping")
+    }
+    
+    // Attack input
+    if input.attack_pressed && player.can_attack {
+        player_animations.set_state("attacking")
+        player.attack_cooldown = 1.2s
+    }
+    
+    // Magic casting
+    if input.cast_spell && player.mana >= current_spell.mana_cost {
+        cast_spell(current_spell, get_target_position())
+    }
+}
+
+// Start the complete game experience
+main()

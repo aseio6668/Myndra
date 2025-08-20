@@ -1,0 +1,894 @@
+// Pomegranate Cognitive & Behavioral Animation System
+// Animation as Intention, Emotion, and Emergent Storytelling
+
+import cognitive with capabilities("emotion", "intention", "memory")
+import behavioral with capabilities("goals", "decisions", "personality")
+import narrative with capabilities("story", "causality", "temporal_logic")
+import generative with capabilities("grammar", "emergence", "procedural")
+import sensory with capabilities("audio", "haptic", "environmental")
+
+#tag:cognitive-agents
+fn main() {
+    // Create a world where every entity has inner life
+    world conscious_garden {
+        camera empathetic_observer {
+            position: vec3(0, 3, 8)
+            
+            // Camera itself has emotional state
+            emotional_state: {
+                curiosity: 0.7,
+                serenity: 0.5,
+                wonder: 0.8
+            }
+            
+            // Camera movement reflects its emotional state
+            @reactive
+            fn emotional_camera_behavior() {
+                match dominant_emotion() {
+                    "curious" => {
+                        // Slight head tilts, focus shifts
+                        add_subtle_movement(head_tilt: sin(time * 0.3) * 2.degrees)
+                        focus_on_interesting_objects(attention_span: 3s)
+                    },
+                    "serene" => {
+                        // Slow, flowing movements
+                        camera_sway(amplitude: 0.1, frequency: 0.2)
+                        depth_of_field.aperture -> 1.4 over 2s  // Dreamy focus
+                    },
+                    "wonder" => {
+                        // Gentle orbiting around points of interest
+                        orbit_behavior(radius: 12.0, speed: 0.1, height_variation: 2.0)
+                    }
+                }
+            }
+        }
+    }
+    
+    create_conscious_entities()
+    setup_narrative_system()
+    initialize_cross_domain_reactivity()
+    
+    render_world()
+}
+
+#tag:conscious-entities
+fn create_conscious_entities() {
+    // Conscious floating crystals with rich inner lives
+    for i in 0..8 {
+        let crystal = cognitive_entity crystal_being {
+            // Physical form
+            mesh: mesh::icosphere {
+                radius: random_range(0.8, 1.5)
+                subdivisions: 3
+                position: vec3(
+                    random_range(-10, 10),
+                    random_range(2, 6),
+                    random_range(-10, 10)
+                )
+            }
+            
+            // Cognitive architecture
+            mind: {
+                // Personality traits affect all behavior
+                personality: {
+                    openness: random_range(0.2, 0.9),      // Curiosity about environment
+                    conscientiousness: random_range(0.3, 0.8), // Order vs chaos preference
+                    extraversion: random_range(0.1, 0.9),  // Social vs solitary
+                    agreeableness: random_range(0.4, 0.9), // Cooperation vs competition
+                    neuroticism: random_range(0.1, 0.6)    // Emotional stability
+                },
+                
+                // Emotional system with temporal persistence
+                emotions: {
+                    joy: evolving(random_range(0.3, 0.7)),
+                    sadness: evolving(0.1),
+                    anger: evolving(0.05),
+                    fear: evolving(0.2),
+                    surprise: evolving(0.0),
+                    curiosity: evolving(personality.openness),
+                    serenity: evolving(0.4),
+                    
+                    // Emotions fade and change over time
+                    emotional_decay: 0.1.per_minute,
+                    emotional_contagion: 0.3  // How much others' emotions affect this one
+                },
+                
+                // Memory system affects behavior
+                memory: {
+                    short_term: circular_buffer(capacity: 20),
+                    long_term: associative_memory(),
+                    emotional_memories: {},  // Events tagged with emotional significance
+                    
+                    // Memory affects current behavior
+                    memory_influence: 0.4
+                },
+                
+                // Goal-oriented behavior system
+                goals: {
+                    primary_drives: [
+                        goal("seek_harmony") {
+                            priority: personality.agreeableness,
+                            satisfaction_condition: |entity| {
+                                nearby_entities.all(|other| other.emotional_state.peaceful > 0.6)
+                            }
+                        },
+                        
+                        goal("explore_environment") {
+                            priority: personality.openness,
+                            satisfaction_condition: |entity| {
+                                let unexplored_areas = find_unvisited_areas(entity.memory)
+                                unexplored_areas.length() == 0
+                            }
+                        },
+                        
+                        goal("maintain_energy") {
+                            priority: 0.8,  // Basic survival need
+                            satisfaction_condition: |entity| entity.energy > 0.7
+                        },
+                        
+                        goal("social_connection") {
+                            priority: personality.extraversion,
+                            satisfaction_condition: |entity| {
+                                let social_bonds = count_positive_relationships(entity)
+                                social_bonds >= personality.extraversion * 5
+                            }
+                        }
+                    ],
+                    
+                    // Goals create intentions which drive animation
+                    current_intention: null,
+                    goal_conflict_resolution: "weighted_priority"
+                }
+            }
+            
+            // Behavioral system translates cognition into action
+            behavior_tree: {
+                root: priority_selector([
+                    // Emergency behaviors (highest priority)
+                    sequence([
+                        condition("energy_critical"),
+                        action("seek_energy_source", {
+                            animation: "urgent_search",
+                            movement: "direct_path",
+                            speed_multiplier: 1.5
+                        })
+                    ]),
+                    
+                    // Goal-driven behaviors
+                    dynamic_goal_selector {
+                        // Automatically generates behavior for current highest-priority goal
+                        goal_behavior_mapping: {
+                            "seek_harmony": sequence([
+                                action("assess_group_mood"),
+                                condition("conflict_detected"),
+                                action("mediate_or_soothe", {
+                                    animation: "gentle_approach",
+                                    particles: "calming_aura",
+                                    emotional_broadcasting: "serenity"
+                                })
+                            ]),
+                            
+                            "explore_environment": sequence([
+                                action("choose_exploration_target"),
+                                action("move_with_curiosity", {
+                                    animation: "curious_drift",
+                                    path: "meandering_with_pauses",
+                                    observation_behavior: "focus_and_study"
+                                }),
+                                action("remember_discoveries")
+                            ]),
+                            
+                            "social_connection": parallel([
+                                action("approach_compatible_entity"),
+                                action("emit_social_signals", {
+                                    animation: "friendly_pulse",
+                                    color_shift: "warm_invitation",
+                                    movement: "synchronized_dance"
+                                })
+                            ])
+                        }
+                    },
+                    
+                    // Default idle behavior with personality expression
+                    action("express_personality", {
+                        animation: personality_based_idle_animation(),
+                        frequency: personality.neuroticism * 0.5 + 0.1
+                    })
+                ])
+            }
+            
+            // Animation system that reflects internal state
+            animation_system: embodied_cognition_animator {
+                // Core principle: all movement reflects inner experience
+                
+                // Emotional expression through movement
+                emotional_movement_mapping: {
+                    joy: {
+                        movement_quality: "bouncy_light",
+                        frequency_modifier: 1.3,
+                        amplitude_modifier: 1.2,
+                        color_shift: color(1.0, 0.8, 0.3),  // Warm golden
+                        particle_emission: "sparkles"
+                    },
+                    
+                    sadness: {
+                        movement_quality: "heavy_slow",
+                        frequency_modifier: 0.7,
+                        amplitude_modifier: 0.8,
+                        color_shift: color(0.4, 0.4, 0.7),  // Cool blue
+                        particle_emission: "gentle_mist"
+                    },
+                    
+                    curiosity: {
+                        movement_quality: "investigative_jerky",
+                        attention_focus: true,
+                        head_tracking: "points_of_interest",
+                        color_shift: color(0.8, 1.0, 0.8),  // Bright green
+                        scanning_behavior: true
+                    },
+                    
+                    fear: {
+                        movement_quality: "tense_ready_to_flee",
+                        hypervigilance: true,
+                        proximity_sensitivity: 2.0,
+                        color_shift: color(0.9, 0.5, 0.5),  // Reddish
+                        defensive_posture: true
+                    }
+                },
+                
+                // Personality affects base movement style
+                personality_movement_traits: {
+                    high_openness: "exploratory_wandering",
+                    high_conscientiousness: "purposeful_direct",
+                    high_extraversion: "social_orbiting",
+                    high_agreeableness: "gentle_yielding",
+                    high_neuroticism: "irregular_twitchy"
+                },
+                
+                // Memory influences animation
+                memory_influenced_behavior: {
+                    familiar_location: "confident_movement",
+                    traumatic_memory_site: "avoidance_behavior",
+                    positive_memory_site: "attraction_lingering",
+                    social_memory_present: "recognition_gestures"
+                }
+            }
+            
+            // Material properties reflect consciousness
+            material: materials::conscious_crystal {
+                // Base appearance shifts with emotional state
+                base_color: lerp_emotional_colors(emotions),
+                
+                // Transparency reflects openness
+                transparency: personality.openness * 0.3 + 0.2,
+                
+                // Emission reflects energy and mood
+                emission: {
+                    color: emotional_color_mapping(dominant_emotion()),
+                    intensity: energy_level * emotional_intensity()
+                },
+                
+                // Surface patterns reflect memory and experience
+                pattern_shader: consciousness_pattern_generator {
+                    memory_traces: visualize_memory_network(memory),
+                    thought_streams: visualize_current_thoughts(),
+                    dream_patterns: when(energy < 0.3) { dream_state_visuals() }
+                }
+            }
+        }
+        
+        crystal.start_consciousness()
+    }
+    
+    // Collective consciousness emerges from individual minds
+    collective_mind = emergent_group_consciousness {
+        participants: all_crystal_beings,
+        
+        // Group emotions emerge from individual states
+        @reactive
+        fn update_collective_emotional_field() {
+            let group_emotions = participants.map(|p| p.emotions).average()
+            
+            // Emotional contagion - entities influence each other
+            for entity in participants {
+                let influence = calculate_emotional_influence(entity, group_emotions)
+                entity.emotions.blend_with(influence, strength: entity.mind.emotional_contagion)
+            }
+            
+            // Collective emotions create environmental effects
+            if group_emotions.joy > 0.7 {
+                spawn_environmental_celebration()
+            }
+            
+            if group_emotions.fear > 0.6 {
+                darken_ambient_lighting()
+                increase_environmental_tension()
+            }
+        }
+    }
+}
+
+#tag:generative-grammar
+// Grammar-based animation system
+animation_grammar_system = {
+    // Define motion patterns as composable syntax
+    motion_primitives: {
+        "wiggle": |amplitude, frequency| {
+            sin_wave_motion(amplitude: amplitude, frequency: frequency, axes: [x, z])
+        },
+        
+        "pulse": |intensity, rhythm| {
+            scale_animation(
+                from: vec3(1.0),
+                to: vec3(1.0 + intensity),
+                duration: 60s / rhythm,
+                ease: ease_in_out_sine
+            )
+        },
+        
+        "drift": |direction, speed, chaos| {
+            procedural_movement(
+                base_direction: direction,
+                speed: speed,
+                noise_influence: chaos,
+                noise_scale: 0.1
+            )
+        },
+        
+        "spiral": |center, radius, ascent_rate| {
+            circular_motion(center: center, radius: radius) +
+            linear_motion(direction: vec3(0, 1, 0), speed: ascent_rate)
+        },
+        
+        "flock": |neighbors, separation, alignment, cohesion| {
+            boids_algorithm(
+                neighbors: neighbors,
+                separation_weight: separation,
+                alignment_weight: alignment,
+                cohesion_weight: cohesion
+            )
+        }
+    },
+    
+    // Compose complex animations from simple grammar
+    animation_language: {
+        // Basic composition: sequential and parallel
+        sequence: |motions| chain_animations(motions),
+        parallel: |motions| blend_animations(motions),
+        
+        // Conditional composition
+        conditional: |condition, true_motion, false_motion| {
+            match condition {
+                true => true_motion,
+                false => false_motion
+            }
+        },
+        
+        // Probabilistic composition
+        maybe: |probability, motion| {
+            if random() < probability { motion } else { idle_motion() }
+        },
+        
+        // Temporal modifiers
+        loop: |motion, count| repeat_animation(motion, count),
+        fade_in: |motion, duration| apply_fade_in(motion, duration),
+        fade_out: |motion, duration| apply_fade_out(motion, duration),
+        
+        // Emotional modifiers
+        with_emotion: |motion, emotion| apply_emotional_filter(motion, emotion),
+        
+        // Social modifiers
+        mimic: |motion, target| synchronize_with_target(motion, target),
+        avoid: |motion, obstacle| add_avoidance_behavior(motion, obstacle)
+    },
+    
+    // Example complex animation compositions
+    examples: {
+        "curious_exploration": sequence([
+            "drift" with parameters(direction: random_direction(), speed: 0.5, chaos: 0.3),
+            "pulse" with parameters(intensity: 0.2, rhythm: 120),  // BPM-based
+            maybe(0.7, "wiggle" with parameters(amplitude: 0.1, frequency: 2.0))
+        ]) with_emotion("curiosity"),
+        
+        "social_dance": parallel([
+            "spiral" with parameters(center: group_center(), radius: 3.0, ascent_rate: 0.1),
+            "pulse" with parameters(intensity: 0.3, rhythm: sync_to_music()),
+            "flock" with parameters(
+                neighbors: nearby_social_partners(),
+                separation: 0.3,
+                alignment: 0.7,
+                cohesion: 0.5
+            )
+        ]) with_emotion("joy"),
+        
+        "meditative_peace": sequence([
+            "drift" with parameters(direction: vec3(0, 0, 0), speed: 0.1, chaos: 0.05),
+            loop("pulse" with parameters(intensity: 0.1, rhythm: 60), infinite),  // Breathing rhythm
+        ]) with_emotion("serenity")
+    }
+}
+
+#tag:narrative-temporal
+// Narrative-driven animation system
+narrative_animation_system = {
+    // Scene scripting DSL that blends animation with story
+    scene_script_dsl: {
+        // Temporal operators for expressive control
+        temporal_operators: {
+            before: |event, action| schedule_before(event, action),
+            after: |event, action| schedule_after(event, action),
+            during: |event, action| execute_during(event, action),
+            while: |condition, action| continue_while(condition, action),
+            until: |condition, action| continue_until(condition, action),
+            
+            // Advanced temporal relationships
+            simultaneously: |actions| execute_parallel(actions),
+            in_sequence: |actions| execute_sequential(actions),
+            interrupt: |action, interruption| allow_interruption(action, interruption),
+            resume: |interrupted_action| continue_from_interruption(interrupted_action),
+            
+            // Narrative time manipulation
+            slow_motion: |action, factor| time_dilation(action, factor),
+            time_skip: |duration| advance_narrative_time(duration),
+            flashback: |past_state, duration| temporary_state_revert(past_state, duration)
+        },
+        
+        // Story beats affect animation
+        narrative_beats: {
+            exposition: {
+                pacing: "slow_contemplative",
+                camera_behavior: "establishing_shots",
+                character_animation: "neutral_exploration"
+            },
+            
+            rising_action: {
+                pacing: "gradually_increasing",
+                tension_factor: evolving(0.1 -> 0.7 over story_duration * 0.6),
+                character_animation: "increasing_urgency"
+            },
+            
+            climax: {
+                pacing: "intense_rapid",
+                camera_behavior: "dynamic_dramatic",
+                character_animation: "peak_emotional_expression",
+                environmental_effects: "storm_or_celebration"
+            },
+            
+            resolution: {
+                pacing: "settling_peaceful",
+                emotional_release: true,
+                character_animation: "relief_or_sadness"
+            }
+        }
+    },
+    
+    // Interactive fiction hooks
+    interactive_story_system: {
+        // Player choices affect animation style
+        choice_influence_mapping: {
+            "compassionate_choice": {
+                character_demeanor: "gentle_caring",
+                environmental_response: "warming_lighting",
+                other_characters: "increased_trust_animations"
+            },
+            
+            "aggressive_choice": {
+                character_demeanor: "tense_defensive",
+                environmental_response: "harsh_shadows",
+                other_characters: "fear_or_anger_responses"
+            },
+            
+            "curious_choice": {
+                character_demeanor: "investigative_alert",
+                environmental_response: "revealing_lighting",
+                other_characters: "intrigued_engagement"
+            }
+        },
+        
+        // Branching narratives create different animation styles
+        @narrative_branch
+        fn handle_story_choice(choice: PlayerChoice) {
+            match choice.moral_alignment {
+                "good" => {
+                    set_global_animation_mood("hopeful_bright")
+                    increase_character_openness(amount: 0.2)
+                    environmental_harmony_level += 0.3
+                },
+                "evil" => {
+                    set_global_animation_mood("dark_tense")
+                    increase_character_defensiveness(amount: 0.3)
+                    environmental_discord_level += 0.4
+                },
+                "neutral" => {
+                    maintain_current_animation_mood()
+                    add_ambiguity_to_character_animations()
+                }
+            }
+            
+            // Choices create emotional memories that affect future animations
+            for character in all_characters {
+                character.memory.add_emotional_memory(choice, character.reaction_to(choice))
+            }
+        }
+    }
+}
+
+#tag:cross-domain-integration
+// Audio-reactive animation
+audio_reactive_system = {
+    // Real-time audio analysis drives animation
+    audio_analyzer: {
+        frequency_bands: [
+            { range: (20, 250), name: "bass", animation_target: "large_scale_movement" },
+            { range: (250, 4000), name: "midrange", animation_target: "medium_gestures" },
+            { range: (4000, 20000), name: "treble", animation_target: "fine_details" }
+        ],
+        
+        rhythm_detection: {
+            bpm_tracker: detect_beats_per_minute(),
+            beat_prediction: predict_next_beat(),
+            rhythm_confidence: calculate_rhythm_certainty()
+        },
+        
+        harmonic_analysis: {
+            key_detection: detect_musical_key(),
+            chord_progression: track_harmonic_changes(),
+            musical_tension: calculate_harmonic_tension()
+        }
+    },
+    
+    // Map audio features to animation parameters
+    audio_animation_mapping: {
+        bass_response: |bass_level| {
+            for entity in conscious_entities {
+                let pulse_intensity = bass_level * 0.5
+                entity.scale -> entity.base_scale * (1.0 + pulse_intensity) over 100ms
+                
+                // Strong bass creates group synchronization
+                if bass_level > 0.8 {
+                    synchronize_group_movement(all_entities, beat_duration)
+                }
+            }
+        },
+        
+        melody_response: |melody_contour| {
+            // Melody pitch changes affect vertical movement
+            let pitch_direction = melody_contour.direction
+            let pitch_intensity = melody_contour.magnitude
+            
+            for entity in conscious_entities {
+                entity.position.y -> entity.position.y + pitch_direction * pitch_intensity over 500ms
+            }
+        },
+        
+        harmonic_tension_response: |tension_level| {
+            // Musical tension affects emotional state
+            let stress_color = lerp(
+                color(0.2, 0.8, 0.6),  // Calm green
+                color(0.9, 0.3, 0.3),  // Tense red
+                tension_level
+            )
+            
+            global_emotional_atmosphere.stress_level = tension_level
+            environmental_lighting.color_tint -> stress_color over 2s
+        }
+    },
+    
+    // Voice and speech integration
+    voice_responsive_animation: {
+        speech_analysis: {
+            sentiment_detection: analyze_emotional_tone(),
+            volume_dynamics: track_volume_changes(),
+            speech_rhythm: detect_speaking_patterns()
+        },
+        
+        voice_animation_effects: {
+            happy_speech: "bright_bouncy_movements",
+            sad_speech: "slow_downward_gestures", 
+            excited_speech: "rapid_energetic_motion",
+            whispered_speech: "small_intimate_movements",
+            shouted_speech: "large_dramatic_gestures"
+        }
+    }
+}
+
+// Data-driven animation from external sources
+data_driven_animation = {
+    // Real-time data streams affect animation
+    data_sources: [
+        {
+            source: "weather_api",
+            mapping: |weather_data| {
+                match weather_data.condition {
+                    "sunny" => set_animation_mood("cheerful_energetic"),
+                    "rainy" => set_animation_mood("melancholic_flowing"),
+                    "stormy" => set_animation_mood("chaotic_intense"),
+                    "foggy" => set_animation_mood("mysterious_slow")
+                }
+                
+                wind_speed_affects_movement(weather_data.wind_speed)
+            }
+        },
+        
+        {
+            source: "stock_market_data",
+            mapping: |market_data| {
+                let market_volatility = calculate_volatility(market_data)
+                
+                // Market chaos affects animation chaos
+                global_chaos_level = market_volatility * 0.5
+                
+                // Market trends affect directional bias
+                if market_data.trend == "bullish" {
+                    add_upward_movement_bias(strength: 0.3)
+                } else if market_data.trend == "bearish" {
+                    add_downward_movement_bias(strength: 0.3)
+                }
+            }
+        },
+        
+        {
+            source: "biometric_sensors",  // Heart rate, galvanic skin response, etc.
+            mapping: |biometric_data| {
+                let stress_level = biometric_data.stress_indicator
+                let heart_rate = biometric_data.heart_rate
+                
+                // User stress affects entity behavior
+                for entity in conscious_entities {
+                    entity.emotions.anxiety = stress_level
+                    entity.animation_frequency = heart_rate / 60.0  // Sync to heartbeat
+                }
+            }
+        }
+    ]
+}
+
+#tag:mathematical-visualization
+// Symbolic computation and mathematical animation
+mathematical_animation_system = {
+    // Animate abstract mathematical concepts
+    mathematical_visualizations: {
+        // Algebraic transformations as spatial animations
+        algebraic_animation: |equation_transformation| {
+            let visual_equation = create_visual_equation(equation_transformation.from)
+            
+            timeline mathematical_transform {
+                duration: 5s,
+                
+                at(0s): display_equation(equation_transformation.from),
+                
+                at(1s): highlight_terms_to_change(equation_transformation.changing_terms),
+                
+                at(2s to 4s): {
+                    // Animate the transformation step by step
+                    for step in equation_transformation.steps {
+                        animate_equation_step(step) {
+                            visual_effects: ["term_morphing", "variable_highlighting"],
+                            explanation_text: step.explanation
+                        }
+                    }
+                },
+                
+                at(5s): display_equation(equation_transformation.to)
+            }
+        },
+        
+        // Geometric proofs through animation
+        geometric_proof_animation: |proof_steps| {
+            let geometric_space = create_3d_proof_space()
+            
+            for step in proof_steps {
+                match step.type {
+                    "construct_line" => {
+                        animate_line_construction(
+                            from: step.point1,
+                            to: step.point2,
+                            duration: 1s,
+                            style: "deliberate_precise"
+                        )
+                    },
+                    
+                    "add_angle_marking" => {
+                        animate_angle_highlight(
+                            vertex: step.vertex,
+                            arms: step.arms,
+                            visual: "glowing_arc_with_label"
+                        )
+                    },
+                    
+                    "demonstrate_congruence" => {
+                        animate_shape_overlay(
+                            shape1: step.shape1,
+                            shape2: step.shape2,
+                            transformation: step.required_transformation,
+                            highlight_matching_elements: true
+                        )
+                    }
+                }
+            }
+        },
+        
+        // Calculus concepts through motion
+        calculus_visualization: {
+            derivative_as_slope: |function| {
+                let curve = create_function_curve(function)
+                let tangent_line = create_movable_tangent_line()
+                
+                animate(tangent_line) {
+                    move_along_curve(curve) {
+                        speed: 0.5,
+                        show_slope_calculation: true,
+                        highlight_instantaneous_rate: true
+                    }
+                }
+            },
+            
+            integral_as_accumulation: |function, bounds| {
+                let rectangles = create_riemann_rectangles(function, bounds, n: 10)
+                
+                timeline integral_buildup {
+                    at(0s): show_rectangles(rectangles, opacity: 0.3),
+                    at(1s to 8s): {
+                        animate_rectangle_refinement {
+                            from: 10.rectangles,
+                            to: 1000.rectangles,
+                            show_area_accumulation: true
+                        }
+                    },
+                    at(9s): highlight_final_area_under_curve()
+                }
+            }
+        }
+    }
+}
+
+#tag:speculative-experiential
+// Animation as a medium for thought and feeling
+experiential_animation_system = {
+    // Synesthetic animation - cross-sensory experiences
+    synesthesia_simulator: {
+        color_sound_mapping: |audio_frequency| {
+            // Map frequencies to colors as some people naturally experience
+            let hue = (audio_frequency - 20) / (20000 - 20) * 360.degrees
+            let color = hsv_to_rgb(hue, 0.8, 1.0)
+            
+            create_animated_color_field(color) {
+                intensity: audio_amplitude,
+                movement: "wave_like_propagation",
+                lifetime: 2s
+            }
+        },
+        
+        texture_emotion_mapping: |emotional_state| {
+            // Different emotions create different surface textures
+            match emotional_state.dominant_emotion {
+                "joy" => apply_texture("smooth_flowing_silk"),
+                "anger" => apply_texture("sharp_jagged_crystals"),
+                "sadness" => apply_texture("soft_absorbent_moss"),
+                "fear" => apply_texture("prickly_defensive_spines"),
+                "love" => apply_texture("warm_embracing_velvet")
+            }
+        }
+    },
+    
+    // Dreams and altered states of consciousness
+    dream_state_animation: {
+        dream_logic_physics: {
+            // Physics that follow emotional rather than physical laws
+            gravity_direction: controlled_by_emotional_state(),
+            object_morphing: allowed_between_emotionally_similar_objects(),
+            time_flow: variable_based_on_dream_narrative_tension(),
+            scale_consistency: ignored_for_symbolic_significance()
+        },
+        
+        archetypal_symbol_animation: |archetype| {
+            match archetype {
+                "the_shadow" => {
+                    create_dark_mirror_entity() {
+                        movement: "inverse_of_conscious_entity",
+                        appearance: "distorted_reflection",
+                        emotional_effect: "uncomfortable_recognition"
+                    }
+                },
+                
+                "the_anima" => {
+                    create_wise_feminine_figure() {
+                        movement: "graceful_knowing",
+                        appearance: "shifting_between_known_feminine_faces",
+                        interaction: "offers_emotional_wisdom"
+                    }
+                },
+                
+                "the_child" => {
+                    create_playful_innocent_form() {
+                        movement: "spontaneous_joyful",
+                        curiosity: infinite,
+                        effect_on_environment: "makes_everything_more_colorful"
+                    }
+                }
+            }
+        }
+    },
+    
+    // Meditation and mindfulness visualization
+    contemplative_animation: {
+        breathing_visualization: |breath_rhythm| {
+            let expansion_contraction = create_breathing_mandala()
+            
+            timeline breath_cycle {
+                duration: breath_rhythm.full_cycle_duration,
+                loop: infinite,
+                
+                // Inhale
+                at(0s to breath_rhythm.inhale_duration): {
+                    expansion_contraction.scale -> vec3(1.5, 1.5, 1.5) over breath_rhythm.inhale_duration
+                    expansion_contraction.color -> color(0.8, 0.9, 1.0) over breath_rhythm.inhale_duration  // Cool
+                },
+                
+                // Hold
+                at(breath_rhythm.inhale_duration to breath_rhythm.inhale_duration + breath_rhythm.hold_duration): {
+                    expansion_contraction.maintain_current_state()
+                    subtle_sparkles_animation(intensity: 0.2)
+                },
+                
+                // Exhale
+                at(breath_rhythm.inhale_duration + breath_rhythm.hold_duration to breath_rhythm.full_cycle_duration): {
+                    expansion_contraction.scale -> vec3(1.0, 1.0, 1.0) over breath_rhythm.exhale_duration
+                    expansion_contraction.color -> color(1.0, 0.8, 0.7) over breath_rhythm.exhale_duration  // Warm
+                }
+            }
+        },
+        
+        mindfulness_presence_indicator: {
+            // Visual indicator of present-moment awareness
+            presence_orb = create_awareness_indicator() {
+                clarity: measure_mental_clarity(),
+                stability: measure_emotional_stability(),
+                openness: measure_receptivity_to_experience()
+            }
+            
+            @reactive
+            fn update_presence_visualization() {
+                // More present = more stable, clear, and radiant
+                presence_orb.stability_animation = inverse_of_mental_turbulence()
+                presence_orb.clarity_material = transparency_proportional_to_clarity()
+                presence_orb.openness_size = scale_proportional_to_receptivity()
+            }
+        }
+    },
+    
+    // Philosophical and existential animation
+    philosophical_visualization: {
+        existential_questions_as_animation: {
+            "what_is_consciousness" => {
+                create_recursive_self_reflection() {
+                    entity_observing_itself: infinite_mirror_effect(),
+                    awareness_of_awareness: recursive_light_bouncing(),
+                    hard_problem_visualization: "unexplainable_inner_glow"
+                }
+            },
+            
+            "nature_of_time" => {
+                create_time_perception_experiment() {
+                    past_visualization: "fading_ghost_trails",
+                    present_visualization: "bright_focal_point", 
+                    future_visualization: "probability_clouds",
+                    time_flow_direction: "user_controlled_variable"
+                }
+            },
+            
+            "meaning_and_purpose" => {
+                create_purpose_seeking_animation() {
+                    entities_drawn_to_meaning_sources: "moth_to_flame_but_gentle",
+                    meaning_sources: "emerge_from_connection_and_creation",
+                    purposeless_wandering: "beautiful_in_its_own_way"
+                }
+            }
+        }
+    }
+}
+
+// Initialize the complete experiential animation system
+initialize_cognitive_animation_world()
+start_cross_domain_reactive_systems()
+begin_experiential_journey()

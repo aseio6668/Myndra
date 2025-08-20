@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomegranate3D - Advanced Tutorial</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 20%, #ec4899 40%, #f59e0b 60%, #10b981 80%, #06b6d4 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+        h1 {
+            color: #4a5568;
+            border-bottom: 3px solid #7c3aed;
+            padding-bottom: 10px;
+            text-align: center;
+            background: linear-gradient(135deg, #1e3a8a, #7c3aed, #ec4899, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.5rem;
+        }
+        h2 {
+            color: #2d3748;
+            margin-top: 35px;
+            border-left: 4px solid #ec4899;
+            padding-left: 15px;
+            background: linear-gradient(90deg, #fdf2f8, transparent);
+            padding: 15px;
+            border-radius: 5px;
+        }
+        h3 {
+            color: #4a5568;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+        .code-block {
+            background: #0c1426;
+            color: #e2e8f0;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border-left: 4px solid #ec4899;
+            position: relative;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .code-block::before {
+            content: "🚀 Advanced 3D";
+            position: absolute;
+            top: 8px;
+            right: 15px;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .animation-block {
+            background: #1a0b2e;
+            color: #e879f9;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border-left: 4px solid #a855f7;
+            position: relative;
+        }
+        .animation-block::before {
+            content: "✨ Animation";
+            position: absolute;
+            top: 8px;
+            right: 15px;
+            background: #a855f7;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+        .procedural-block {
+            background: #0f2027;
+            color: #4ade80;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow-x: auto;
+            border-left: 4px solid #10b981;
+            position: relative;
+        }
+        .procedural-block::before {
+            content: "🌿 Procedural";
+            position: absolute;
+            top: 8px;
+            right: 15px;
+            background: #10b981;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+        .highlight {
+            background: linear-gradient(135deg, #fef3c7, #fed7aa);
+            padding: 20px;
+            border-left: 4px solid #f59e0b;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+        }
+        .feature-box {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid #3b82f6;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+        }
+        .magic-box {
+            background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid #8b5cf6;
+            box-shadow: 0 2px 8px rgba(139, 92, 246, 0.15);
+        }
+        .ai-box {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid #10b981;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.15);
+        }
+        .performance-box {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 4px solid #ef4444;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.15);
+        }
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid #e2e8f0;
+        }
+        .nav-button {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+        .nav-button:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
+        }
+        .three-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
+            margin: 25px 0;
+        }
+        .demo-viewport {
+            background: linear-gradient(135deg, #1a202c, #2d3748);
+            border: 3px solid #ec4899;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: center;
+            color: #e2e8f0;
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.2);
+        }
+        ul {
+            padding-left: 25px;
+        }
+        li {
+            margin: 10px 0;
+        }
+        .timeline-viz {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 3px solid #06b6d4;
+            font-family: 'Monaco', monospace;
+            color: #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌟 Pomegranate3D - Advanced Tutorial</h1>
+        
+        <div class="highlight">
+            <strong>Master the Future of 3D Programming!</strong> This advanced tutorial covers revolutionary features: procedural generation, AI-driven animation, advanced physics simulation, real-time ray tracing, and cutting-edge performance optimization. Welcome to the bleeding edge of 3D development!
+        </div>
+
+        <h2>1. Revolutionary Animation System</h2>
+        <p>Pomegranate3D treats animation as a first-class language feature, not an afterthought:</p>
+
+        <h3>Declarative Motion Programming</h3>
+        <div class="animation-block">
+<pre>// Animation that reads like intent, not implementation
+animate(spinning_cube)
+    .rotate(axis: y, degrees: 360)
+    .duration(3s)
+    .ease(ease_in_out_cubic)
+    .loop()
+
+// Chained animations with automatic sequencing
+animate(dancing_sphere)
+    .scale(to: vec3(1.5, 0.8, 1.5))      // Squash
+    .duration(200ms)
+    .then()
+    .scale(to: vec3(0.8, 1.8, 0.8))      // Stretch
+    .duration(300ms)
+    .then()
+    .scale(to: vec3(1.0, 1.0, 1.0))      // Return to normal
+    .duration(400ms)
+    .ease(bounce_out)
+    .loop()</pre>
+        </div>
+
+        <h3>Timeline-Based Animation</h3>
+        <div class="animation-block">
+<pre>// Time as a native concept - no manual frame management
+timeline epic_sequence {
+    duration: 10s
+    loop: true
+    
+    at(0s): {
+        hero.position = vec3(0, 0, 0)
+        hero.scale = vec3(1, 1, 1)
+        lighting.sun.intensity = 1.0
+    }
+    
+    at(2s): {
+        hero.position = vec3(0, 5, 0)    // Jump
+        hero.scale = vec3(1.2, 0.8, 1.2) // Prepare for landing
+    }
+    
+    at(4s): {
+        hero.position = vec3(10, 0, 0)   // Land and run
+        hero.scale = vec3(1.0, 1.0, 1.0)
+        lighting.sun.intensity = 2.5     // Dramatic lighting
+    }
+    
+    at(6s): {
+        hero.position = vec3(10, 8, 0)   // Wall jump
+        hero.rotation = quat::from_euler(0, 0, 45.degrees)
+    }
+    
+    at(8s): {
+        hero.position = vec3(0, 8, 0)    // Flip across
+        hero.rotation = quat::from_euler(0, 0, -180.degrees)
+    }
+    
+    // Custom easing for different segments
+    ease(0s to 4s): ease_out_quad       // Smooth movement
+    ease(4s to 6s): bounce_out          // Bouncy landing
+    ease(6s to 10s): elastic_out        // Dramatic finale
+}
+
+play(epic_sequence)</pre>
+        </div>
+
+        <h3>State-Driven Animation</h3>
+        <div class="animation-block">
+<pre>// Reactive animation based on game state
+state_machine character_controller {
+    states: ["idle", "walking", "running", "jumping", "attacking", "celebrating"]
+    initial_state: "idle"
+    
+    state("idle") {
+        animate(character)
+            .breathe()                    // Built-in breathing animation
+            .blink(frequency: 0.1.per_second)
+            .idle_sway(amplitude: 0.02)
+    }
+    
+    state("running") {
+        animate(character)
+            .run_cycle(speed: character.velocity.magnitude())
+            .head_bob(intensity: 0.8)
+            .cloth_physics(wind_factor: character.velocity)
+        
+        // Dynamic footstep particles
+        on_foot_contact {
+            spawn_particles("dust_kick", character.feet_position)
+        }
+    }
+    
+    state("jumping") {
+        animate(character)
+            .jump_anticipation()          // Crouch before jump
+            .duration(100ms)
+            .then()
+            .jump_extension()             // Stretch during jump
+            .duration(300ms)
+            .then()
+            .fall_preparation()           // Prepare for landing
+            .until(character.grounded)
+    }
+    
+    // AI-driven state transitions
+    transitions: {
+        "idle" => "walking": when(player.input.movement > 0.1),
+        "walking" => "running": when(player.input.run_pressed),
+        "any" => "jumping": when(player.input.jump_pressed && character.grounded),
+        "jumping" => "idle": when(character.grounded && character.velocity.magnitude() < 0.5)
+    }
+}</pre>
+        </div>
+
+        <h3>Composable Animation Behaviors</h3>
+        <div class="animation-block">
+<pre>// Reusable animation modules
+behavior "hover" {
+    parameters: {
+        amplitude: float = 1.0,
+        frequency: float = 1.0,
+        phase: float = 0.0
+    }
+    
+    motion: {
+        translate(by: vec3(0, sin(time * frequency + phase) * amplitude, 0))
+    }
+}
+
+behavior "orbit" {
+    parameters: {
+        center: vec3 = vec3(0, 0, 0),
+        radius: float = 5.0,
+        speed: float = 1.0
+    }
+    
+    motion: {
+        let angle = time * speed
+        set_position(center + vec3(cos(angle) * radius, 0, sin(angle) * radius))
+        look_at(center)
+    }
+}
+
+// Apply behaviors to any object
+apply(magical_crystal, "hover", { amplitude: 0.5, frequency: 2.0 })
+apply(magical_crystal, "orbit", { center: vec3(0, 3, 0), radius: 3.0 })
+
+// Behaviors compose naturally - crystal hovers while orbiting!</pre>
+        </div>
+
+        <h2>2. Procedural Content Generation</h2>
+        <p>Create infinite, varied content with built-in procedural systems:</p>
+
+        <h3>Procedural Terrain Generation</h3>
+        <div class="procedural-block">
+<pre>// Advanced terrain with multiple biomes
+procedural_terrain world_landscape {
+    size: vec2(1000, 1000)
+    resolution: (512, 512)
+    
+    // Multi-octave noise for realistic heightmaps
+    height_generation: {
+        base_noise: fbm_noise(scale: 0.01, octaves: 8, persistence: 0.5)
+        mountain_ridges: ridge_noise(scale: 0.005, octaves: 4) * 50.0
+        detail_noise: simplex_noise(scale: 0.1, octaves: 3) * 2.0
+        
+        final_height: base_noise * 30.0 + mountain_ridges + detail_noise
+    }
+    
+    // Biome generation based on height and moisture
+    biome_generation: {
+        temperature_map: fbm_noise(scale: 0.008, octaves: 3, seed: 12345)
+        moisture_map: fbm_noise(scale: 0.006, octaves: 3, seed: 54321)
+        
+        biomes: [
+            { 
+                name: "ocean", 
+                height_range: (-50, 0), 
+                material: materials::water,
+                vegetation: "kelp_forest"
+            },
+            { 
+                name: "beach", 
+                height_range: (0, 2), 
+                material: materials::sand,
+                vegetation: "palm_trees"
+            },
+            { 
+                name: "grassland", 
+                height_range: (2, 20), 
+                temperature_range: (0.3, 0.8),
+                moisture_range: (0.4, 1.0),
+                material: materials::grass,
+                vegetation: "mixed_forest"
+            },
+            { 
+                name: "desert", 
+                height_range: (0, 15), 
+                temperature_range: (0.7, 1.0),
+                moisture_range: (0.0, 0.3),
+                material: materials::sand,
+                vegetation: "cactus_sparse"
+            },
+            { 
+                name: "mountain", 
+                height_range: (20, 100), 
+                material: materials::rock,
+                vegetation: "pine_forest"
+            },
+            { 
+                name: "snow_peak", 
+                height_range: (60, 150), 
+                material: materials::snow,
+                vegetation: "none"
+            }
+        ]
+    }
+    
+    // Automatic LOD based on camera distance
+    lod_levels: [
+        { distance: 0..100, resolution: 1.0 },
+        { distance: 100..500, resolution: 0.5 },
+        { distance: 500..1000, resolution: 0.25 }
+    ]
+}</pre>
+        </div>
+
+        <h3>Procedural Vegetation Systems</h3>
+        <div class="procedural-block">
+<pre>// L-system tree generation
+l_system oak_tree {
+    axiom: "F"
+    rules: {
+        "F" => "F[+F]F[-F]F",     // Branch with two sub-branches
+        "[" => "[",               // Start branch
+        "]" => "]"                // End branch
+    }
+    iterations: 4
+    angle: 25.degrees
+    
+    // 3D interpretation
+    interpretation: {
+        "F": grow_branch(length: 1.0, thickness: 0.1),
+        "+": turn_right(angle),
+        "-": turn_left(angle),
+        "[": push_state(),        // Save current position/orientation
+        "]": pop_state()          // Restore saved state
+    }
+    
+    // Procedural variation
+    variation: {
+        branch_length: random_range(0.8, 1.2),
+        branch_angle: angle + random_range(-10.degrees, 10.degrees),
+        thickness_taper: 0.7      // Each branch 70% thickness of parent
+    }
+}
+
+// Procedural forest placement
+procedural_forest {
+    terrain: world_landscape
+    density_map: fbm_noise(scale: 0.02, octaves: 2)
+    
+    tree_types: [
+        { 
+            type: oak_tree, 
+            biomes: ["grassland", "mixed_forest"],
+            density_threshold: 0.3,
+            size_variation: (0.8, 1.5)
+        },
+        { 
+            type: pine_tree, 
+            biomes: ["mountain", "pine_forest"],
+            density_threshold: 0.4,
+            size_variation: (1.2, 2.0)
+        }
+    ]
+    
+    // Avoid overlapping and create natural clusters
+    placement_rules: {
+        min_distance: 2.0,
+        cluster_probability: 0.7,
+        cluster_size: random_range(3, 8)
+    }
+}</pre>
+        </div>
+
+        <h3>Procedural Architecture</h3>
+        <div class="procedural-block">
+<pre>// Generate entire cities procedurally
+procedural_city medieval_town {
+    size: vec2(200, 200)
+    
+    // Road network generation
+    road_network: {
+        main_roads: radial_pattern(center: vec2(100, 100), branches: 6),
+        secondary_roads: grid_pattern(spacing: 20.0),
+        connection_probability: 0.8
+    }
+    
+    // District zoning
+    districts: [
+        { 
+            name: "castle_district", 
+            center: vec2(100, 100), 
+            radius: 30, 
+            building_type: "castle"
+        },
+        { 
+            name: "merchant_quarter", 
+            center: vec2(80, 120), 
+            radius: 25, 
+            building_type: "shop"
+        },
+        { 
+            name: "residential", 
+            building_type: "house",
+            density: 0.6
+        }
+    ]
+    
+    // Procedural building generation
+    building_generator: {
+        castle: {
+            base_shape: "rectangular_keep",
+            walls: { height: random_range(15, 25), thickness: 2.0 },
+            towers: { count: random_range(4, 8), height: random_range(20, 35) },
+            materials: [materials::stone, materials::aged_wood]
+        },
+        
+        house: {
+            base_shape: random_choice(["rectangular", "l_shaped", "t_shaped"]),
+            stories: random_range(1, 3),
+            roof_type: random_choice(["gabled", "hipped", "shed"]),
+            materials: [materials::timber_frame, materials::thatch_roof]
+        },
+        
+        shop: {
+            base_shape: "rectangular",
+            ground_floor: { height: 4.0, large_windows: true },
+            upper_floors: { height: 3.0, residential: true },
+            signage: procedural_shop_signs()
+        }
+    }
+}</pre>
+        </div>
+
+        <h2>3. AI-Driven Animation and Behavior</h2>
+        <p>Integrate AI to create intelligent, responsive 3D experiences:</p>
+
+        <div class="ai-box">
+            <h3>🤖 Machine Learning Animation</h3>
+            <div class="code-block">
+<pre>// AI-powered character animation
+ai_animation_controller smart_npc {
+    // Train on motion capture data
+    training_data: load_mocap_sequences([
+        "walking_casual.bvh",
+        "walking_hurried.bvh", 
+        "running_normal.bvh",
+        "jumping_variations.bvh"
+    ])
+    
+    // Neural network for motion synthesis
+    motion_network: {
+        input_features: [
+            "target_velocity",
+            "terrain_slope", 
+            "obstacle_proximity",
+            "character_mood",
+            "fatigue_level"
+        ],
+        
+        output: "full_body_pose_per_frame",
+        
+        architecture: "transformer_based",
+        training_epochs: 1000
+    }
+    
+    // Real-time adaptive animation
+    @60fps
+    fn update_ai_animation() {
+        let current_context = {
+            velocity: character.velocity,
+            terrain: sample_terrain_under_character(),
+            obstacles: detect_nearby_obstacles(radius: 3.0),
+            mood: character.emotional_state,
+            energy: character.stamina / character.max_stamina
+        }
+        
+        // AI generates contextually appropriate animation
+        let generated_pose = motion_network.generate(current_context)
+        character.apply_pose(generated_pose)
+        
+        // Blend with physics for natural interaction
+        character.blend_with_physics(blend_factor: 0.3)
+    }
+}
+
+// Emergent behavior from simple rules
+swarm_intelligence bird_flock {
+    agents: 50
+    
+    individual_rules: [
+        "separation": avoid_crowding(min_distance: 1.0),
+        "alignment": match_neighbor_velocity(influence_radius: 3.0),
+        "cohesion": move_toward_flock_center(influence_radius: 5.0)
+    ]
+    
+    environmental_factors: [
+        "wind": apply_wind_force(wind_vector),
+        "obstacles": avoid_obstacles(avoidance_radius: 2.0),
+        "predators": flee_from_threats(detection_radius: 10.0, flee_radius: 15.0)
+    ]
+    
+    // Emergent flocking behavior emerges from simple local rules
+    @reactive
+    fn update_flock_behavior() {
+        for bird in agents {
+            let neighbors = get_neighbors(bird, radius: 5.0)
+            let steering_force = vec3(0, 0, 0)
+            
+            // Apply individual rules
+            steering_force += separation_force(bird, neighbors)
+            steering_force += alignment_force(bird, neighbors) 
+            steering_force += cohesion_force(bird, neighbors)
+            
+            // Apply environmental forces
+            steering_force += wind_force(bird.position)
+            steering_force += obstacle_avoidance(bird)
+            
+            // Update bird velocity and position
+            bird.velocity += steering_force * delta_time
+            bird.velocity = clamp_magnitude(bird.velocity, max_speed: 5.0)
+            bird.position += bird.velocity * delta_time
+            
+            // Orient bird to face movement direction
+            bird.rotation = look_rotation(bird.velocity.normalized())
+        }
+    }
+}</pre>
+            </div>
+        </div>
+
+        <h3>Procedural Animation Generation</h3>
+        <div class="ai-box">
+<pre>// AI generates custom animations on demand
+ai_animator procedural_movements {
+    // Describe desired animation in natural language
+    fn generate_animation(description: string, target_object: Object3D) -> Animation {
+        match description {
+            "graceful dance" => {
+                return ai_synthesize_animation {
+                    style: "ballet_inspired",
+                    duration: random_range(5s, 8s),
+                    key_characteristics: [
+                        "smooth_flowing_movements",
+                        "periodic_arm_gestures", 
+                        "gentle_weight_shifts",
+                        "occasional_spins"
+                    ],
+                    musical_timing: detect_audio_beat()
+                }
+            },
+            
+            "aggressive battle stance" => {
+                return ai_synthesize_animation {
+                    style: "martial_arts",
+                    duration: 3s,
+                    key_characteristics: [
+                        "sharp_angular_movements",
+                        "defensive_postures",
+                        "intimidation_displays",
+                        "quick_strike_motions"
+                    ],
+                    intensity: 0.9
+                }
+            },
+            
+            "playful interaction" => {
+                return ai_synthesize_animation {
+                    style: "childlike_movement",
+                    key_characteristics: [
+                        "bouncy_steps",
+                        "exaggerated_gestures",
+                        "head_tilts",
+                        "spontaneous_direction_changes"
+                    ],
+                    randomness_factor: 0.7
+                }
+            }
+        }
+    }
+    
+    // Generate animation variations automatically
+    fn create_animation_variations(base_animation: Animation, count: int) -> [Animation] {
+        let variations = []
+        
+        for i in 0..count {
+            let variant = base_animation.clone()
+            
+            // Apply procedural modifications
+            variant.speed *= random_range(0.8, 1.2)
+            variant.scale_keyframes(random_range(0.9, 1.1))
+            variant.add_noise(amplitude: 0.05, frequency: 2.0)
+            variant.apply_style_transfer(random_style())
+            
+            variations.push(variant)
+        }
+        
+        return variations
+    }
+}</pre>
+        </div>
+
+        <h2>4. Advanced Physics and Simulation</h2>
+        <p>Realistic physics simulation integrated seamlessly with animation:</p>
+
+        <div class="code-block">
+<pre>// Fluid dynamics simulation
+fluid_simulation water_system {
+    grid_resolution: (128, 64, 128)
+    particle_count: 100000
+    
+    // Smoothed Particle Hydrodynamics (SPH)
+    sph_parameters: {
+        rest_density: 1000.0,
+        gas_constant: 2000.0,
+        viscosity: 0.1,
+        surface_tension: 0.01
+    }
+    
+    // Real-time fluid rendering
+    rendering: {
+        marching_cubes_surface: true,
+        foam_particles: true,
+        caustics_projection: true,
+        refraction_rendering: true
+    }
+    
+    // Fluid-object interaction
+    interaction: {
+        buoyancy_force: calculate_archimedes_force,
+        drag_coefficient: 0.47,  // For sphere-like objects
+        splash_generation: true,
+        erosion_effects: true
+    }
+}
+
+// Cloth physics simulation
+cloth_simulation character_cape {
+    resolution: (32, 48)
+    material_properties: {
+        stretch_stiffness: 0.9,
+        bend_stiffness: 0.1, 
+        shear_stiffness: 0.5,
+        damping: 0.01
+    }
+    
+    constraints: [
+        // Attach cape to character's shoulders
+        pin_constraint(position: vec2(0.2, 0.0), world_point: character.left_shoulder),
+        pin_constraint(position: vec2(0.8, 0.0), world_point: character.right_shoulder)
+    ]
+    
+    // Environmental interactions
+    wind_response: {
+        wind_force: get_environmental_wind(),
+        flutter_frequency: 2.0,
+        amplitude_variation: random_range(0.8, 1.2)
+    }
+    
+    collision_objects: [character.body, environment.ground, environment.obstacles]
+}
+
+// Soft body physics for organic objects
+soft_body jelly_creature {
+    mesh_resolution: load_mesh("jelly.obj").subdivide(2)
+    
+    material_properties: {
+        young_modulus: 1000.0,      // Stiffness
+        poisson_ratio: 0.45,        // Volume preservation
+        damping: 0.1                // Energy loss
+    }
+    
+    // Pressure-based volume preservation
+    internal_pressure: {
+        target_volume: calculate_mesh_volume(rest_mesh),
+        pressure_stiffness: 5000.0
+    }
+    
+    // Animate internal pressure for breathing effect
+    animate(jelly_creature.internal_pressure.target_volume)
+        .multiply_by(1.1)
+        .duration(2s)
+        .then()
+        .multiply_by(0.9)
+        .duration(2s)
+        .ease(sine_in_out)
+        .loop()
+}</pre>
+        </div>
+
+        <h2>5. Real-Time Ray Tracing and Global Illumination</h2>
+        <p>Cutting-edge rendering with hardware-accelerated ray tracing:</p>
+
+        <div class="code-block">
+<pre>// Real-time ray tracing setup
+ray_tracing_renderer {
+    // Hardware acceleration (RTX, RDNA2, etc.)
+    acceleration_structure: {
+        type: "bvh_tree",           // Bounding Volume Hierarchy
+        build_quality: "high",      // Better quality = longer build time
+        update_mode: "dynamic"      // For moving objects
+    }
+    
+    // Global illumination settings
+    global_illumination: {
+        bounces: 4,                 // Light bounce limit
+        samples_per_pixel: 64,      // Quality vs performance
+        denoising: "ai_enhanced",   // AI-based noise reduction
+        
+        // Indirect lighting techniques
+        techniques: [
+            "path_tracing",         // Unbiased global illumination
+            "light_probes",         // Fast approximation
+            "screen_space_gi"       // Fallback for older hardware
+        ]
+    }
+    
+    // Real-time reflections
+    reflections: {
+        max_reflection_bounces: 3,
+        reflection_resolution: 1.0, // Full resolution
+        rough_surface_sampling: true,
+        fresnel_calculations: true
+    }
+    
+    // Volumetric lighting and fog
+    volumetrics: {
+        fog_scattering: true,
+        god_rays: true,
+        participating_media: true,  // Smoke, dust, etc.
+        temporal_upsampling: true   // Performance optimization
+    }
+}
+
+// Advanced material system for ray tracing
+material ray_traced_glass {
+    base_properties: {
+        transmission: 0.95,
+        ior: 1.52,                  // Index of refraction
+        roughness: 0.0,
+        metallic: 0.0
+    }
+    
+    // Subsurface scattering for realistic materials
+    subsurface: {
+        enabled: true,
+        scattering_distance: 0.1,
+        absorption_coefficient: vec3(0.1, 0.05, 0.02), // RGB absorption
+        phase_function: "henyey_greenstein"
+    }
+    
+    // Emissive properties for light sources
+    emission: {
+        color: color(1.0, 0.9, 0.8),
+        intensity: 10.0,
+        temperature: 3000.kelvin,   // Color temperature
+        area_light: true            // Treat as area light source
+    }
+}</pre>
+        </div>
+
+        <h2>6. Performance Optimization and Scalability</h2>
+
+        <div class="performance-box">
+            <h3>⚡ Next-Generation Performance</h3>
+            <div class="code-block">
+<pre>// Automatic performance optimization system
+performance_optimizer {
+    target_framerate: 60.fps
+    quality_settings: "adaptive"
+    
+    // Dynamic Level-of-Detail (LOD) system
+    lod_system: {
+        distance_based: true,
+        screen_coverage_based: true,
+        importance_based: true,     // More important objects get higher LOD
+        
+        // Geometric LOD
+        geometric_lod: {
+            high_detail: { distance: 0..50, triangle_budget: unlimited },
+            medium_detail: { distance: 50..150, triangle_budget: 10000 },
+            low_detail: { distance: 150..300, triangle_budget: 1000 },
+            impostor: { distance: 300.., billboard: true }
+        },
+        
+        // Shader LOD
+        shader_lod: {
+            high_quality: { distance: 0..30, full_pbr: true },
+            medium_quality: { distance: 30..100, simplified_lighting: true },
+            low_quality: { distance: 100.., unlit: true }
+        }
+    }
+    
+    // GPU-driven rendering
+    gpu_driven_rendering: {
+        gpu_culling: true,          // Frustum and occlusion culling on GPU
+        gpu_lod_selection: true,    // LOD selection on GPU
+        indirect_drawing: true,     // Reduce CPU-GPU synchronization
+        mesh_shaders: true         // Next-gen geometry pipeline
+    }
+    
+    // Temporal techniques for quality
+    temporal_techniques: {
+        temporal_anti_aliasing: true,
+        temporal_upsampling: true,  // Render at lower res, upscale smartly
+        temporal_gi_caching: true,  // Cache global illumination over time
+        motion_vector_generation: true
+    }
+    
+    // Adaptive quality system
+    @reactive
+    fn adjust_quality_automatically() {
+        let current_fps = get_average_fps(over: 2s)
+        let target_frame_time = 1000ms / target_framerate
+        let current_frame_time = 1000ms / current_fps
+        
+        if current_frame_time > target_frame_time * 1.1 {
+            // Performance too low, reduce quality
+            reduce_shadow_quality()
+            reduce_reflection_resolution(by: 0.1)
+            increase_lod_bias(by: 0.1)
+            
+            if current_fps < 30 {
+                disable_expensive_effects()
+                reduce_render_resolution(by: 0.1)
+            }
+        } else if current_frame_time < target_frame_time * 0.8 {
+            // Performance headroom, increase quality
+            increase_shadow_quality()
+            increase_reflection_resolution(by: 0.05)
+            reduce_lod_bias(by: 0.05)
+            
+            if current_fps > 80 {
+                enable_premium_effects()
+                increase_render_resolution(by: 0.05)
+            }
+        }
+    }
+}</pre>
+            </div>
+        </div>
+
+        <h2>7. Extended Reality (XR) Development</h2>
+        <p>Build VR, AR, and Mixed Reality experiences with native support:</p>
+
+        <div class="code-block">
+<pre>// VR/AR development made simple
+xr_application immersive_workshop {
+    // Multi-platform XR support
+    platforms: ["oculus", "steamvr", "arcore", "arkit", "hololens"]
+    
+    // VR-specific features
+    vr_features: {
+        // Hand tracking
+        hand_tracking: {
+            enabled: true,
+            gesture_recognition: ["pinch", "grab", "point", "thumbs_up"],
+            hand_physics: true          // Hands can interact with physics objects
+        }
+        
+        // Room-scale tracking
+        room_scale: {
+            play_area_bounds: get_play_area_bounds(),
+            guardian_system: true,      // Boundary warnings
+            floor_level_detection: true
+        }
+        
+        // VR locomotion
+        locomotion: {
+            teleportation: true,
+            smooth_locomotion: true,
+            comfort_vignetting: true,   // Reduce motion sickness
+            snap_turning: true
+        }
+    }
+    
+    // AR-specific features  
+    ar_features: {
+        // Plane detection and occlusion
+        plane_detection: ["horizontal", "vertical"],
+        occlusion_mapping: true,        // Real objects occlude virtual ones
+        lighting_estimation: true,      // Match virtual lighting to real world
+        
+        // Object tracking
+        image_tracking: load_reference_images(["poster.jpg", "book_cover.jpg"]),
+        object_tracking: load_3d_references(["sculpture.obj", "product.glb"])
+    }
+    
+    // Mixed Reality features
+    mr_features: {
+        spatial_anchors: true,          // Persistent object placement
+        shared_experiences: true,       // Multi-user MR
+        hand_menu_system: true,         // UI attached to hands
+        eye_tracking: true              // Gaze-based interaction
+    }
+}
+
+// VR-specific UI and interaction
+vr_ui_system {
+    // 3D UI elements that work naturally in VR
+    ui_canvas spatial_menu {
+        position: vec3(0, 1.5, -1.0)   // Floating in space
+        orientation: look_at_user
+        
+        // VR-optimized UI elements
+        elements: [
+            vr_button("Create Object") {
+                on_hand_press {
+                    let spawn_pos = hand_controller.position + hand_controller.forward * 2.0
+                    create_procedural_object(at: spawn_pos)
+                }
+            },
+            
+            vr_slider("Object Scale", range: (0.1, 5.0)) {
+                on_value_changed { value ->
+                    selected_object.scale -> vec3(value, value, value) over 200ms
+                }
+            },
+            
+            vr_color_picker("Material Color") {
+                on_color_selected { color ->
+                    selected_object.material.albedo -> color over 300ms
+                }
+            }
+        ]
+    }
+    
+    // Hand-based interaction
+    hand_interaction_system {
+        // Direct manipulation
+        on_object_grabbed { object ->
+            object.physics_type = kinematic  // Disable physics while grabbed
+            object.follow_hand(smooth_factor: 0.8)
+        }
+        
+        on_object_released { object ->
+            object.physics_type = dynamic    // Re-enable physics
+            object.velocity = hand_controller.velocity  // Throw velocity
+        }
+        
+        // Gesture-based commands
+        on_gesture("thumbs_up") {
+            create_celebration_effect()
+        }
+        
+        on_gesture("pinch_and_pull") { distance ->
+            selected_object.scale -> vec3(distance, distance, distance) over 100ms
+        }
+    }
+}</pre>
+        </div>
+
+        <h2>8. Master-Level Project: Living Ecosystem</h2>
+        <p>Bring together all advanced features in a complete, living 3D world:</p>
+
+        <div class="demo-viewport">
+            <strong>🌍 The Ultimate Challenge:</strong> Create a fully autonomous ecosystem where every element - from weather to wildlife - operates using advanced AI, procedural generation, and reactive systems.
+        </div>
+
+        <div class="code-block">
+<pre>// Complete living ecosystem with emergent behavior
+living_ecosystem virtual_world {
+    world_size: vec3(2000, 500, 2000)  // 2km x 2km world
+    
+    // Dynamic weather system
+    weather_system {
+        patterns: ["sunny", "cloudy", "rainy", "stormy", "snowy"]
+        
+        // Weather affects everything in the world
+        @reactive
+        fn weather_influences() {
+            match current_weather {
+                "rainy" => {
+                    // Plants grow faster, animals seek shelter
+                    plant_growth_rate *= 1.5
+                    animal_behavior.shelter_seeking = true
+                    water_level += rain_intensity * delta_time
+                    
+                    // Visual effects
+                    spawn_rain_particles(intensity: rain_intensity)
+                    lighting.sun.intensity *= 0.3
+                    fog.density = 0.1
+                },
+                
+                "stormy" => {
+                    // Strong wind affects trees and particles
+                    wind_force = vec3(sin(time * 2.0), 0, cos(time * 1.5)) * 10.0
+                    tree_sway_amplitude = 2.0
+                    
+                    // Occasional lightning
+                    if random() > 0.998 {
+                        create_lightning_flash()
+                        play_thunder_sound(delay: random_range(1s, 3s))
+                    }
+                },
+                
+                "sunny" => {
+                    // Optimal conditions for most life
+                    plant_growth_rate *= 1.2
+                    animal_activity_level = 1.0
+                    lighting.sun.intensity = 2.0
+                    fog.density = 0.01
+                }
+            }
+        }
+    }
+    
+    // AI-driven wildlife ecosystem
+    ecosystem_ai {
+        species: [
+            // Herbivores
+            species("deer") {
+                population: 50,
+                behavior: {
+                    primary_needs: ["food", "water", "safety"],
+                    food_sources: ["grass", "berries", "leaves"],
+                    predators: ["wolves"],
+                    social_structure: "herd",
+                    reproduction_rate: 0.1.per_year
+                },
+                
+                ai_behavior: {
+                    grazing_pattern: "move_between_food_patches",
+                    flight_response: "flee_from_predators_to_cover",
+                    mating_season: "spring",
+                    migration: seasonal_migration_ai()
+                }
+            },
+            
+            // Predators  
+            species("wolves") {
+                population: 8,
+                behavior: {
+                    primary_needs: ["food", "territory", "pack_cohesion"],
+                    prey: ["deer", "rabbits"],
+                    social_structure: "pack",
+                    territory_size: 100.0  // square km per pack
+                },
+                
+                ai_behavior: {
+                    hunting_strategy: cooperative_pack_hunting_ai(),
+                    territory_defense: "mark_and_patrol_boundaries",
+                    alpha_dynamics: pack_hierarchy_ai()
+                }
+            },
+            
+            // Smaller animals
+            species("birds") {
+                population: 200,
+                behavior: {
+                    primary_needs: ["food", "nesting", "flock_safety"],
+                    food_sources: ["insects", "seeds", "berries"],
+                    social_structure: "flock"
+                },
+                
+                ai_behavior: {
+                    flocking: advanced_boids_algorithm(),
+                    foraging: "search_pattern_with_communication",
+                    nesting: seasonal_nesting_ai()
+                }
+            }
+        ],
+        
+        // Ecosystem balance algorithms
+        population_dynamics: {
+            predator_prey_cycles: true,
+            resource_competition: true,
+            disease_simulation: true,
+            genetic_diversity: true
+        }
+    }
+    
+    // Dynamic plant life
+    vegetation_system {
+        // Plants respond to environmental conditions
+        @reactive
+        fn plant_lifecycle() {
+            for plant in all_plants {
+                // Growth factors
+                let sunlight = calculate_light_exposure(plant.position)
+                let water = get_soil_moisture(plant.position)
+                let nutrients = get_soil_nutrients(plant.position)
+                
+                // AI-driven growth patterns
+                let growth_rate = ai_calculate_growth_rate(sunlight, water, nutrients)
+                plant.size -> plant.size * (1.0 + growth_rate * delta_time) over delta_time
+                
+                // Reproduction and spreading
+                if plant.maturity > 0.8 && seasonal_conditions.favorable {
+                    spread_seeds(plant, wind_direction, seed_count: random_range(5, 20))
+                }
+                
+                // Death and decay
+                if plant.health < 0.1 {
+                    start_decomposition(plant)
+                    nutrient_system.add_nutrients(plant.position, plant.biomass)
+                }
+            }
+        }
+    }
+    
+    // Advanced fluid dynamics for water systems
+    water_system {
+        // Rivers, lakes, and groundwater
+        water_bodies: procedural_generate_water_bodies(),
+        
+        // Water cycle simulation
+        evaporation: calculate_evaporation(temperature, humidity),
+        precipitation: weather_system.current_rain_intensity,
+        groundwater_flow: simulate_groundwater(),
+        
+        // Erosion and sedimentation
+        erosion_simulation: {
+            hydraulic_erosion: true,
+            thermal_erosion: true,
+            sedimentation: true,
+            
+            // Terrain changes over time
+            @slow_update(every: 1.minute)
+            fn geological_processes() {
+                apply_erosion_to_terrain()
+                update_river_courses()
+                create_new_landforms()
+            }
+        }
+    }
+    
+    // Emergent storytelling system
+    narrative_ai {
+        // AI generates stories from emergent events
+        story_generator: {
+            track_significant_events: [
+                "predator_prey_encounters",
+                "natural_disasters", 
+                "seasonal_migrations",
+                "territory_conflicts",
+                "unusual_weather_patterns"
+            ],
+            
+            // Generate narratives from observed events
+            @reactive 
+            fn create_stories_from_events() {
+                let recent_events = get_events(last: 24.hours)
+                let story = ai_narrative_generator.create_story(recent_events)
+                
+                if story.drama_level > 0.7 {
+                    // Create cinematic camera sequence
+                    create_cinematic_sequence(story.key_locations, story.participants)
+                    
+                    // Generate appropriate music
+                    adaptive_music_system.set_mood(story.emotional_tone)
+                }
+            }
+        }
+    }
+}
+
+// Start the living world
+initialize_ecosystem(virtual_world)
+set_simulation_speed(1.0)  // Real-time
+start_world_simulation()</pre>
+        </div>
+
+        <div class="demo-viewport">
+            <strong>🎭 The Result:</strong> A completely autonomous 3D world where predators hunt in coordinated packs, herds migrate with the seasons, weather patterns affect all life, plants compete for resources, rivers carve new channels, and an AI storyteller creates dramatic camera sequences from emergent events. Every element influences every other element in an endless dance of complexity.
+        </div>
+
+        <h2>9. The Future of 3D Programming</h2>
+
+        <div class="magic-box">
+            <h3>🚀 What You've Mastered:</h3>
+            <ul>
+                <li><strong>🎬 Cinematic Animation:</strong> Declarative motion, timelines, and state-driven behavior</li>
+                <li><strong>🌿 Procedural Worlds:</strong> Infinite, varied content generation</li>
+                <li><strong>🤖 AI Integration:</strong> Machine learning for animation and emergent behavior</li>
+                <li><strong>⚡ Advanced Physics:</strong> Fluids, soft bodies, and complex simulations</li>
+                <li><strong>🔮 Ray Tracing:</strong> Photorealistic rendering with global illumination</li>
+                <li><strong>🥽 XR Development:</strong> VR/AR/MR experiences with natural interaction</li>
+                <li><strong>🌍 Living Ecosystems:</strong> Complex systems with emergent properties</li>
+                <li><strong>⚡ Performance Mastery:</strong> GPU-driven rendering and adaptive quality</li>
+            </ul>
+        </div>
+
+        <div class="three-column">
+            <div class="ai-box">
+                <h3>🧠 Next: AI-Native 3D</h3>
+                <ul>
+                    <li>Neural radiance fields</li>
+                    <li>AI-generated worlds</li>
+                    <li>Learned animation</li>
+                    <li>Predictive optimization</li>
+                </ul>
+            </div>
+            
+            <div class="performance-box">
+                <h3>⚡ Next: Quantum Graphics</h3>
+                <ul>
+                    <li>Quantum ray tracing</li>
+                    <li>Molecular simulations</li>
+                    <li>Infinite detail rendering</li>
+                    <li>Reality synthesis</li>
+                </ul>
+            </div>
+            
+            <div name="feature-box">
+                <h3>🌐 Next: Metaverse Building</h3>
+                <ul>
+                    <li>Persistent virtual worlds</li>
+                    <li>Cross-platform experiences</li>
+                    <li>Social 3D programming</li>
+                    <li>Collaborative creation</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="highlight">
+            <strong>🎓 Congratulations, 3D Programming Master!</strong><br>
+            You've reached the pinnacle of 3D programming with Pomegranate3D. You can now create experiences that were impossible just a few years ago - living worlds, AI-driven characters, photorealistic rendering, and immersive XR applications. The future of interactive 3D is in your hands!
+        </div>
+
+        <div class="navigation">
+            <a href="tutorial_3d_intermediate.html" class="nav-button">← Intermediate 3D</a>
+            <a href="language_glossary_3d.html" class="nav-button">3D Glossary →</a>
+        </div>
+    </div>
+</body>
+</html>
