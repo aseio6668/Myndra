@@ -1,4 +1,4 @@
-# Pomegranate Language Reference
+# Myndra Language Reference
 
 ## Table of Contents
 
@@ -18,7 +18,7 @@
 
 ## Language Philosophy
 
-Pomegranate is designed to be:
+Myndra is designed to be:
 
 - **Context-Aware**: Code adapts to execution environment
 - **Live and Dynamic**: Functions can be modified at runtime
@@ -32,7 +32,7 @@ Pomegranate is designed to be:
 
 ### Variables and Constants
 
-```pomegranate
+```myndra
 let mutable_var = 42
 let immutable_const: const int = 100
 let inferred_type = "Hello"  // Type inferred as string
@@ -44,7 +44,7 @@ let position: evolving<float> = 0.0
 
 ### Functions
 
-```pomegranate
+```myndra
 fn greet(name: string) -> string {
     return "Hello, " + name + "!"
 }
@@ -69,7 +69,7 @@ fn process_data(items: [Item]) -> [ProcessedItem] {
 
 ### Control Flow
 
-```pomegranate
+```myndra
 if condition {
     // if block
 } else if other_condition {
@@ -95,7 +95,7 @@ for i in 0..10 {
 
 Code can adapt based on execution context without external configuration:
 
-```pomegranate
+```myndra
 import std::logging with capabilities("write")
 
 fn process_request(request: Request) -> Response {
@@ -131,7 +131,7 @@ fn process_request(request: Request) -> Response {
 
 Capsules are live, editable code blocks that can be modified at runtime:
 
-```pomegranate
+```myndra
 #tag:ui
 capsule user_profile {
     fn render(user: User) -> Element {
@@ -163,7 +163,7 @@ fn update_user_profile() {
 
 Built-in reactive primitives for data flows and event-driven systems:
 
-```pomegranate
+```myndra
 import std::reactive with capabilities("observe", "emit")
 
 @reactive
@@ -212,7 +212,7 @@ fn counter_component() {
 
 Variables that evolve over time, perfect for animations and state transitions:
 
-```pomegranate
+```myndra
 import std::temporal with capabilities("interpolate")
 
 fn create_animation() {
@@ -263,7 +263,7 @@ fn physics_ball() {
 
 Modules declare their required permissions, providing fine-grained security:
 
-```pomegranate
+```myndra
 // Import with specific capabilities
 import net::http with capabilities("fetch", "post")
 import fs::file with capabilities("read")
@@ -307,7 +307,7 @@ fn process_file(filename: string) {
 
 Native support for DIDs and zero-knowledge proofs:
 
-```pomegranate
+```myndra
 import did::core with capabilities("verify", "resolve")
 import crypto::zk with capabilities("prove", "verify")
 
@@ -359,9 +359,9 @@ fn verify_eligibility(user_did: string) -> bool {
 
 ## Inline DSL Blocks
 
-Embed domain-specific languages directly in Pomegranate code:
+Embed domain-specific languages directly in Myndra code:
 
-```pomegranate
+```myndra
 import graphics::shader with capabilities("compile", "execute")
 import db::sql with capabilities("query")
 import markup::html with capabilities("render")
@@ -442,7 +442,7 @@ fn get_component_styles() -> Styles {
 
 Built-in fallback strategies and automatic error recovery:
 
-```pomegranate
+```myndra
 // Function with multiple fallback strategies
 fn fetch_user_data(user_id: string) -> User
     fallback retry(3) or return cached_user(user_id) or return default_user() {
@@ -500,7 +500,7 @@ fn process_payment(payment: Payment) -> PaymentResult
 
 Use semantic tags for better code organization and navigation:
 
-```pomegranate
+```myndra
 #tag:auth
 fn login(credentials: Credentials) -> Session? {
     // Authentication logic
@@ -560,7 +560,7 @@ fn handle_sensitive_data(data: SensitiveData) -> ProcessedData {
 
 Hash-based package system with semantic understanding:
 
-```pomegranate
+```myndra
 // Import packages by hash and intent
 import "ui-components" from hash("a1b2c3d4e5f6...") 
     with intent("reactive-ui-v2")
@@ -601,7 +601,7 @@ fn setup_project() {
 
 Choose how code runs with simple annotations:
 
-```pomegranate
+```myndra
 // Synchronous (default)
 fn compute_result(data: Data) -> Result {
     return process(data)
@@ -663,9 +663,9 @@ fn debug_monitor(app_state: AppState) {
 
 ## Example: Complete Application
 
-Here's a complete example showing multiple Pomegranate features:
+Here's a complete example showing multiple Myndra features:
 
-```pomegranate
+```myndra
 import std::ui with capabilities("render", "event-handling")
 import std::reactive with capabilities("observe", "emit")
 import net::api with capabilities("fetch")
@@ -743,7 +743,7 @@ capsule todo_app {
         }
         
         return ui::div([
-            ui::h1("Pomegranate Todos"),
+            ui::h1("Myndra Todos"),
             ui::input_field("Add todo...", on_submit: add_todo),
             
             ui::div(filtered_todos().map(render_todo)),
@@ -795,4 +795,4 @@ This example demonstrates:
 - Async operations
 - UI components
 
-The Pomegranate language brings together cutting-edge programming concepts in an intuitive, developer-friendly package that's ready for the future of software development.
+The Myndra language brings together cutting-edge programming concepts in an intuitive, developer-friendly package that's ready for the future of software development.

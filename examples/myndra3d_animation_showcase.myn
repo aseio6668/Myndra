@@ -1,0 +1,619 @@
+// Myndra3D Animation System - Revolutionary Motion Programming
+// Animation as a First-Class Language Feature
+
+import space3d with capabilities("render", "animate", "physics")
+import animation with capabilities("timeline", "behavior", "reactive")
+import procedural with capabilities("generate", "motion")
+
+#tag:animation-core
+fn main() {
+    world {
+        camera main_cam {
+            position: vec3(0, 5, 15)
+            target: vec3(0, 0, 0)
+        }
+        
+        lighting {
+            light::sun {
+                direction: vec3(-1, -2, -1).normalized()
+                intensity: 2.0
+            }
+            ambient: color(0.2, 0.2, 0.3)
+        }
+    }
+    
+    showcase_declarative_motion()
+    showcase_timeline_system()
+    showcase_state_driven_animation()
+    showcase_composable_behaviors()
+    showcase_procedural_animation()
+    showcase_reactive_animation()
+    
+    render_world()
+}
+
+#tag:declarative-motion
+fn showcase_declarative_motion() {
+    let spinning_cube = mesh::cube {
+        size: vec3(2, 2, 2)
+        position: vec3(-6, 0, 0)
+        material: materials::pbr {
+            albedo: color(0.8, 0.2, 0.4)
+            metallic: 0.1
+            roughness: 0.3
+        }
+    }
+    
+    // Declarative animation - reads like intent, not implementation
+    animate(spinning_cube)
+        .rotate(axis: y, degrees: 360)
+        .duration(3s)
+        .ease(ease_in_out_cubic)
+        .loop()
+    
+    // Chained animations
+    animate(spinning_cube)
+        .scale(to: vec3(1.5, 1.5, 1.5))
+        .duration(2s)
+        .then()
+        .scale(to: vec3(1.0, 1.0, 1.0))
+        .duration(2s)
+        .ease(bounce_out)
+        .loop()
+    
+    // Multiple simultaneous animations
+    animate(spinning_cube)
+        .translate(to: vec3(-6, 2, 0))
+        .duration(4s)
+        .ease(sine_in_out)
+        .then()
+        .translate(to: vec3(-6, 0, 0))
+        .duration(4s)
+        .ease(sine_in_out)
+        .loop()
+}
+
+#tag:timeline-system
+fn showcase_timeline_system() {
+    let dancing_sphere = mesh::sphere {
+        radius: 1.0
+        position: vec3(-2, 0, 0)
+        material: materials::glass {
+            color: color(0.2, 0.8, 0.9, 0.8)
+            refraction_index: 1.4
+        }
+    }
+    
+    // Timeline-based animation - time as a native concept
+    timeline choreography {
+        duration: 8s
+        loop: true
+        
+        // Keyframe-style with automatic interpolation
+        at(0s): {
+            dancing_sphere.position = vec3(-2, 0, 0)
+            dancing_sphere.rotation = quat::identity()
+            dancing_sphere.scale = vec3(1.0, 1.0, 1.0)
+        }
+        
+        at(1s): {
+            dancing_sphere.position = vec3(-2, 3, 0)
+            dancing_sphere.rotation = quat::from_euler(0, 90.degrees, 0)
+        }
+        
+        at(2s): {
+            dancing_sphere.position = vec3(0, 3, 0)
+            dancing_sphere.scale = vec3(1.5, 0.8, 1.5)  // Squash and stretch
+        }
+        
+        at(3s): {
+            dancing_sphere.position = vec3(2, 3, 0)
+            dancing_sphere.rotation = quat::from_euler(0, 180.degrees, 45.degrees)
+            dancing_sphere.scale = vec3(1.0, 1.0, 1.0)
+        }
+        
+        at(4s): {
+            dancing_sphere.position = vec3(2, 0, 0)
+            dancing_sphere.rotation = quat::from_euler(0, 270.degrees, 0)
+        }
+        
+        at(5s): {
+            dancing_sphere.position = vec3(0, 0, 2)
+            dancing_sphere.scale = vec3(0.5, 2.0, 0.5)  // Stretch
+        }
+        
+        at(6s): {
+            dancing_sphere.position = vec3(-2, 1, 2)
+            dancing_sphere.scale = vec3(1.0, 1.0, 1.0)
+        }
+        
+        at(7s): {
+            dancing_sphere.position = vec3(-2, 2, 0)
+            dancing_sphere.rotation = quat::from_euler(360.degrees, 360.degrees, 0)
+        }
+        
+        // Automatic easing between keyframes
+        default_ease: ease_in_out_quad
+        
+        // Custom easing for specific segments
+        ease(1s to 3s): bounce_out
+        ease(5s to 6s): elastic_out
+    }
+    
+    // Execute timeline
+    play(choreography)
+}
+
+#tag:state-driven
+fn showcase_state_driven_animation() {
+    let character = mesh::cylinder {
+        radius: 0.5
+        height: 2.0
+        position: vec3(2, 1, 0)
+        material: materials::pbr {
+            albedo: color(0.3, 0.7, 0.3)
+            roughness: 0.6
+        }
+    }
+    
+    // Character state system
+    state_machine character_states {
+        states: ["idle", "walking", "jumping", "falling", "celebrating"]
+        initial_state: "idle"
+        
+        // State-driven animations
+        state("idle") {
+            animate(character)
+                .scale(to: vec3(1.0, 1.05, 1.0))
+                .duration(2s)
+                .then()
+                .scale(to: vec3(1.0, 0.95, 1.0))
+                .duration(2s)
+                .ease(sine_in_out)
+                .loop()
+        }
+        
+        state("walking") {
+            animate(character)
+                .rotate(axis: y, degrees: 10)
+                .duration(0.5s)
+                .then()
+                .rotate(axis: y, degrees: -10)
+                .duration(0.5s)
+                .ease(sine_in_out)
+                .loop()
+            
+            animate(character)
+                .translate(by: vec3(0, 0.2, 0))
+                .duration(0.25s)
+                .then()
+                .translate(by: vec3(0, -0.2, 0))
+                .duration(0.25s)
+                .ease(bounce_out)
+                .loop()
+        }
+        
+        state("jumping") {
+            animate(character)
+                .scale(to: vec3(1.2, 0.8, 1.2))  // Prepare for jump
+                .duration(0.1s)
+                .then()
+                .scale(to: vec3(0.8, 1.5, 0.8))  // Stretch up
+                .translate(by: vec3(0, 4, 0))
+                .duration(0.3s)
+                .ease(ease_out_quad)
+                .on_complete(() => set_state("falling"))
+        }
+        
+        state("falling") {
+            animate(character)
+                .scale(to: vec3(1.1, 0.9, 1.1))  // Prepare for landing
+                .translate(by: vec3(0, -4, 0))
+                .duration(0.4s)
+                .ease(ease_in_quad)
+                .on_complete(() => set_state("idle"))
+        }
+        
+        state("celebrating") {
+            animate(character)
+                .rotate(axis: y, degrees: 720)  // Spin around
+                .scale(to: vec3(1.3, 1.3, 1.3))
+                .duration(1s)
+                .ease(elastic_out)
+                .then()
+                .scale(to: vec3(1.0, 1.0, 1.0))
+                .duration(0.5s)
+                .on_complete(() => set_state("idle"))
+        }
+        
+        // Automatic state transitions
+        transitions: {
+            "idle" => "walking": after(3s),
+            "walking" => "jumping": randomly(every: 2s, chance: 0.3),
+            "walking" => "idle": after(5s),
+            "idle" => "celebrating": randomly(every: 10s, chance: 0.1)
+        }
+    }
+    
+    // Start the state machine
+    start_state_machine(character_states)
+}
+
+#tag:composable-behaviors
+fn showcase_composable_behaviors() {
+    // Define reusable animation behaviors
+    behavior "hover" {
+        parameters: {
+            amplitude: float = 1.0,
+            frequency: float = 1.0,
+            phase: float = 0.0
+        }
+        
+        motion: {
+            translate(
+                by: vec3(0, sin(time * frequency + phase) * amplitude, 0)
+            )
+        }
+    }
+    
+    behavior "orbit" {
+        parameters: {
+            center: vec3 = vec3(0, 0, 0),
+            radius: float = 5.0,
+            speed: float = 1.0,
+            axis: vec3 = vec3(0, 1, 0)
+        }
+        
+        motion: {
+            let angle = time * speed
+            let orbit_pos = center + vec3(
+                cos(angle) * radius,
+                0,
+                sin(angle) * radius
+            )
+            set_position(orbit_pos)
+            look_at(center)  // Always face the center
+        }
+    }
+    
+    behavior "pulse" {
+        parameters: {
+            min_scale: float = 0.8,
+            max_scale: float = 1.2,
+            rate: float = 2.0
+        }
+        
+        motion: {
+            let pulse_factor = (sin(time * rate) + 1.0) * 0.5  // 0 to 1
+            let current_scale = lerp(min_scale, max_scale, pulse_factor)
+            scale(to: vec3(current_scale, current_scale, current_scale))
+        }
+    }
+    
+    behavior "spiral" {
+        parameters: {
+            center: vec3 = vec3(0, 0, 0),
+            radius_speed: float = 1.0,
+            height_speed: float = 0.5,
+            rotation_speed: float = 2.0
+        }
+        
+        motion: {
+            let angle = time * rotation_speed
+            let height = sin(time * height_speed) * 3.0
+            let radius = 3.0 + sin(time * radius_speed) * 1.0
+            
+            set_position(center + vec3(
+                cos(angle) * radius,
+                height,
+                sin(angle) * radius
+            ))
+        }
+    }
+    
+    // Apply behaviors to objects
+    let floating_gems = []
+    for i in 0..6 {
+        let gem = mesh::icosphere {
+            radius: 0.3
+            subdivisions: 2
+            position: vec3(i * 2 - 5, 4, -3)
+            material: materials::crystal {
+                color: hsv_to_rgb(i * 60.degrees, 0.8, 1.0, 0.7)
+                emission: hsv_to_rgb(i * 60.degrees, 0.6, 0.5)
+            }
+        }
+        floating_gems.push(gem)
+        
+        // Apply multiple behaviors simultaneously
+        apply(gem, "hover", { 
+            amplitude: 0.5, 
+            frequency: 1.0 + i * 0.2, 
+            phase: i * 30.degrees 
+        })
+        
+        apply(gem, "pulse", { 
+            min_scale: 0.9, 
+            max_scale: 1.1, 
+            rate: 3.0 + i * 0.5 
+        })
+        
+        // Some gems also orbit
+        if i % 2 == 0 {
+            apply(gem, "orbit", { 
+                center: vec3(0, 4, -3), 
+                radius: 3.0, 
+                speed: 0.5,
+                axis: vec3(0, 1, 0.2).normalized()
+            })
+        }
+    }
+}
+
+#tag:procedural-animation
+fn showcase_procedural_animation() {
+    // Procedural wave animation
+    let wave_surface = mesh::plane {
+        size: vec2(10, 10)
+        resolution: (64, 64)
+        position: vec3(6, -1, 0)
+        material: materials::water {
+            color: color(0.1, 0.4, 0.8, 0.7)
+            normal_strength: 1.5
+        }
+    }
+    
+    // Procedural vertex animation
+    animate_procedural(wave_surface) {
+        vertex_function: |vertex, time| {
+            let world_pos = vertex.world_position
+            
+            // Multiple wave frequencies
+            let wave1 = sin(world_pos.x * 0.5 + time * 2.0) * 0.3
+            let wave2 = cos(world_pos.z * 0.3 + time * 1.5) * 0.2
+            let wave3 = sin((world_pos.x + world_pos.z) * 0.2 + time * 0.8) * 0.15
+            
+            vertex.position.y += wave1 + wave2 + wave3
+            
+            // Update normals for proper lighting
+            let normal = calculate_wave_normal(world_pos, time)
+            vertex.normal = normal
+        }
+    }
+    
+    // Procedural particle system with animation
+    particle_system procedural_leaves {
+        position: vec3(6, 5, 0)
+        emission_rate: 10.per_second
+        lifetime: 8s
+        
+        spawn_function: |particle| {
+            particle.position = vec3(
+                random_range(-2, 2),
+                random_range(0, 1),
+                random_range(-2, 2)
+            )
+            particle.velocity = vec3(
+                random_range(-1, 1),
+                random_range(-2, -0.5),
+                random_range(-1, 1)
+            )
+            particle.angular_velocity = random_range(-180.degrees, 180.degrees)
+        }
+        
+        update_function: |particle, time, delta_time| {
+            // Procedural wind effect
+            let wind_strength = sin(time * 0.5) * 0.5 + 0.5
+            let wind_direction = vec3(1.0, 0.0, 0.3).normalized()
+            
+            particle.velocity += wind_direction * wind_strength * delta_time
+            particle.velocity.y -= 9.81 * delta_time  // Gravity
+            
+            // Spiral motion as they fall
+            let spiral_force = vec3(
+                cos(time * 2.0) * 2.0,
+                0,
+                sin(time * 2.0) * 2.0
+            )
+            particle.velocity += spiral_force * delta_time * 0.1
+            
+            // Update rotation
+            particle.rotation += particle.angular_velocity * delta_time
+        }
+        
+        material: materials::foliage {
+            texture: "leaf.png"
+            alpha_cutout: 0.5
+        }
+    }
+}
+
+#tag:reactive-animation
+fn showcase_reactive_animation() {
+    let reactive_crystal = mesh::icosphere {
+        radius: 1.0
+        subdivisions: 3
+        position: vec3(10, 2, 0)
+        material: materials::crystal {
+            base_color: color(0.8, 0.3, 0.9, 0.8)
+            emission: color(0.2, 0.1, 0.3)
+        }
+    }
+    
+    // Reactive animation system - responds to external stimuli
+    reactive_animator crystal_reactions {
+        // React to camera proximity
+        on_distance_changed(from: main_cam, threshold: 5.0) { distance ->
+            let proximity = clamp(1.0 - (distance / 5.0), 0.0, 1.0)
+            
+            animate(reactive_crystal)
+                .scale(to: vec3(1.0 + proximity * 0.5))
+                .duration(300ms)
+                .ease(elastic_out)
+            
+            reactive_crystal.material.emission -> 
+                color(0.2 + proximity * 0.8, 0.1 + proximity * 0.4, 0.3 + proximity * 0.7) 
+                over 200ms
+        }
+        
+        // React to other animated objects
+        on_object_nearby(objects: floating_gems, radius: 3.0) { nearby_objects ->
+            let gem_count = nearby_objects.length()
+            
+            if gem_count > 0 {
+                // Spin faster when gems are near
+                animate(reactive_crystal)
+                    .rotate(axis: y, degrees: 360 * gem_count)
+                    .duration(1s / gem_count)
+                    .ease(linear)
+                    .loop()
+                
+                // Change color based on nearest gem
+                let nearest_gem = nearby_objects.closest_to(reactive_crystal.position)
+                reactive_crystal.material.base_color -> nearest_gem.material.color over 500ms
+            } else {
+                // Return to normal when no gems nearby
+                stop_animation(reactive_crystal, "rotation")
+                reactive_crystal.material.base_color -> color(0.8, 0.3, 0.9, 0.8) over 1s
+            }
+        }
+        
+        // React to user input
+        on_user_input("mouse_click") { click_position ->
+            let world_click = screen_to_world(click_position)
+            let click_distance = (world_click - reactive_crystal.position).magnitude()
+            
+            if click_distance < 10.0 {
+                // Pulse effect on click
+                animate(reactive_crystal)
+                    .scale(to: vec3(1.5, 1.5, 1.5))
+                    .duration(200ms)
+                    .then()
+                    .scale(to: vec3(1.0, 1.0, 1.0))
+                    .duration(800ms)
+                    .ease(bounce_out)
+                
+                // Spawn sparkle particles
+                spawn_particle_burst(reactive_crystal.position, "celebration", 50)
+            }
+        }
+        
+        // React to audio (if available)
+        on_audio_beat(frequency_range: [60, 250]) { beat_intensity ->
+            animate(reactive_crystal)
+                .scale(to: vec3(1.0 + beat_intensity * 0.3))
+                .duration(100ms)
+                .then()
+                .scale(to: vec3(1.0))
+                .duration(400ms)
+                .ease(bounce_out)
+        }
+        
+        // React to time of day
+        on_time_changed() { current_time ->
+            let day_cycle = (current_time % 24.0) / 24.0  // 0 to 1 over 24 hours
+            let night_glow = sin(day_cycle * PI) * 2.0 + 1.0
+            
+            reactive_crystal.material.emission -> 
+                reactive_crystal.material.emission * night_glow over 30s
+        }
+    }
+    
+    start_reactive_animator(crystal_reactions)
+}
+
+#tag:animation-dsl
+// Domain-Specific Language for complex animations
+animation_sequence "grand_finale" {
+    duration: 20s
+    
+    // Parallel animation tracks
+    track("camera_movement") {
+        animate(main_cam)
+            .orbit_around(center: vec3(0, 0, 0), radius: 20, height: 10)
+            .duration(20s)
+            .ease(sine_in_out)
+    }
+    
+    track("object_symphony") {
+        // All objects participate in synchronized motion
+        for_each_object(in_scene) { obj, index ->
+            let delay = index * 0.1s
+            let phase = index * 30.degrees
+            
+            wait(delay)
+            animate(obj)
+                .scale(to: vec3(0.0, 0.0, 0.0))
+                .duration(0.5s)
+                .then()
+                .scale(to: vec3(2.0, 2.0, 2.0))
+                .duration(1s)
+                .ease(elastic_out)
+                .then()
+                .rotate(axis: vec3(sin(phase), 1, cos(phase)), degrees: 360)
+                .duration(2s)
+                .then()
+                .scale(to: vec3(1.0, 1.0, 1.0))
+                .duration(1s)
+                .ease(bounce_out)
+        }
+    }
+    
+    track("lighting_effects") {
+        at(0s): lighting.ambient = color(0.1, 0.1, 0.2)
+        at(5s): lighting.ambient = color(0.8, 0.4, 0.9)
+        at(10s): lighting.ambient = color(0.2, 0.8, 0.9)
+        at(15s): lighting.ambient = color(0.9, 0.8, 0.2)
+        at(20s): lighting.ambient = color(0.2, 0.2, 0.3)
+        
+        ease: rainbow_cycle
+    }
+    
+    track("particle_extravaganza") {
+        every(2s) {
+            spawn_particle_system("fireworks", {
+                position: random_sphere_point(radius: 10),
+                intensity: random_range(0.5, 1.0)
+            })
+        }
+    }
+}
+
+// Execute the grand finale
+@user_input("f")
+fn trigger_grand_finale() {
+    play_animation_sequence("grand_finale")
+}
+
+#tag:motion-capture
+// Motion capture and retargeting system
+fn setup_motion_capture() {
+    // Record animation from user input or procedural motion
+    motion_recorder user_gestures {
+        record_from: mouse_movement
+        duration: 10s
+        sample_rate: 60.fps
+        
+        // Process recorded motion
+        post_process: {
+            smooth(window: 3.frames)
+            normalize_speed()
+            remove_jitter(threshold: 0.1)
+        }
+    }
+    
+    // Apply recorded motion to any object
+    @user_input("r")
+    fn start_recording() {
+        start_recording(user_gestures)
+        print("Recording motion... Move your mouse!")
+    }
+    
+    @user_input("p")
+    fn playback_motion() {
+        let target_object = get_selected_object()
+        if target_object {
+            apply_recorded_motion(target_object, user_gestures.recorded_data)
+        }
+    }
+}

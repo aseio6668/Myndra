@@ -2,7 +2,7 @@
 #include <cctype>
 #include <algorithm>
 
-namespace pomegranate {
+namespace myndra {
 
 std::unordered_map<std::string, TokenType> Lexer::keywords_;
 std::unordered_map<std::string, TokenType> Lexer::annotations_;
@@ -388,4 +388,4 @@ void Lexer::add_error(const std::string& message) {
                       ": " + message);
 }
 
-} // namespace pomegranate
+} // namespace myndra

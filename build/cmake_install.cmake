@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]
+# Install script for directory: C:/Users/aseio/Documents/.Source/Myndra
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/Pomegranate")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/Myndra")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -34,65 +34,65 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/tests/cmake_install.cmake")
+  include("C:/Users/aseio/Documents/.Source/Myndra/build/tests/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/Debug/pomegranate.exe")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/Myndra/build/Debug/myndra.exe")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/Release/pomegranate.exe")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/Myndra/build/Release/myndra.exe")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Mm][Ii][Nn][Ss][Ii][Zz][Ee][Rr][Ee][Ll])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/MinSizeRel/pomegranate.exe")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/Myndra/build/MinSizeRel/myndra.exe")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ww][Ii][Tt][Hh][Dd][Ee][Bb][Ii][Nn][Ff][Oo])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/RelWithDebInfo/pomegranate.exe")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/Myndra/build/RelWithDebInfo/myndra.exe")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
-    include("C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/CMakeFiles/pomegranate.dir/install-cxx-module-bmi-Debug.cmake" OPTIONAL)
+    include("C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/myndra.dir/install-cxx-module-bmi-Debug.cmake" OPTIONAL)
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
-    include("C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/CMakeFiles/pomegranate.dir/install-cxx-module-bmi-Release.cmake" OPTIONAL)
+    include("C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/myndra.dir/install-cxx-module-bmi-Release.cmake" OPTIONAL)
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Mm][Ii][Nn][Ss][Ii][Zz][Ee][Rr][Ee][Ll])$")
-    include("C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/CMakeFiles/pomegranate.dir/install-cxx-module-bmi-MinSizeRel.cmake" OPTIONAL)
+    include("C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/myndra.dir/install-cxx-module-bmi-MinSizeRel.cmake" OPTIONAL)
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ww][Ii][Tt][Hh][Dd][Ee][Bb][Ii][Nn][Ff][Oo])$")
-    include("C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/CMakeFiles/pomegranate.dir/install-cxx-module-bmi-RelWithDebInfo.cmake" OPTIONAL)
+    include("C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/myndra.dir/install-cxx-module-bmi-RelWithDebInfo.cmake" OPTIONAL)
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/Debug/pom-pkg.exe")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/Myndra/build/Debug/myn-pkg.exe")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/Release/pom-pkg.exe")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/Myndra/build/Release/myn-pkg.exe")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Mm][Ii][Nn][Ss][Ii][Zz][Ee][Rr][Ee][Ll])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/MinSizeRel/pom-pkg.exe")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/Myndra/build/MinSizeRel/myn-pkg.exe")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ww][Ii][Tt][Hh][Dd][Ee][Bb][Ii][Nn][Ff][Oo])$")
-    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/RelWithDebInfo/pom-pkg.exe")
+    file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "C:/Users/aseio/Documents/.Source/Myndra/build/RelWithDebInfo/myn-pkg.exe")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
-    include("C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/CMakeFiles/pom-pkg.dir/install-cxx-module-bmi-Debug.cmake" OPTIONAL)
+    include("C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/myn-pkg.dir/install-cxx-module-bmi-Debug.cmake" OPTIONAL)
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
-    include("C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/CMakeFiles/pom-pkg.dir/install-cxx-module-bmi-Release.cmake" OPTIONAL)
+    include("C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/myn-pkg.dir/install-cxx-module-bmi-Release.cmake" OPTIONAL)
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Mm][Ii][Nn][Ss][Ii][Zz][Ee][Rr][Ee][Ll])$")
-    include("C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/CMakeFiles/pom-pkg.dir/install-cxx-module-bmi-MinSizeRel.cmake" OPTIONAL)
+    include("C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/myn-pkg.dir/install-cxx-module-bmi-MinSizeRel.cmake" OPTIONAL)
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ww][Ii][Tt][Hh][Dd][Ee][Bb][Ii][Nn][Ff][Oo])$")
-    include("C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/CMakeFiles/pom-pkg.dir/install-cxx-module-bmi-RelWithDebInfo.cmake" OPTIONAL)
+    include("C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/myn-pkg.dir/install-cxx-module-bmi-RelWithDebInfo.cmake" OPTIONAL)
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pomegranate/stdlib" TYPE DIRECTORY FILES "C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/src/stdlib/")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/myndra/stdlib" TYPE DIRECTORY FILES "C:/Users/aseio/Documents/.Source/Myndra/src/stdlib/")
 endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/install_local_manifest.txt"
+  file(WRITE "C:/Users/aseio/Documents/.Source/Myndra/build/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
 if(CMAKE_INSTALL_COMPONENT)
@@ -108,6 +108,6 @@ else()
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/${CMAKE_INSTALL_MANIFEST}"
+  file(WRITE "C:/Users/aseio/Documents/.Source/Myndra/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()

@@ -1,10 +1,10 @@
-#ifndef POMEGRANATE_TOKEN_H
-#define POMEGRANATE_TOKEN_H
+#ifndef MYNDRA_TOKEN_H
+#define MYNDRA_TOKEN_H
 
 #include <string>
 #include <variant>
 
-namespace pomegranate {
+namespace myndra {
 
 enum class TokenType {
     // Literals
@@ -141,6 +141,6 @@ struct Token {
 
 const char* token_type_to_string(TokenType type);
 
-} // namespace pomegranate
+} // namespace myndra
 
-#endif // POMEGRANATE_TOKEN_H
+#endif // MYNDRA_TOKEN_H

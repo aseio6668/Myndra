@@ -19,6 +19,6 @@ add_executable(test_basic_compilation
     test_basic_compilation.cpp
 )
 
-target_link_libraries(test_basic_compilation pomegranate_compiler)
+target_link_libraries(test_basic_compilation myndra_compiler)
 
 add_test(NAME BasicCompilationTests COMMAND test_basic_compilation)

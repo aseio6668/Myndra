@@ -4,7 +4,7 @@
 #include <iostream>
 
 // Parser stubs
-namespace pomegranate {
+namespace myndra {
 
 void ast_stub() {
     // TODO: Implement AST nodes
@@ -178,4 +178,4 @@ void package_tool_stub() {
     // TODO: Implement package tool
 }
 
-} // namespace pomegranate
+} // namespace myndra

@@ -1,10 +1,10 @@
-# Pomegranate Programming Language
+# Myndra Programming Language
 
 A revolutionary programming language designed for the modern era - featuring context-aware syntax, live code capsules, reactive programming, and decentralized package management.
 
 ## Vision
 
-Pomegranate aims to be:
+Myndra aims to be:
 - **Easily typed and simple** yet **open-ended and robust**
 - **Machine learning friendly** in design
 - **Dynamic and adaptive** to execution context
@@ -15,13 +15,13 @@ Pomegranate aims to be:
 
 ### 🎯 Context-Aware Syntax
 Code that adapts based on execution context (dev/prod/test):
-```pomegranate
+```myndra
 log("debug info") if context == "dev"
 ```
 
 ### 🔄 Live Code Capsules
 Editable and reloadable functions at runtime:
-```pomegranate
+```myndra
 capsule render_ui {
     // UI logic that can be modified live
 }
@@ -29,26 +29,26 @@ capsule render_ui {
 
 ### ⚡ Native Reactive Programming
 Built-in reactive primitives for data flows:
-```pomegranate
+```myndra
 @reactive fn update_ui() { ... }
 ```
 
 ### 🔒 Capability-Based Imports
 Modules declare their permissions:
-```pomegranate
+```myndra
 import net::http with capabilities("read-only")
 ```
 
 ### ⏱️ Temporal Types
 Variables that evolve over time:
-```pomegranate
+```myndra
 let score: evolving<int> = 0
 score -> 10 over 5s
 ```
 
 ### 🎨 Inline DSL Blocks
 Embedded domain-specific languages:
-```pomegranate
+```myndra
 dsl shader {
     vec4 color = texture(uSampler, uv);
 }
@@ -56,13 +56,13 @@ dsl shader {
 
 ### 🛡️ Self-Healing Error Handling
 Built-in fallback strategies:
-```pomegranate
+```myndra
 fn fetch_data() fallback retry(3) or return default_data
 ```
 
 ### 🏷️ Semantic Code Navigation
 Tag-based navigation system:
-```pomegranate
+```myndra
 #tag:auth
 fn login() { ... }
 
@@ -72,14 +72,14 @@ capsule render_ui() { ... }
 
 ### 🆔 Decentralized Identity Integration
 Native DID and zero-knowledge proof support:
-```pomegranate
+```myndra
 let user = did::verify(token)
 if user.has_proof("age > 18") { ... }
 ```
 
 ### 🔀 Composable Execution Models
 Choose execution patterns with annotations:
-```pomegranate
+```myndra
 @parallel
 fn crunch_data() { ... }
 
@@ -96,7 +96,7 @@ Decentralized packages with semantic understanding:
 ## Project Structure
 
 ```
-pomegranate/
+myndra/
 ├── src/
 │   ├── lexer/          # Tokenization and lexical analysis
 │   ├── parser/         # Syntax analysis and AST generation
@@ -130,7 +130,7 @@ make
 
 1. Install dependencies
 2. Build the compiler
-3. Write your first Pomegranate program
+3. Write your first Myndra program
 4. Experience the future of programming!
 
 ## License

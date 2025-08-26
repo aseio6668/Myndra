@@ -1,6 +1,6 @@
 #include "token.h"
 
-namespace pomegranate {
+namespace myndra {
 
 const char* token_type_to_string(TokenType type) {
     switch (type) {
@@ -86,4 +86,4 @@ const char* token_type_to_string(TokenType type) {
     }
 }
 
-} // namespace pomegranate
+} // namespace myndra

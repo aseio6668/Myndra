@@ -1,0 +1,13 @@
+// Hello World with context-aware logging
+// This example demonstrates basic syntax and context-aware features
+
+import std::io with capabilities("write")
+
+fn main() {
+    log("Starting Myndra program") if context == "dev"
+    
+    let message = "Hello, Myndra!"
+    print(message)
+    
+    log("Program completed successfully") if context == "dev"
+}

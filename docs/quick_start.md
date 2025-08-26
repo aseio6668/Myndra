@@ -1,6 +1,6 @@
-# Quick Start Guide - Pomegranate Programming Language
+# Quick Start Guide - Myndra Programming Language
 
-Welcome to Pomegranate! This guide will get you up and running with the most innovative programming language of 2025.
+Welcome to Myndra! This guide will get you up and running with the most innovative programming language of 2025.
 
 ## Installation
 
@@ -14,26 +14,26 @@ Welcome to Pomegranate! This guide will get you up and running with the most inn
 
 ```bash
 # Clone the repository
-git clone https://github.com/pomegranate-lang/pomegranate.git
-cd pomegranate
+git clone https://github.com/myndra-lang/myndra.git
+cd myndra
 
 # Build the compiler
 ./build.sh    # On Linux/macOS
 # or
 build.bat     # On Windows
 
-# The compiler will be in build/pomegranate
+# The compiler will be in build/myndra
 ```
 
-## Your First Pomegranate Program
+## Your First Myndra Program
 
 Create a file called `hello.pom`:
 
-```pomegranate
+```myndra
 import std::io with capabilities("write")
 
 fn main() {
-    print("Hello, Pomegranate!")
+    print("Hello, Myndra!")
     log("First program executed successfully!") if context == "dev"
 }
 ```
@@ -41,14 +41,14 @@ fn main() {
 Run it:
 
 ```bash
-./build/pomegranate hello.pom --run
+./build/myndra hello.pom --run
 ```
 
 ## Language Features Overview
 
 ### 1. Context-Aware Programming
 
-```pomegranate
+```myndra
 fn process_request(data: RequestData) {
     // Automatic behavior based on context
     log("Processing: " + data.id) if context == "dev"
@@ -64,7 +64,7 @@ fn process_request(data: RequestData) {
 
 ### 2. Live Code Capsules
 
-```pomegranate
+```myndra
 #tag:ui
 capsule button_component {
     fn render(text: string, onclick: fn()) -> Element {
@@ -84,7 +84,7 @@ capsule button_component {
 
 ### 3. Reactive Programming
 
-```pomegranate
+```myndra
 @reactive
 fn counter_app() {
     let count = observable<int>(0)
@@ -103,7 +103,7 @@ fn counter_app() {
 
 ### 4. Temporal Types
 
-```pomegranate
+```myndra
 fn create_animation() {
     let x: evolving<float> = 0.0
     let opacity: evolving<float> = 1.0
@@ -119,7 +119,7 @@ fn create_animation() {
 
 ### 5. Capability-Based Security
 
-```pomegranate
+```myndra
 import net::http with capabilities("fetch", "read-only")
 import fs::file with capabilities("read")
 
@@ -132,7 +132,7 @@ fn safe_operation() requires capabilities("data:read", "network:fetch") {
 
 ### 6. Decentralized Identity
 
-```pomegranate
+```myndra
 fn authenticate_user(did_token: string) -> User? {
     let identity = did::verify(did_token)
     
@@ -148,7 +148,7 @@ fn authenticate_user(did_token: string) -> User? {
 
 ### 7. Inline DSL
 
-```pomegranate
+```myndra
 fn create_shader() -> Shader {
     dsl shader {
         precision mediump float;
@@ -174,7 +174,7 @@ fn query_users() -> [User] {
 
 ### 8. Self-Healing Error Handling
 
-```pomegranate
+```myndra
 fn fetch_data(url: string) -> Data 
     fallback retry(3) or return cached_data() or return default_data() {
     
@@ -191,17 +191,17 @@ fn fetch_data(url: string) -> Data
 Start the REPL for interactive development:
 
 ```bash
-./build/pomegranate --interactive
+./build/myndra --interactive
 ```
 
-```pomegranate
+```myndra
 pom> let x = 42
 pom> x + 8
 => 50
 
-pom> let greeting = "Hello, " + "Pomegranate!"
+pom> let greeting = "Hello, " + "Myndra!"
 pom> greeting
-=> "Hello, Pomegranate!"
+=> "Hello, Myndra!"
 
 pom> context dev
 Context changed to: dev
@@ -212,9 +212,9 @@ This will show in dev context
 
 ## Package Management
 
-Pomegranate uses hash-based packages for reproducible builds:
+Myndra uses hash-based packages for reproducible builds:
 
-```pomegranate
+```myndra
 // Install packages by semantic intent
 import "ui-framework" from intent("modern-reactive-ui")
 import "database" from intent("fast-nosql-db")
@@ -240,7 +240,7 @@ required = ["data:read", "data:write"]
 
 ## Project Structure
 
-Organize your Pomegranate project:
+Organize your Myndra project:
 
 ```
 my-project/
@@ -266,7 +266,7 @@ my-project/
 
 ### Reactive UI Component
 
-```pomegranate
+```myndra
 #tag:ui:components
 capsule todo_item {
     let completed: evolving<bool> = false
@@ -291,7 +291,7 @@ capsule todo_item {
 
 ### API Service with Fallbacks
 
-```pomegranate
+```myndra
 #tag:api:services
 fn user_service() {
     fn get_user(id: string) -> User 
@@ -319,7 +319,7 @@ fn user_service() {
 
 ### Machine Learning Pipeline
 
-```pomegranate
+```myndra
 #tag:ml:pipeline
 @parallel
 fn training_pipeline(dataset: Dataset) -> Model {
@@ -357,14 +357,14 @@ fn training_pipeline(dataset: Dataset) -> Model {
 
 1. Read the [Language Reference](docs/language_reference.md) for complete documentation
 2. Explore the [examples/](examples/) directory for more complex examples
-3. Check out the [Package Registry](https://packages.pomegranate-lang.org) for available packages
-4. Join the [Community](https://community.pomegranate-lang.org) for support and discussion
+3. Check out the [Package Registry](https://packages.myndra-lang.org) for available packages
+4. Join the [Community](https://community.myndra-lang.org) for support and discussion
 
 ## Getting Help
 
-- **Documentation**: [docs.pomegranate-lang.org](https://docs.pomegranate-lang.org)
-- **Community**: [community.pomegranate-lang.org](https://community.pomegranate-lang.org)
-- **Issues**: [github.com/pomegranate-lang/pomegranate/issues](https://github.com/pomegranate-lang/pomegranate/issues)
-- **Discord**: [discord.gg/pomegranate](https://discord.gg/pomegranate)
+- **Documentation**: [docs.myndra-lang.org](https://docs.myndra-lang.org)
+- **Community**: [community.myndra-lang.org](https://community.myndra-lang.org)
+- **Issues**: [github.com/myndra-lang/myndra/issues](https://github.com/myndra-lang/myndra/issues)
+- **Discord**: [discord.gg/myndra](https://discord.gg/myndra)
 
-Welcome to the future of programming with Pomegranate! 🚀
+Welcome to the future of programming with Myndra! 🚀

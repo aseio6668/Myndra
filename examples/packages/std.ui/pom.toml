@@ -1,10 +1,10 @@
-# Pomegranate Package Definition (pom.toml)
-# This file defines a package for the Pomegranate ecosystem
+# Myndra Package Definition (pom.toml)
+# This file defines a package for the Myndra ecosystem
 
 [package]
 name = "std.ui"
-description = "Standard UI library for Pomegranate with reactive components"
-authors = ["Pomegranate Team"]
+description = "Standard UI library for Myndra with reactive components"
+authors = ["Myndra Team"]
 license = "MIT"
 
 # Hash-based versioning instead of semantic versioning
@@ -48,12 +48,12 @@ accessibility = ["a11y", "screen-reader", "keyboard-nav"]
 
 # Export definitions
 [exports]
-components = "src/components/mod.pom"
-reactive = "src/reactive/mod.pom"
-styling = "src/styling/mod.pom"
-utils = "src/utils/mod.pom"
+components = "src/components/mod.myn"
+reactive = "src/reactive/mod.myn"
+styling = "src/styling/mod.myn"
+utils = "src/utils/mod.myn"
 
 [build]
 # Custom build steps if needed
-scripts = ["build.pom"]
+scripts = ["build.myn"]
 assets = ["styles/", "icons/"]

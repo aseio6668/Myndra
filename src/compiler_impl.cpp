@@ -1,10 +1,10 @@
-#include "../include/pomegranate.h"
+#include "../include/myndra.h"
 #include "lexer/lexer.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
-namespace pomegranate {
+namespace myndra {
 
 // Implementation details
 class Compiler::Impl {
@@ -18,7 +18,7 @@ public:
 
 // Constructor
 Compiler::Compiler(const Options& opts) : pimpl(std::make_unique<Impl>(opts)) {
-    std::cout << "Pomegranate Compiler initialized with context: " 
+    std::cout << "Myndra Compiler initialized with context: " 
               << opts.target_context << std::endl;
     
     if (opts.enable_live_reload) {
@@ -189,4 +189,4 @@ namespace utils {
     }
 }
 
-} // namespace pomegranate
+} // namespace myndra

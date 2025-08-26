@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cassert>
 
-using namespace pomegranate;
+using namespace myndra;
 
 void test_basic_tokens() {
     std::cout << "Testing basic tokens..." << std::endl;
@@ -137,7 +137,7 @@ void test_complex_example() {
 }
 
 int main() {
-    std::cout << "Running Pomegranate Lexer Tests..." << std::endl;
+    std::cout << "Running Myndra Lexer Tests..." << std::endl;
     std::cout << "=================================" << std::endl;
     
     try {

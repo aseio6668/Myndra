@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\aseio\Documents\.Source\.SOURCE4\Pomegrante2[c]\tests\test_basic_compilation.cpp">
+    <ClCompile Include="C:\Users\aseio\Documents\.Source\Myndra\tests\test_basic_compilation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\aseio\Documents\.Source\.SOURCE4\Pomegrante2[c]\tests\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\aseio\Documents\.Source\Myndra\tests\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{F00D62DB-7855-3674-91CB-FBFAD595907A}</UniqueIdentifier>
+      <UniqueIdentifier>{EC133C78-4D89-3299-9040-85F4B7D1484B}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

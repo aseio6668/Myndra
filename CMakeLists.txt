@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(Pomegranate VERSION 1.0.0 LANGUAGES C CXX)
+project(Myndra VERSION 1.0.0 LANGUAGES C CXX)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 20)
@@ -31,7 +31,7 @@ set(OTHER_SOURCES
 )
 
 # Main executable
-add_executable(pomegranate
+add_executable(myndra
     src/main.cpp
     src/compiler_impl.cpp
     ${LEXER_SOURCES}
@@ -39,33 +39,33 @@ add_executable(pomegranate
 )
 
 # Link libraries (remove LLVM for now to simplify build)
-target_link_libraries(pomegranate Threads::Threads)
+target_link_libraries(myndra Threads::Threads)
 
 # Compiler library
-add_library(pomegranate_compiler STATIC
+add_library(myndra_compiler STATIC
     src/compiler_impl.cpp
     ${LEXER_SOURCES}
     ${OTHER_SOURCES}
 )
 
 # Runtime library
-add_library(pomegranate_runtime STATIC
+add_library(myndra_runtime STATIC
     ${OTHER_SOURCES}
 )
 
-target_link_libraries(pomegranate_runtime Threads::Threads)
+target_link_libraries(myndra_runtime Threads::Threads)
 
 # Package manager utility
-add_executable(pom-pkg
+add_executable(myn-pkg
     src/pom_pkg_main.cpp
 )
 
-target_link_libraries(pom-pkg pomegranate_runtime)
+target_link_libraries(myn-pkg myndra_runtime)
 
 # Tests
 enable_testing()
 add_subdirectory(tests)
 
 # Install targets
-install(TARGETS pomegranate pom-pkg DESTINATION bin)
-install(DIRECTORY src/stdlib/ DESTINATION lib/pomegranate/stdlib)
+install(TARGETS myndra myn-pkg DESTINATION bin)
+install(DIRECTORY src/stdlib/ DESTINATION lib/myndra/stdlib)

@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="C:\Users\aseio\Documents\.Source\.SOURCE4\Pomegrante2[c]\build\CMakeFiles\9426c9dfd6081ba160adf43f231db7c8\RUN_TESTS_force.rule">
+    <CustomBuild Include="C:\Users\aseio\Documents\.Source\Myndra\build\CMakeFiles\5615944db264b9dd3faa806266c4b17c\RUN_TESTS_force.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{46ECA065-95B2-338F-8776-E40B70534067}</UniqueIdentifier>
+      <UniqueIdentifier>{87151165-BD31-3A55-AC2D-47CAA66E289E}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -2,8 +2,8 @@
 
 // Simple main function for the package manager tool
 int main(int argc, char* argv[]) {
-    std::cout << "Pomegranate Package Manager v1.0.0\n";
-    std::cout << "Usage: pom-pkg [command] [options]\n\n";
+    std::cout << "Myndra Package Manager v1.0.0\n";
+    std::cout << "Usage: myn-pkg [command] [options]\n\n";
     std::cout << "Commands:\n";
     std::cout << "  install <hash|intent>  Install a package\n";
     std::cout << "  search <query>         Search for packages\n";

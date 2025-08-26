@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Pomegranate Build Script
-# Builds the Pomegranate programming language compiler and runtime
+# Myndra Build Script
+# Builds the Myndra programming language compiler and runtime
 
 set -e
 
-echo "Building Pomegranate Programming Language..."
+echo "Building Myndra Programming Language..."
 
 # Create build directory
 if [ ! -d "build" ]; then
@@ -25,9 +25,9 @@ make -j$(nproc)
 echo "Build completed successfully!"
 echo ""
 echo "Executables created:"
-echo "  - pomegranate (main compiler/interpreter)"
-echo "  - pom-pkg (package manager utility)"
+echo "  - myndra (main compiler/interpreter)"
+echo "  - myn-pkg (package manager utility)"
 echo ""
 echo "To run examples:"
-echo "  ./pomegranate ../examples/hello_world.pom --run"
-echo "  ./pomegranate --interactive"
+echo "  ./myndra ../examples/hello_world.myn --run"
+echo "  ./myndra --interactive"

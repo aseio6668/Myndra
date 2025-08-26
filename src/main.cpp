@@ -1,11 +1,11 @@
-#include "pomegranate.h"
+#include "myndra.h"
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
 
 void print_usage(const char* program_name) {
-    std::cout << "Pomegranate Programming Language v1.0.0\n";
+    std::cout << "Myndra Programming Language v1.0.0\n";
     std::cout << "Usage: " << program_name << " [options] <file>\n\n";
     std::cout << "Options:\n";
     std::cout << "  -h, --help              Show this help message\n";
@@ -32,19 +32,19 @@ void print_usage(const char* program_name) {
 }
 
 void print_version() {
-    std::cout << "Pomegranate Programming Language\n";
+    std::cout << "Myndra Programming Language\n";
     std::cout << "Version: 1.0.0\n";
     std::cout << "Built with: C++20, LLVM\n";
     std::cout << "Features: All advanced features enabled\n";
 }
 
-void start_repl(pomegranate::Compiler& compiler) {
-    std::cout << "Pomegranate Interactive REPL\n";
+void start_repl(myndra::Compiler& compiler) {
+    std::cout << "Myndra Interactive REPL\n";
     std::cout << "Type 'exit' to quit, 'help' for commands\n\n";
     
     std::string line;
     while (true) {
-        std::cout << "pom> ";
+        std::cout << "myn> ";
         if (!std::getline(std::cin, line)) {
             break;
         }
@@ -72,7 +72,7 @@ void start_repl(pomegranate::Compiler& compiler) {
         // Handle REPL commands
         if (line.substr(0, 7) == "context") {
             std::string context_type = line.substr(8);
-            pomegranate::ExecutionContext new_context;
+            myndra::ExecutionContext new_context;
             new_context.type = context_type;
             new_context.timestamp = std::chrono::steady_clock::now();
             
@@ -104,7 +104,7 @@ void start_repl(pomegranate::Compiler& compiler) {
 }
 
 int main(int argc, char* argv[]) {
-    pomegranate::Compiler::Options options;
+    myndra::Compiler::Options options;
     std::string filename;
     bool interactive = false;
     bool run_immediately = false;
@@ -154,7 +154,7 @@ int main(int argc, char* argv[]) {
     }
     
     try {
-        pomegranate::Compiler compiler(options);
+        myndra::Compiler compiler(options);
         
         if (interactive) {
             start_repl(compiler);

@@ -1,8 +1,8 @@
-#include "../include/pomegranate.h"
+#include "../include/myndra.h"
 #include <iostream>
 #include <cassert>
 
-using namespace pomegranate;
+using namespace myndra;
 
 void test_compiler_creation() {
     std::cout << "Testing compiler creation..." << std::endl;
@@ -49,7 +49,7 @@ void test_function_compilation() {
         }
         
         fn main() {
-            let greeting = greet("Pomegranate")
+            let greeting = greet("Myndra")
             print(greeting)
         }
     )";
@@ -210,7 +210,7 @@ void test_error_handling() {
 }
 
 int main() {
-    std::cout << "Running Pomegranate Compilation Tests..." << std::endl;
+    std::cout << "Running Myndra Compilation Tests..." << std::endl;
     std::cout << "=======================================" << std::endl;
     
     try {

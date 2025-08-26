@@ -1,12 +1,12 @@
-#ifndef POMEGRANATE_LEXER_H
-#define POMEGRANATE_LEXER_H
+#ifndef MYNDRA_LEXER_H
+#define MYNDRA_LEXER_H
 
 #include "token.h"
 #include <string>
 #include <vector>
 #include <unordered_map>
 
-namespace pomegranate {
+namespace myndra {
 
 class Lexer {
 public:
@@ -64,6 +64,6 @@ private:
     static void init_annotations();
 };
 
-} // namespace pomegranate
+} // namespace myndra
 
-#endif // POMEGRANATE_LEXER_H
+#endif // MYNDRA_LEXER_H

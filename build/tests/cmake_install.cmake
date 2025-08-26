@@ -1,8 +1,8 @@
-# Install script for directory: C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/tests
+# Install script for directory: C:/Users/aseio/Documents/.Source/Myndra/tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/Pomegranate")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/Myndra")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -35,6 +35,6 @@ endif()
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
 if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "C:/Users/aseio/Documents/.Source/.SOURCE4/Pomegrante2[c]/build/tests/install_local_manifest.txt"
+  file(WRITE "C:/Users/aseio/Documents/.Source/Myndra/build/tests/install_local_manifest.txt"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
