@@ -154,7 +154,7 @@ capsule user_profile {
 
 // Reload a capsule at runtime
 fn update_user_profile() {
-    let new_code = load_from_file("updated_profile.pom")
+    let new_code = load_from_file("updated_profile.myn")
     capsule_manager::reload("user_profile", new_code)
 }
 ```

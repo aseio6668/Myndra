@@ -108,7 +108,7 @@ events:
       The output was:
       0
       MSBuild version 17.14.18+a338add32 for .NET Framework
-      Build started 8/26/2025 9:41:15 AM.
+      Build started 8/26/2025 10:23:11 AM.
       
       Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\4.1.0\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
       PrepareForBuild:
@@ -146,7 +146,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:01.14
+      Time Elapsed 00:00:00.83
       
       
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
@@ -3238,7 +3238,7 @@ events:
       The output was:
       0
       MSBuild version 17.14.18+a338add32 for .NET Framework
-      Build started 8/26/2025 9:41:17 AM.
+      Build started 8/26/2025 10:23:12 AM.
       
       Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\4.1.0\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
       PrepareForBuild:
@@ -3276,7 +3276,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:00.64
+      Time Elapsed 00:00:00.65
       
       
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
@@ -4928,8 +4928,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-kt2q8t"
-      binary: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-kt2q8t"
+      source: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-29x52y"
+      binary: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-29x52y"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -4942,40 +4942,40 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-kt2q8t'
+        Change Dir: 'C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-29x52y'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_0e845.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_4d91f.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.18+a338add32 for .NET Framework
-        Build started 8/26/2025 9:41:18 AM.
+        Build started 8/26/2025 10:23:13 AM.
         
-        Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kt2q8t\\cmTC_0e845.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-29x52y\\cmTC_4d91f.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_0e845.dir\\Debug\\".
+          Creating directory "cmTC_4d91f.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kt2q8t\\Debug\\".
-          Creating directory "cmTC_0e845.dir\\Debug\\cmTC_0e845.tlog\\".
+          Creating directory "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-29x52y\\Debug\\".
+          Creating directory "cmTC_4d91f.dir\\Debug\\cmTC_4d91f.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_0e845.dir\\Debug\\cmTC_0e845.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_0e845.dir\\Debug\\cmTC_0e845.tlog\\unsuccessfulbuild".
+          Creating "cmTC_4d91f.dir\\Debug\\cmTC_4d91f.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_4d91f.dir\\Debug\\cmTC_4d91f.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_0e845.dir\\Debug\\\\" /Fd"cmTC_0e845.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_4d91f.dir\\Debug\\\\" /Fd"cmTC_4d91f.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35213 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_0e845.dir\\Debug\\\\" /Fd"cmTC_0e845.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_4d91f.dir\\Debug\\\\" /Fd"cmTC_4d91f.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCCompilerABI.c"
           CMakeCCompilerABI.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kt2q8t\\Debug\\cmTC_0e845.exe" /INCREMENTAL /ILK:"cmTC_0e845.dir\\Debug\\cmTC_0e845.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-kt2q8t/Debug/cmTC_0e845.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-kt2q8t/Debug/cmTC_0e845.lib" /MACHINE:X64  /machine:x64 cmTC_0e845.dir\\Debug\\CMakeCCompilerABI.obj
-          cmTC_0e845.vcxproj -> C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kt2q8t\\Debug\\cmTC_0e845.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-29x52y\\Debug\\cmTC_4d91f.exe" /INCREMENTAL /ILK:"cmTC_4d91f.dir\\Debug\\cmTC_4d91f.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-29x52y/Debug/cmTC_4d91f.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-29x52y/Debug/cmTC_4d91f.lib" /MACHINE:X64  /machine:x64 cmTC_4d91f.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_4d91f.vcxproj -> C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-29x52y\\Debug\\cmTC_4d91f.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_0e845.dir\\Debug\\cmTC_0e845.tlog\\unsuccessfulbuild".
-          Touching "cmTC_0e845.dir\\Debug\\cmTC_0e845.tlog\\cmTC_0e845.lastbuildstate".
-        Done Building Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-kt2q8t\\cmTC_0e845.vcxproj" (default targets).
+          Deleting file "cmTC_4d91f.dir\\Debug\\cmTC_4d91f.tlog\\unsuccessfulbuild".
+          Touching "cmTC_4d91f.dir\\Debug\\cmTC_4d91f.tlog\\cmTC_4d91f.lastbuildstate".
+        Done Building Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-29x52y\\cmTC_4d91f.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.33
+        Time Elapsed 00:00:00.35
         
       exitCode: 0
   -
@@ -5015,8 +5015,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-32x9os"
-      binary: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-32x9os"
+      source: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-h4khuh"
+      binary: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-h4khuh"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /GR /EHsc"
       CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -5030,40 +5030,40 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-32x9os'
+        Change Dir: 'C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-h4khuh'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_e687b.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_58d32.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.18+a338add32 for .NET Framework
-        Build started 8/26/2025 9:41:19 AM.
+        Build started 8/26/2025 10:23:14 AM.
         
-        Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-32x9os\\cmTC_e687b.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-h4khuh\\cmTC_58d32.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_e687b.dir\\Debug\\".
+          Creating directory "cmTC_58d32.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-32x9os\\Debug\\".
-          Creating directory "cmTC_e687b.dir\\Debug\\cmTC_e687b.tlog\\".
+          Creating directory "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-h4khuh\\Debug\\".
+          Creating directory "cmTC_58d32.dir\\Debug\\cmTC_58d32.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_e687b.dir\\Debug\\cmTC_e687b.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_e687b.dir\\Debug\\cmTC_e687b.tlog\\unsuccessfulbuild".
+          Creating "cmTC_58d32.dir\\Debug\\cmTC_58d32.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_58d32.dir\\Debug\\cmTC_58d32.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_e687b.dir\\Debug\\\\" /Fd"cmTC_e687b.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_58d32.dir\\Debug\\\\" /Fd"cmTC_58d32.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35213 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_e687b.dir\\Debug\\\\" /Fd"cmTC_e687b.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /GR /Fo"cmTC_58d32.dir\\Debug\\\\" /Fd"cmTC_58d32.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.1\\Modules\\CMakeCXXCompilerABI.cpp"
           CMakeCXXCompilerABI.cpp
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-32x9os\\Debug\\cmTC_e687b.exe" /INCREMENTAL /ILK:"cmTC_e687b.dir\\Debug\\cmTC_e687b.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-32x9os/Debug/cmTC_e687b.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-32x9os/Debug/cmTC_e687b.lib" /MACHINE:X64  /machine:x64 cmTC_e687b.dir\\Debug\\CMakeCXXCompilerABI.obj
-          cmTC_e687b.vcxproj -> C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-32x9os\\Debug\\cmTC_e687b.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-h4khuh\\Debug\\cmTC_58d32.exe" /INCREMENTAL /ILK:"cmTC_58d32.dir\\Debug\\cmTC_58d32.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-h4khuh/Debug/cmTC_58d32.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-h4khuh/Debug/cmTC_58d32.lib" /MACHINE:X64  /machine:x64 cmTC_58d32.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_58d32.vcxproj -> C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-h4khuh\\Debug\\cmTC_58d32.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_e687b.dir\\Debug\\cmTC_e687b.tlog\\unsuccessfulbuild".
-          Touching "cmTC_e687b.dir\\Debug\\cmTC_e687b.tlog\\cmTC_e687b.lastbuildstate".
-        Done Building Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-32x9os\\cmTC_e687b.vcxproj" (default targets).
+          Deleting file "cmTC_58d32.dir\\Debug\\cmTC_58d32.tlog\\unsuccessfulbuild".
+          Touching "cmTC_58d32.dir\\Debug\\cmTC_58d32.tlog\\cmTC_58d32.lastbuildstate".
+        Done Building Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-h4khuh\\cmTC_58d32.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:00.33
+        Time Elapsed 00:00:00.35
         
       exitCode: 0
   -
@@ -5106,8 +5106,8 @@ events:
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-6kn9xo"
-      binary: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-6kn9xo"
+      source: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-jn3dyo"
+      binary: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-jn3dyo"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -5120,40 +5120,40 @@ events:
       variable: "CMAKE_HAVE_LIBC_PTHREAD"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-6kn9xo'
+        Change Dir: 'C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-jn3dyo'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_7cc88.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_8f39e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.18+a338add32 for .NET Framework
-        Build started 8/26/2025 9:41:19 AM.
+        Build started 8/26/2025 10:23:14 AM.
         
-        Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6kn9xo\\cmTC_7cc88.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jn3dyo\\cmTC_8f39e.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_7cc88.dir\\Debug\\".
+          Creating directory "cmTC_8f39e.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6kn9xo\\Debug\\".
-          Creating directory "cmTC_7cc88.dir\\Debug\\cmTC_7cc88.tlog\\".
+          Creating directory "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jn3dyo\\Debug\\".
+          Creating directory "cmTC_8f39e.dir\\Debug\\cmTC_8f39e.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_7cc88.dir\\Debug\\cmTC_7cc88.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_7cc88.dir\\Debug\\cmTC_7cc88.tlog\\unsuccessfulbuild".
+          Creating "cmTC_8f39e.dir\\Debug\\cmTC_8f39e.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_8f39e.dir\\Debug\\cmTC_8f39e.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_7cc88.dir\\Debug\\\\" /Fd"cmTC_7cc88.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6kn9xo\\src.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_8f39e.dir\\Debug\\\\" /Fd"cmTC_8f39e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jn3dyo\\src.c"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35213 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_7cc88.dir\\Debug\\\\" /Fd"cmTC_7cc88.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6kn9xo\\src.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_8f39e.dir\\Debug\\\\" /Fd"cmTC_8f39e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jn3dyo\\src.c"
           src.c
-        C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6kn9xo\\src.c(1,10): error C1083: Cannot open include file: 'pthread.h': No such file or directory [C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6kn9xo\\cmTC_7cc88.vcxproj]
-        Done Building Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6kn9xo\\cmTC_7cc88.vcxproj" (default targets) -- FAILED.
+        C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jn3dyo\\src.c(1,10): error C1083: Cannot open include file: 'pthread.h': No such file or directory [C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jn3dyo\\cmTC_8f39e.vcxproj]
+        Done Building Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jn3dyo\\cmTC_8f39e.vcxproj" (default targets) -- FAILED.
         
         Build FAILED.
         
-        "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6kn9xo\\cmTC_7cc88.vcxproj" (default target) (1) ->
+        "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jn3dyo\\cmTC_8f39e.vcxproj" (default target) (1) ->
         (ClCompile target) -> 
-          C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6kn9xo\\src.c(1,10): error C1083: Cannot open include file: 'pthread.h': No such file or directory [C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-6kn9xo\\cmTC_7cc88.vcxproj]
+          C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jn3dyo\\src.c(1,10): error C1083: Cannot open include file: 'pthread.h': No such file or directory [C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jn3dyo\\cmTC_8f39e.vcxproj]
         
             0 Warning(s)
             1 Error(s)
         
-        Time Elapsed 00:00:00.23
+        Time Elapsed 00:00:00.21
         
       exitCode: 1
   -
@@ -5167,8 +5167,8 @@ events:
     checks:
       - "Looking for pthread_create in pthreads"
     directories:
-      source: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-l3rn72"
-      binary: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-l3rn72"
+      source: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-z810mm"
+      binary: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-z810mm"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -5181,42 +5181,42 @@ events:
       variable: "CMAKE_HAVE_PTHREADS_CREATE"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-l3rn72'
+        Change Dir: 'C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-z810mm'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_2b990.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_ff1ac.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.18+a338add32 for .NET Framework
-        Build started 8/26/2025 9:41:19 AM.
+        Build started 8/26/2025 10:23:15 AM.
         
-        Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-l3rn72\\cmTC_2b990.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-z810mm\\cmTC_ff1ac.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_2b990.dir\\Debug\\".
+          Creating directory "cmTC_ff1ac.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-l3rn72\\Debug\\".
-          Creating directory "cmTC_2b990.dir\\Debug\\cmTC_2b990.tlog\\".
+          Creating directory "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-z810mm\\Debug\\".
+          Creating directory "cmTC_ff1ac.dir\\Debug\\cmTC_ff1ac.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_2b990.dir\\Debug\\cmTC_2b990.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_2b990.dir\\Debug\\cmTC_2b990.tlog\\unsuccessfulbuild".
+          Creating "cmTC_ff1ac.dir\\Debug\\cmTC_ff1ac.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_ff1ac.dir\\Debug\\cmTC_ff1ac.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_2b990.dir\\Debug\\\\" /Fd"cmTC_2b990.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-l3rn72\\CheckFunctionExists.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_ff1ac.dir\\Debug\\\\" /Fd"cmTC_ff1ac.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-z810mm\\CheckFunctionExists.c"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35213 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_2b990.dir\\Debug\\\\" /Fd"cmTC_2b990.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-l3rn72\\CheckFunctionExists.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_ff1ac.dir\\Debug\\\\" /Fd"cmTC_ff1ac.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-z810mm\\CheckFunctionExists.c"
           CheckFunctionExists.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-l3rn72\\Debug\\cmTC_2b990.exe" /INCREMENTAL /ILK:"cmTC_2b990.dir\\Debug\\cmTC_2b990.ilk" /NOLOGO pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-l3rn72/Debug/cmTC_2b990.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-l3rn72/Debug/cmTC_2b990.lib" /MACHINE:X64  /machine:x64 cmTC_2b990.dir\\Debug\\CheckFunctionExists.obj
-        LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-l3rn72\\cmTC_2b990.vcxproj]
-        Done Building Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-l3rn72\\cmTC_2b990.vcxproj" (default targets) -- FAILED.
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-z810mm\\Debug\\cmTC_ff1ac.exe" /INCREMENTAL /ILK:"cmTC_ff1ac.dir\\Debug\\cmTC_ff1ac.ilk" /NOLOGO pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-z810mm/Debug/cmTC_ff1ac.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-z810mm/Debug/cmTC_ff1ac.lib" /MACHINE:X64  /machine:x64 cmTC_ff1ac.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-z810mm\\cmTC_ff1ac.vcxproj]
+        Done Building Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-z810mm\\cmTC_ff1ac.vcxproj" (default targets) -- FAILED.
         
         Build FAILED.
         
-        "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-l3rn72\\cmTC_2b990.vcxproj" (default target) (1) ->
+        "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-z810mm\\cmTC_ff1ac.vcxproj" (default target) (1) ->
         (Link target) -> 
-          LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-l3rn72\\cmTC_2b990.vcxproj]
+          LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-z810mm\\cmTC_ff1ac.vcxproj]
         
             0 Warning(s)
             1 Error(s)
         
-        Time Elapsed 00:00:00.25
+        Time Elapsed 00:00:00.28
         
       exitCode: 1
   -
@@ -5230,8 +5230,8 @@ events:
     checks:
       - "Looking for pthread_create in pthread"
     directories:
-      source: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-xxy4o9"
-      binary: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-xxy4o9"
+      source: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-nz2vq0"
+      binary: "C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-nz2vq0"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
       CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
@@ -5244,42 +5244,42 @@ events:
       variable: "CMAKE_HAVE_PTHREAD_CREATE"
       cached: true
       stdout: |
-        Change Dir: 'C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-xxy4o9'
+        Change Dir: 'C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-nz2vq0'
         
-        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_e551c.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_a1f74.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
         MSBuild version 17.14.18+a338add32 for .NET Framework
-        Build started 8/26/2025 9:41:20 AM.
+        Build started 8/26/2025 10:23:15 AM.
         
-        Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxy4o9\\cmTC_e551c.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nz2vq0\\cmTC_a1f74.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_e551c.dir\\Debug\\".
+          Creating directory "cmTC_a1f74.dir\\Debug\\".
           Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
-          Creating directory "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxy4o9\\Debug\\".
-          Creating directory "cmTC_e551c.dir\\Debug\\cmTC_e551c.tlog\\".
+          Creating directory "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nz2vq0\\Debug\\".
+          Creating directory "cmTC_a1f74.dir\\Debug\\cmTC_a1f74.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_e551c.dir\\Debug\\cmTC_e551c.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
-          Touching "cmTC_e551c.dir\\Debug\\cmTC_e551c.tlog\\unsuccessfulbuild".
+          Creating "cmTC_a1f74.dir\\Debug\\cmTC_a1f74.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_a1f74.dir\\Debug\\cmTC_a1f74.tlog\\unsuccessfulbuild".
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_e551c.dir\\Debug\\\\" /Fd"cmTC_e551c.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxy4o9\\CheckFunctionExists.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_a1f74.dir\\Debug\\\\" /Fd"cmTC_a1f74.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nz2vq0\\CheckFunctionExists.c"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35213 for x64
           Copyright (C) Microsoft Corporation.  All rights reserved.
-          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_e551c.dir\\Debug\\\\" /Fd"cmTC_e551c.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxy4o9\\CheckFunctionExists.c"
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Fo"cmTC_a1f74.dir\\Debug\\\\" /Fd"cmTC_a1f74.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nz2vq0\\CheckFunctionExists.c"
           CheckFunctionExists.c
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxy4o9\\Debug\\cmTC_e551c.exe" /INCREMENTAL /ILK:"cmTC_e551c.dir\\Debug\\cmTC_e551c.ilk" /NOLOGO pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-xxy4o9/Debug/cmTC_e551c.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-xxy4o9/Debug/cmTC_e551c.lib" /MACHINE:X64  /machine:x64 cmTC_e551c.dir\\Debug\\CheckFunctionExists.obj
-        LINK : fatal error LNK1104: cannot open file 'pthread.lib' [C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxy4o9\\cmTC_e551c.vcxproj]
-        Done Building Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxy4o9\\cmTC_e551c.vcxproj" (default targets) -- FAILED.
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /OUT:"C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nz2vq0\\Debug\\cmTC_a1f74.exe" /INCREMENTAL /ILK:"cmTC_a1f74.dir\\Debug\\cmTC_a1f74.ilk" /NOLOGO pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-nz2vq0/Debug/cmTC_a1f74.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /IMPLIB:"C:/Users/aseio/Documents/.Source/Myndra/build/CMakeFiles/CMakeScratch/TryCompile-nz2vq0/Debug/cmTC_a1f74.lib" /MACHINE:X64  /machine:x64 cmTC_a1f74.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: cannot open file 'pthread.lib' [C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nz2vq0\\cmTC_a1f74.vcxproj]
+        Done Building Project "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nz2vq0\\cmTC_a1f74.vcxproj" (default targets) -- FAILED.
         
         Build FAILED.
         
-        "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxy4o9\\cmTC_e551c.vcxproj" (default target) (1) ->
+        "C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nz2vq0\\cmTC_a1f74.vcxproj" (default target) (1) ->
         (Link target) -> 
-          LINK : fatal error LNK1104: cannot open file 'pthread.lib' [C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xxy4o9\\cmTC_e551c.vcxproj]
+          LINK : fatal error LNK1104: cannot open file 'pthread.lib' [C:\\Users\\aseio\\Documents\\.Source\\Myndra\\build\\CMakeFiles\\CMakeScratch\\TryCompile-nz2vq0\\cmTC_a1f74.vcxproj]
         
             0 Warning(s)
             1 Error(s)
         
-        Time Elapsed 00:00:00.25
+        Time Elapsed 00:00:00.28
         
       exitCode: 1
   -

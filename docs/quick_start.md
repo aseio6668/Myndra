@@ -27,7 +27,7 @@ build.bat     # On Windows
 
 ## Your First Myndra Program
 
-Create a file called `hello.pom`:
+Create a file called `hello.myn`:
 
 ```myndra
 import std::io with capabilities("write")
@@ -41,7 +41,7 @@ fn main() {
 Run it:
 
 ```bash
-./build/myndra hello.pom --run
+./build/myndra hello.myn --run
 ```
 
 ## Language Features Overview
@@ -246,20 +246,20 @@ Organize your Myndra project:
 my-project/
 ├── pom.toml              # Package definition
 ├── src/
-│   ├── main.pom          # Main entry point
+│   ├── main.myn          # Main entry point
 │   ├── auth/             # Authentication module
-│   │   ├── mod.pom
-│   │   └── did.pom
+│   │   ├── mod.myn
+│   │   └── did.myn
 │   ├── ui/               # UI components
-│   │   ├── mod.pom
-│   │   └── components.pom
+│   │   ├── mod.myn
+│   │   └── components.myn
 │   └── data/             # Data processing
-│       ├── mod.pom
-│       └── processors.pom
+│       ├── mod.myn
+│       └── processors.myn
 ├── tests/
-│   └── integration.pom
+│   └── integration.myn
 └── examples/
-    └── demo.pom
+    └── demo.myn
 ```
 
 ## Common Patterns
