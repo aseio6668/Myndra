@@ -1,0 +1,20 @@
+print("=== Myndra Standard Library Test ===");
+
+// Test input function
+let name = input("Enter your name: ");
+print("Hello,", name, "!");
+
+// Test string functions
+let text = "Hello World";
+print("Original text:", text);
+print("Length:", length(text));
+print("Substring (0,5):", substring(text, 0, 5));
+print("Substring (6):", substring(text, 6));
+
+// Test with user input
+if (length(name) > 0) {
+    print("Your name has", length(name), "characters");
+    if (length(name) > 3) {
+        print("First 3 characters:", substring(name, 0, 3));
+    }
+}

@@ -90,69 +90,69 @@ Token Lexer::next_token() {
     skip_whitespace();
     
     if (is_at_end()) {
-        return make_token(TokenType::EOF_TOKEN);
+        return make_token(TokenType::EOF_TOKEN, std::string(""));
     }
     
     char c = advance();
     
     // Single-character tokens
     switch (c) {
-        case '(': return make_token(TokenType::LEFT_PAREN);
-        case ')': return make_token(TokenType::RIGHT_PAREN);
-        case '{': return make_token(TokenType::LEFT_BRACE);
-        case '}': return make_token(TokenType::RIGHT_BRACE);
-        case '[': return make_token(TokenType::LEFT_BRACKET);
-        case ']': return make_token(TokenType::RIGHT_BRACKET);
-        case ',': return make_token(TokenType::COMMA);
-        case '.': return make_token(TokenType::DOT);
-        case ';': return make_token(TokenType::SEMICOLON);
-        case '?': return make_token(TokenType::QUESTION);
+        case '(': return make_token(TokenType::LEFT_PAREN, std::string("("));
+        case ')': return make_token(TokenType::RIGHT_PAREN, std::string(")"));
+        case '{': return make_token(TokenType::LEFT_BRACE, std::string("{"));
+        case '}': return make_token(TokenType::RIGHT_BRACE, std::string("}"));
+        case '[': return make_token(TokenType::LEFT_BRACKET, std::string("["));
+        case ']': return make_token(TokenType::RIGHT_BRACKET, std::string("]"));
+        case ',': return make_token(TokenType::COMMA, std::string(","));
+        case '.': return make_token(TokenType::DOT, std::string("."));
+        case ';': return make_token(TokenType::SEMICOLON, std::string(";"));
+        case '?': return make_token(TokenType::QUESTION, std::string("?"));
         case '+': 
-            if (match('=')) return make_token(TokenType::PLUS_ASSIGN);
-            return make_token(TokenType::PLUS);
+            if (match('=')) return make_token(TokenType::PLUS_ASSIGN, std::string("+="));
+            return make_token(TokenType::PLUS, std::string("+"));
         case '-': 
-            if (match('=')) return make_token(TokenType::MINUS_ASSIGN);
-            if (match('>')) return make_token(TokenType::ARROW);
-            return make_token(TokenType::MINUS);
-        case '*': return make_token(TokenType::MULTIPLY);
-        case '%': return make_token(TokenType::MODULO);
+            if (match('=')) return make_token(TokenType::MINUS_ASSIGN, std::string("-="));
+            if (match('>')) return make_token(TokenType::ARROW, std::string("->"));
+            return make_token(TokenType::MINUS, std::string("-"));
+        case '*': return make_token(TokenType::MULTIPLY, std::string("*"));
+        case '%': return make_token(TokenType::MODULO, std::string("%"));
         case '!':
-            if (match('=')) return make_token(TokenType::NOT_EQUAL);
-            return make_token(TokenType::NOT);
+            if (match('=')) return make_token(TokenType::NOT_EQUAL, std::string("!="));
+            return make_token(TokenType::NOT, std::string("!"));
         case '=':
-            if (match('=')) return make_token(TokenType::EQUAL);
-            if (match('>')) return make_token(TokenType::FAT_ARROW);
-            return make_token(TokenType::ASSIGN);
+            if (match('=')) return make_token(TokenType::EQUAL, std::string("=="));
+            if (match('>')) return make_token(TokenType::FAT_ARROW, std::string("=>"));
+            return make_token(TokenType::ASSIGN, std::string("="));
         case '<':
-            if (match('=')) return make_token(TokenType::LESS_EQUAL);
-            return make_token(TokenType::LESS);
+            if (match('=')) return make_token(TokenType::LESS_EQUAL, std::string("<="));
+            return make_token(TokenType::LESS, std::string("<"));
         case '>':
-            if (match('=')) return make_token(TokenType::GREATER_EQUAL);
-            return make_token(TokenType::GREATER);
+            if (match('=')) return make_token(TokenType::GREATER_EQUAL, std::string(">="));
+            return make_token(TokenType::GREATER, std::string(">"));
         case ':':
-            if (match(':')) return make_token(TokenType::DOUBLE_COLON);
-            return make_token(TokenType::COLON);
+            if (match(':')) return make_token(TokenType::DOUBLE_COLON, std::string("::"));
+            return make_token(TokenType::COLON, std::string(":"));
         case '/':
             if (match('/')) {
                 skip_line_comment();
-                return make_token(TokenType::COMMENT);
+                return make_token(TokenType::COMMENT, std::string(""));
             }
             if (match('*')) {
                 skip_block_comment();
-                return make_token(TokenType::COMMENT);
+                return make_token(TokenType::COMMENT, std::string(""));
             }
-            return make_token(TokenType::DIVIDE);
+            return make_token(TokenType::DIVIDE, std::string("/"));
         case '#':
             if (is_alpha(peek())) {
                 return semantic_tag();
             }
-            return make_token(TokenType::HASH);
+            return make_token(TokenType::HASH, std::string("#"));
         case '@':
             return annotation();
         case '\n':
             line_++;
             column_ = 1;
-            return make_token(TokenType::NEWLINE);
+            return make_token(TokenType::NEWLINE, std::string("\n"));
         case '"':
             return string_literal();
         default:
@@ -312,10 +312,10 @@ Token Lexer::identifier_or_keyword() {
             bool value = (text == "true");
             return make_token(type, value);
         }
-        return make_token(type);
+        return make_token(type, text);
     }
     
-    return make_token(TokenType::IDENTIFIER);
+    return make_token(TokenType::IDENTIFIER, text);
 }
 
 Token Lexer::annotation() {
@@ -343,7 +343,7 @@ Token Lexer::semantic_tag() {
         advance();
     }
     
-    return make_token(TokenType::TAG);
+    return make_token(TokenType::TAG, std::string(""));
 }
 
 bool Lexer::is_alpha(char c) const {

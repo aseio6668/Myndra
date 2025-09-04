@@ -25,7 +25,7 @@
     <ProjectGuid>{E12C3A22-614C-38DB-823E-31109AEBD6AC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <VcpkgEnabled>false</VcpkgEnabled>
-    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
     <Platform>x64</Platform>
     <ProjectName>test_lexer</ProjectName>
     <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
@@ -88,14 +88,14 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Users\aseio\Documents\.Source\Myndra\src;C:\Users\aseio\Documents\.Source\Myndra\include;C:\Users\aseio\Documents\.Source\Myndra\tests\..\src\lexer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) -g -O0 -Wextra</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MinimalRebuild></MinimalRebuild>
-      <Optimization></Optimization>
+      <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -106,8 +106,6 @@
       <WarningLevel>EnableAllWarnings</WarningLevel>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
-      <DebugInformationFormat>
-      </DebugInformationFormat>
       <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
@@ -125,7 +123,7 @@
     <PostBuildEvent>
       <Message></Message>
       <Command>setlocal
-C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/aseio/Documents/.Source/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/aseio/Documents/.Source/Myndra/build/tests/Debug/test_lexer.exe -installedDir C:/Users/aseio/Documents/.Source/vcpkg/installed/x64-windows/debug/bin -OutVariable out
+"C:\Program Files\PowerShell\7\pwsh.exe" -noprofile -executionpolicy Bypass -file C:/Users/aseio/Documents/.Source/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/aseio/Documents/.Source/Myndra/build/tests/Debug/test_lexer.exe -installedDir C:/Users/aseio/Documents/.Source/vcpkg/installed/x64-windows/debug/bin -OutVariable out
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -155,14 +153,13 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Users\aseio\Documents\.Source\Myndra\src;C:\Users\aseio\Documents\.Source\Myndra\include;C:\Users\aseio\Documents\.Source\Myndra\tests\..\src\lexer;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) -O3</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <MinimalRebuild></MinimalRebuild>
-      <Optimization></Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -191,7 +188,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <PostBuildEvent>
       <Message></Message>
       <Command>setlocal
-C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/aseio/Documents/.Source/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/aseio/Documents/.Source/Myndra/build/tests/Release/test_lexer.exe -installedDir C:/Users/aseio/Documents/.Source/vcpkg/installed/x64-windows/bin -OutVariable out
+"C:\Program Files\PowerShell\7\pwsh.exe" -noprofile -executionpolicy Bypass -file C:/Users/aseio/Documents/.Source/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/aseio/Documents/.Source/Myndra/build/tests/Release/test_lexer.exe -installedDir C:/Users/aseio/Documents/.Source/vcpkg/installed/x64-windows/bin -OutVariable out
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -257,7 +254,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <PostBuildEvent>
       <Message></Message>
       <Command>setlocal
-C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/aseio/Documents/.Source/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/aseio/Documents/.Source/Myndra/build/tests/MinSizeRel/test_lexer.exe -installedDir C:/Users/aseio/Documents/.Source/vcpkg/installed/x64-windows/bin -OutVariable out
+"C:\Program Files\PowerShell\7\pwsh.exe" -noprofile -executionpolicy Bypass -file C:/Users/aseio/Documents/.Source/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/aseio/Documents/.Source/Myndra/build/tests/MinSizeRel/test_lexer.exe -installedDir C:/Users/aseio/Documents/.Source/vcpkg/installed/x64-windows/bin -OutVariable out
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -322,7 +319,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <PostBuildEvent>
       <Message></Message>
       <Command>setlocal
-C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/aseio/Documents/.Source/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/aseio/Documents/.Source/Myndra/build/tests/RelWithDebInfo/test_lexer.exe -installedDir C:/Users/aseio/Documents/.Source/vcpkg/installed/x64-windows/bin -OutVariable out
+"C:\Program Files\PowerShell\7\pwsh.exe" -noprofile -executionpolicy Bypass -file C:/Users/aseio/Documents/.Source/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/aseio/Documents/.Source/Myndra/build/tests/RelWithDebInfo/test_lexer.exe -installedDir C:/Users/aseio/Documents/.Source/vcpkg/installed/x64-windows/bin -OutVariable out
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone

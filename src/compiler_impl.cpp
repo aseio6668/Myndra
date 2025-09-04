@@ -1,5 +1,7 @@
 #include "../include/myndra.h"
 #include "lexer/lexer.h"
+#include "parser/parser.h"
+#include "interpreter/interpreter.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -12,8 +14,10 @@ public:
     Options options;
     std::vector<std::string> errors;
     std::string current_source;
+    std::unique_ptr<Program> ast;
+    std::unique_ptr<Interpreter> interpreter;
     
-    explicit Impl(const Options& opts) : options(opts) {}
+    explicit Impl(const Options& opts) : options(opts), interpreter(std::make_unique<Interpreter>()) {}
 };
 
 // Constructor
@@ -74,10 +78,35 @@ bool Compiler::compile_string(const std::string& source) {
     
     std::cout << "✓ Lexical analysis completed (" << tokens.size() << " tokens)" << std::endl;
     
-    // TODO: Implement parser, semantic analysis, code generation
-    std::cout << "✓ Parsing completed (stub)" << std::endl;
+    // Parsing
+    Parser parser(tokens);
+    pimpl->ast = parser.parseProgram();
+    
+    if (parser.hasErrors()) {
+        for (const auto& error : parser.getErrors()) {
+            pimpl->errors.push_back("Parse error: " + error);
+        }
+        return false;
+    }
+    
+    std::cout << "✓ Parsing completed (" << pimpl->ast->statements.size() << " statements)" << std::endl;
+    
+    // For now, print the AST for debugging
+    if (pimpl->options.target_context == "dev") {
+        std::cout << "AST:\n" << pimpl->ast->to_string() << std::endl;
+    }
+    
+    // Execute the AST with the interpreter
     std::cout << "✓ Semantic analysis completed (stub)" << std::endl;
-    std::cout << "✓ Code generation completed (stub)" << std::endl;
+    std::cout << "✓ Executing..." << std::endl;
+    
+    try {
+        pimpl->interpreter->execute(*pimpl->ast);
+        std::cout << "✓ Execution completed" << std::endl;
+    } catch (const std::exception& e) {
+        pimpl->errors.push_back("Runtime error: " + std::string(e.what()));
+        return false;
+    }
     
     return true;
 }

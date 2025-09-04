@@ -1,0 +1,10 @@
+print("Hello from Myndra interpreter!");
+let x = 42;
+let y = x + 8;
+print("x =", x);
+print("y =", y);
+print("x + y =", x + y);
+
+if (y > 40) {
+    print("y is greater than 40");
+}

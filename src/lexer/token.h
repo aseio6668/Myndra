@@ -19,12 +19,16 @@ enum class TokenType {
     
     // Keywords
     LET,
+    MUT,
     FN,
     IF,
     ELSE,
     WHILE,
     FOR,
+    IN,
     RETURN,
+    TRUE,
+    FALSE,
     IMPORT,
     EXPORT,
     WITH,

@@ -11,7 +11,7 @@ void test_basic_tokens() {
     Lexer lexer(source);
     auto tokens = lexer.tokenize();
     
-    assert(tokens.size() == 6); // let, x, =, 42, +, 3.14, EOF
+    assert(tokens.size() == 7); // let, x, =, 42, +, 3.14, EOF
     assert(tokens[0].type == TokenType::LET);
     assert(tokens[1].type == TokenType::IDENTIFIER);
     assert(tokens[2].type == TokenType::ASSIGN);
